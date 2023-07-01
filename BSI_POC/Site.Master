@@ -38,7 +38,7 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
+<%--        <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -57,16 +57,17 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>--%>
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
 
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p style="text-align:center">&copy; <%: DateTime.Now.Year %> - PT Mitsubishi Motors Krama Yudha Sales Indonesia
+            <%--<hr style="width: 75%"/>--%>
+<%--            <footer>
+                <p style="text-align:center; border:solid thin; width:75%">&copy; <%: DateTime.Now.Year %> - PT Mitsubishi Motors Krama Yudha Sales Indonesia</p>
+            </footer>--%>
         </div>
 
     </form>

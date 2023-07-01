@@ -125,6 +125,7 @@
     <Content Include="Assets\css\Design\transaction.css" />
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\css\table.css" />
+    <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\Library\angular-route.min.js" />
     <Content Include="Assets\Library\angular.min.js" />
     <Content Include="Assets\Library\BaseLogic.js" />

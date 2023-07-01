@@ -1,16 +1,18 @@
 ﻿label {
     width: 35%;
     padding-bottom: 15px;
+    padding-left: 15px;
 }
 
-input{
-    width: 100%;
+.myInput{
+    width: 95%;
 }
 
 .col-5{
     border: black solid thin;
     border-radius: 5px;
     padding-top: 15px;
+    width: 49% !important;
 }
 
 .col-6 {
@@ -24,18 +26,16 @@ input{
 }
 
 .myLabel{
-    text-decoration: underline;
+    
     padding-bottom: 0;
 }
 
 .myLabel-detail{
-    text-decoration: underline;
     padding-bottom: 0;
     padding-top: 20px;
 }
 
 .myTable th {
-    background-color: aqua;
     border: solid black thin;
     text-align: center;
     color: black;
@@ -51,4 +51,35 @@ input{
 .myTable td {
     text-align: center;
     border: solid black thin;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.myContainer{
+    border: solid thin black;
+}
+
+.myParagraph{
+    text-align: center;
+    font-size: larger;
+    font-weight: bold;
+    width: 15%;
+    padding-top: 12.5px;
+    padding-bottom: 5px;
+    margin-left: 45%;
+    background-color: aqua;
+    border-radius: 5px;
+}
+
+.logo{
+    width: 60px;
+    height: 55px;
+}
+
+.header-input{
+    width: 100%;
+    background-color: gainsboro;
+    border-width: thin;
 }

@@ -15,6 +15,7 @@
         option0.text = '== Select Stationary Item ==';
         option0.disabled = "disabled";
         option0.selected = "selected";
+        option0.classList.add("text-center");
         dropdown.add(option0);
 
         const option1 = document.createElement('option');
@@ -40,14 +41,34 @@
     dropdown.style.width = "90%";
 
 
-    const celss = [cell2, cell3, cell4, cell5];
+    const celss = [cell1, cell3, cell4];
 
-    cell1.appendChild(dropdown);
+    cell2.appendChild(dropdown);
     for (const i of celss) {
         const inp = document.createElement('input');
         inp.type = "text";
+        inp.style.width = "95%";
         i.appendChild(inp);
         console.log(i);
     }
-    console.log(el);
+
+    const txt = document.createElement('textarea');
+    txt.id = "reason";
+    txt.style.width = "100%";
+    txt.style.height = "auto";
+    txt.addEventListener('input', function () {
+        const inputBox = document.getElementById("reason");
+        inputBox.style.height = "auto";
+        inputBox.style.height = inputBox.scrollHeight + "px";
+        console.log(inputBox);
+    })
+    cell5.appendChild(txt);
+
+}
+
+function adjustHeight() {
+    const inputBox = document.getElementById("reason");
+    inputBox.style.height = "auto";
+    inputBox.style.height = inputBox.scrollHeight + "px";
+    console.log(inputBox);
 }
