@@ -1,0 +1,53 @@
+﻿label {
+    width: 35%;
+    padding-bottom: 15px;
+}
+
+input{
+    width: 65%;
+}
+
+.col-5{
+    border: black solid thin;
+    border-radius: 5px;
+    padding-top: 15px;
+}
+
+.col-6 {
+    border: black solid thin;
+    border-radius: 5px;
+    padding-top: 15px;
+}
+
+.col-1 {
+    width: 3px;
+}
+
+.myLabel{
+    text-decoration: underline;
+    padding-bottom: 0;
+}
+
+.myLabel-detail{
+    text-decoration: underline;
+    padding-bottom: 0;
+    padding-top: 20px;
+}
+
+.myTable th {
+    background-color: aqua;
+    border: solid black thin;
+    text-align: center;
+    color: black;
+}
+
+.myTable tr {
+    text-align: center;
+    border: solid black thin;
+    background-color: antiquewhite;
+}
+
+.myTable td {
+    text-align: center;
+    border: solid black thin;
+}
