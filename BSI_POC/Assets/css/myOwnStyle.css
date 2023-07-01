@@ -3,8 +3,8 @@
     padding-bottom: 15px;
 }
 
-input{
-    width: 65%;
+.myInput{
+    width: 100%;
 }
 
 .col-5{
@@ -44,7 +44,6 @@ input{
 .myTable tr {
     text-align: center;
     border: solid black thin;
-    background-color: antiquewhite;
 }
 
 .myTable td {

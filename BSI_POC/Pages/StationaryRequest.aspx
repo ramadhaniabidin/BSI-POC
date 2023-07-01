@@ -67,11 +67,20 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
+                    <td>
+                        <select>
+                            <option disabled="disabled" selected="selected"> == Select Stationary Item == </option>
+                            <option>A4 Paper</option>
+                            <option>Pencil</option>
+                            <option>Pencil</option>
+                            <option>Marker</option>
+                            <option>Envelope</option>
+                        </select>
+                    </td>
+                    <td><input class="myInput" type="text"></td>
+                    <td><input class="myInput" type="text"></td>
+                    <td><input class="myInput" type="text"></td>
+                    <td><input class="myInput" type="text"></td>
                 </tr>
             </tbody>
         </table>
