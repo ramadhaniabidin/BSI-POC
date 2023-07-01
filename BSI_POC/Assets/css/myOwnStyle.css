@@ -3,7 +3,7 @@
     padding-bottom: 15px;
 }
 
-.myInput{
+input{
     width: 100%;
 }
 
@@ -39,6 +39,8 @@
     border: solid black thin;
     text-align: center;
     color: black;
+    padding-bottom:10px;
+    padding-top: 10px;
 }
 
 .myTable tr {

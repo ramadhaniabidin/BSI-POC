@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="../Assets/css/bootstrap/bootstrap_importer.css"/>
     <link rel="stylesheet" href="../Assets/css/myOwnStyle.css"/>
+    <script src="../Assets/Library/MyJavaScript.js"></script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -55,7 +56,7 @@
     <div class="row" style="justify-content:center">
         <label class="myLabel-detail" style="font-size:large">Request Detail</label>
         <table class="myTable" id="semprot_lahan">   
-            <caption style="caption-side: bottom; cursor:pointer; color:black">+</caption>  
+            <caption id="add" style="caption-side: bottom; cursor:pointer; color:black; width:3px" onclick="addRow()">+</caption>  
             <thead>                            
                 <tr>                                                                                                   
                     <th>No.</th>                                                                                                   
@@ -68,7 +69,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <select>
+                        <select style="width: 90%;">
                             <option disabled="disabled" selected="selected"> == Select Stationary Item == </option>
                             <option>A4 Paper</option>
                             <option>Pencil</option>
