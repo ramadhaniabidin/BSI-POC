@@ -113,6 +113,7 @@
     <Content Include="Assets\css\customLogin.css" />
     <Content Include="Assets\css\entry.css" />
     <Content Include="Assets\css\list.css" />
+    <Content Include="Assets\css\myOwnStyle.css" />
     <Content Include="Assets\css\Phosphor-regular\Phosphor.svg" />
     <Content Include="Assets\css\Phosphor-regular\style.css" />
     <Content Include="Assets\css\Design\form.css" />

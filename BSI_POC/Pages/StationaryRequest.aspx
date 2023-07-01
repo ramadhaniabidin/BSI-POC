@@ -53,16 +53,16 @@
         </div>
     </div>
     <div class="row" style="justify-content:center">
-        <label class="myLabel-detail">Request Detail</label>
+        <label class="myLabel-detail" style="font-size:large">Request Detail</label>
         <table class="myTable" id="semprot_lahan">   
-            <caption style="caption-side: top;">Semprot Lahan</caption>  
+            <caption style="caption-side: bottom; cursor:pointer; color:black">+</caption>  
             <thead>                            
                 <tr>                                                                                                   
                     <th>No.</th>                                                                                                   
-                    <th>Persil</th>                                                                                                   
-                    <th>​​​​Ha</th>                                                                                                   
-                    <th>KCB</th>                                                                                                   
-                    <th>HOK</th>                                                                                                                                                               
+                    <th>Item Name</th>                                                                                                   
+                    <th>​​​​UOM</th>                                                                                                   
+                    <th>Request QTY</th>                                                                                                   
+                    <th>Reason</th>                                                                                                                                                               
                 </tr>                               
             </thead>
             <tbody>
