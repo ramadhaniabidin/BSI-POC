@@ -1,0 +1,77 @@
+/* banner */
+.banner {
+    position: relative;
+    height: 430px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner .text-container {
+    position: absolute;
+    font-family: 'Roboto', sans-serif;
+    width: 360px;
+    bottom: 40px;
+    left: 60px;
+    color: var(--ink-black);
+}
+
+.banner .text-container h2 {
+    font-size: 53px;
+    margin-bottom: 0;
+}
+
+.banner .text-container p {
+    font-size: 20px;
+}
+
+/* full service */
+.service-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.service-container .card {
+    width: 250px;
+}
+
+.service-container .card h3 {
+    margin: 0;
+    padding: 24px 0px;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--deep-ocean);
+    border-bottom: 2px solid var(--bone-white);
+}
+
+.service-container .card p {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--smoke);
+    margin-bottom: 24px;
+}
+
+.service-container .card button {
+    cursor: pointer;
+    display: flex;
+    padding: 14px 24px;
+    background: linear-gradient(180deg, #A4A4A4 -7.52%, #CCCCCC 84.04%);
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--ink-black);
+    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+.service-container .card button img {
+    margin-left: 12px;
+}

@@ -1,0 +1,579 @@
+.form-title {
+    padding: 44px 0px 28px 0px;
+}
+
+.form-title label {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 600;
+    color: #D9A05B;
+    letter-spacing: 0.4em;
+}
+
+.form-title h2 {
+    margin: 0px;
+    margin-top: 14px;
+    font-weight: 500;
+    font-size: 34px;
+    color: var(--ink-black);
+}
+
+/* form styling */
+form {
+    /* background: red; */
+    width: 100%;
+}
+.form-container {
+    display: flex;
+}
+.form-container .left,
+.form-container .right {
+    width: 50%;
+}
+.form-container .left {
+    margin-right: 10px;
+}
+.form-container .right {
+    margin-left: 10px;
+}
+form input {
+    box-sizing: border-box;
+    width: 100%;
+}
+.flex-input {
+    display: flex;
+}
+.label-field {
+    width: 100%;
+}
+
+#title,
+#from,
+#until {
+    margin-bottom: 0;
+}
+
+#status {
+    width: 100%;
+}
+
+/*form textarea {
+    box-sizing: border-box;
+    resize: none;
+    width: 100%;
+    height: 162px;
+}*/
+
+/*form input[type="text"]:not([disabled]),
+form textarea:not([disabled]) {
+    margin-bottom: 15px;
+    margin: 0px;
+    padding: 14px 20px;
+    font-family: 'Roboto', sans-serif;
+    outline: none;
+    background: #D6D6D6;
+    border: none;
+    font-size: 14px;
+}*/
+
+.filled-text {
+    color: red;
+}
+
+form input::placeholder,
+form textarea::placeholder
+.placeholder-text {
+    color: var(--smoke);
+}
+
+div.label-field label {
+    width: 220px;
+    font-size: 14px;
+    color: var(--smoke);
+}
+
+.form-btn {
+    margin-top: 45px;
+    display: flex;
+}
+
+.form-btn button,
+div.form-btn input {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    padding: 14px 0px;
+    width: 160px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--ink-black);
+    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+#cancel {
+    background: linear-gradient(180deg, #A4A4A4 -7.52%, #CCCCCC 84.04%);
+    margin-right: 16px;
+}
+
+#save {
+    /* background: linear-gradient(180deg, #1C6E86 -7.52%, #019BD1 84.04%); */
+    background: linear-gradient(180deg, #8E6628 0%, #CB9646 100%);
+    color: white;
+}
+
+.input-form,
+.date-picker {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 15px;
+}
+
+.NativeDatepicker {
+    width: 20px;
+    height: 20px;
+    background: transparent url(../img/ERP_icon_calendar.png) no-repeat center center;
+    background-size: contain;
+    vertical-align: middle;
+    margin: auto 16px;
+}
+
+.NativeDatepicker__input {
+    padding: 0;
+    margin: 0;
+}
+
+.attachment-field,
+.file-attachment {
+    display: flex;
+}
+
+.attachment-field {
+    margin-bottom: 15px;
+}
+
+.file-attachment {
+    margin-bottom: 8px;
+    justify-content: space-between;
+}
+
+.files {
+    width: 100%;
+    margin-top: 12px;
+}
+.file-attachment a {
+    text-decoration-color: #67686A;
+}
+.file-attachment p {
+    color: var(--smoke);
+    font-size: 14px;
+    margin: auto 40px;
+    margin-left: 0;
+    width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-attachment button {
+    border: none;
+    cursor: pointer;
+    background: transparent;
+}
+
+#Attachment {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* checkbox */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #d6d6d6;
+}
+
+.checkbox-container input:checked~.checkmark {
+    background-color: #2196F3;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked~.checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.add-attachment {
+    display: flex;
+}
+.add-attachment p {
+    width: auto;
+    margin-left: 16px;
+}
+
+/*Patch -- Start*/
+select.nf-datepicker-select {
+    height: auto;
+}
+
+div.nf-date img.ui-datepicker-trigger,
+div.nf-datetime img.ui-datepicker-trigger {
+    width: 24px;
+    height: 24px;
+    top: unset;
+}
+
+div div.nf-date,
+div div.nf-datetime {
+    display: flex;
+    align-items: center;
+}
+
+div.nwf-form input {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+div.nwf-form {
+    display: flex;
+    align-items: center;
+}
+
+div.nwf-form input[type="text"],
+div.nwf-form textarea,
+div.nwf-form select,
+div.nwf-form textarea.ip-input.ui-autocomplete-input{
+    margin: 0px;
+    padding: 14px 20px;
+    /*background-color: #D6D6D6;*/
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    width: 100%;
+    line-height: normal;
+    border: 2px solid #00000000;
+    border-radius: 0px;
+}
+
+div.nwf-form input[type="text"]:read-only,
+div.nwf-form textarea:read-only,
+div.nwf-form input[type="text"]:disabled,
+div.nwf-form textarea:disabled,
+div.nwf-form select:disabled,
+div.nwf-form textarea.ip-input.ui-autocomplete-input:disabled {
+    /* For 'disabled' control on Display mode */
+    background-color: #D6D6D6 !important;
+    color: #142038;
+}
+
+div.nwf-form textarea.ip-input.ui-autocomplete-input {
+    height: unset !important;
+}
+
+form input::placeholder,
+form textarea::placeholder,
+.nwf-form input::placeholder,
+.nwf-form textarea::placeholder,
+.placeholder-text {
+    color: var(--smoke);
+}
+
+div.form-btn-nowdth,
+div.form-btn-wdth {
+    display: flex;
+    margin-top: 0.25rem;
+    justify-content:center;
+    align-items:center;
+}
+
+div.form-btn-nowdth button,
+div.form-btn-nowdth input,
+div.form-btn-wdth button,
+div.form-btn-wdth input {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    /*color: var(--ink-black);*/
+    border: none;
+    border-radius: 4px;
+    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.3);
+    width: auto;
+}
+
+div.form-btn-wdth button,
+div.form-btn-wdth input {
+    margin: 0px 12px;
+    min-width: 120px;
+}
+
+div.utility-nodisplay,
+div.utility-nodisplay * {
+    display: none;
+}
+
+/*Imported from submission.css -- Start*/
+table.popup-table tbody.popup-table-body {
+    background: transparent;
+}
+
+table.popup-table tbody.popup-table-body td {
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif; 
+    font-size: 15px;
+    padding: 0px;
+    text-align: left;
+    margin-bottom: 8px;
+    border: 5px solid #ededed;
+    border-top: 0;
+    border-bottom: 0;
+    border-collapse: collapse;
+}
+
+td .date-picker,
+td select,
+td input {
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+}
+table.popup-table thead th {
+    text-align: center;
+}
+table.popup-table tbody.popup-table-body tr.popup-table-row td select {
+    width: 130px;
+}
+/*Imported from submission.css -- End*/
+
+/*Imported from submission-patch.css -- Start*/
+table.popup-table tbody.popup-table-body tr.popup-table-row td {
+    border: 0px !important;
+    text-align: center
+}
+
+.popup-pagination {
+    display: inline-block;
+}
+
+.popup-pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    margin: 0 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+/*Imported from submission-patch.css -- End*/
+
+/*Imported from sharedPatch.css -- Start*/
+tbody tr td a.action-text {
+    text-decoration: underline;
+    color: #0072c6;
+    cursor: pointer;
+}
+
+a.pagination-info {
+    cursor:default;
+}
+/*Imported from sharedPatch.css -- End*/
+
+/*Imported from transaction.css for Table -- Start*/
+table.popup-table,
+table.rptsect-header {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+}
+
+table.rptsect-header thead.rptsect-header,
+table.popup-table thead {
+    background: #142038;
+    color: #E2E2E2;
+}
+
+table.popup-table tbody {
+    background: #E2E2E2;
+    color: #142038;
+}
+
+table.popup-table tbody td {
+    font-weight: 500;
+    font-size: 15px;
+    padding: 0px;
+    text-align: left;
+    margin-bottom: 8px;
+    border: 5px solid #ededed;
+    border-top: 0;
+    border-bottom: 0;
+    border-collapse: collapse;
+}
+
+table.rptsect-header thead tr th,
+table.popup-table thead tr th,
+table.popup-table tbody tr td {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    text-align: center;
+    /*margin-bottom: 8px;*/
+    margin: 0px;
+}
+/*Imported from transaction.css for end -- End*/
+
+table.popup-table tbody tr td {
+    padding: 4px 0px;
+}
+
+table.popup-table thead tr th,
+table.rptsect-header thead tr th{
+    padding: 8px 0px;
+}
+
+/*Nintex Forms overrider -- Start*/
+div.nf-repeater-row.nf-item-alternating {
+    background-color: unset;
+}
+/*Nintex Forms overrider -- End*/
+
+/*For Pop-up modal -- Start*/
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 30px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 70%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    /*background-color: #6caee0;*/
+    background-image: url('/_layouts/15/Sambu.MasterPages/assets/img/Bg.png');
+    color: white;
+}
+
+.modal-header h2 {
+    color: white;
+}
+
+.modal-body {
+    padding: 2px 16px;
+}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: white;
+    /*color: white;*/
+    float: left;
+    width: 97.6%;
+}
+/*For pop-up modal -- End*/
+
+/*For pop-up modal search section -- Start*/
+.input-search {
+    margin-top: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.label-field {
+    width: 100%;
+}
+
+div.search-input {
+    display: flex;
+}
+
+div.search-input div.input-search input,
+div.search-input div.input-search select {
+    padding: 14px 20px;
+    font-family: 'Roboto', sans-serif;
+    outline: none;
+    background-color: #D6D6D6 !important;
+    border: none;
+    font-size: 14px;
+    display: flex;
+    /*Additionals*/
+    box-sizing: border-box;
+    width: 100%;
+    line-height: normal;
+}
+
+div.label-field {
+    display: flex;
+}
+
+/*Patch -- End*/

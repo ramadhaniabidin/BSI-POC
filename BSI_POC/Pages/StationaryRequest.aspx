@@ -4,4 +4,12 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>Stationary Request</h1>
+    <div class="row">
+        <div class="col-6">
+            Testing 1
+        </div>
+        <div class="col-6">
+            Testing 2
+        </div>
+    </div>
 </asp:Content>

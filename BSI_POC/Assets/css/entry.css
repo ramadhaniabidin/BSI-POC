@@ -1,0 +1,308 @@
+﻿.form-title {
+    padding: 44px 0px 28px 0px;
+}
+
+.form-title label {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 600;
+    color: #D9A05B;
+    letter-spacing: 0.4em;
+}
+
+.form-title h2 {
+    margin: 0px;
+    margin-top: 14px;
+    font-weight: 500;
+    font-size: 34px;
+    color: var(--ink-black);
+}
+
+/* form styling */
+form {
+    /* background: red; */
+    width: 100%;
+}
+.form-container {
+    display: flex;
+}
+.form-container .left,
+.form-container .right {
+    width: 50%;
+}
+.form-container .left {
+    margin-right: 10px;
+}
+.form-container .right {
+    margin-left: 10px;
+}
+form input {
+    box-sizing: border-box;
+    width: 100%;
+}
+.flex-input {
+    display: flex;
+}
+.label-field {
+    width: 100%;
+}
+
+#title,
+#from,
+#until {
+    margin-bottom: 0;
+}
+
+#status {
+    width: 100%;
+}
+
+form textarea {
+    box-sizing: border-box;
+    resize: none;
+    width: 100%;
+    height: 162px;
+}
+
+form input,
+form textarea,
+form select {
+    padding: 14px 20px !important;
+    font-family: 'Roboto', sans-serif;
+    outline: none;
+    border: none !important;
+    font-size: 14px;
+}
+
+form input:read-only
+{
+    background: #D6D6D6;
+}
+
+form input::placeholder,
+form textarea::placeholder,
+.placeholder-text {
+    color: var(--smoke);
+}
+
+.input-form,
+.date-picker {
+    margin-top: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.label-field label {
+    width: 220px;
+    font-size: 14px;
+    color: var(--smoke);
+}
+
+.form-btn {
+    margin-top: 45px;
+    display: flex;
+}
+
+.form-btn button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    padding: 14px 0px;
+    width: 160px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--ink-black);
+    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+#cancel {
+    background: linear-gradient(180deg, #A4A4A4 -7.52%, #CCCCCC 84.04%);
+    margin-right: 16px;
+}
+
+#save {
+    /* background: linear-gradient(180deg, #1C6E86 -7.52%, #019BD1 84.04%); */
+    background: linear-gradient(180deg, #8E6628 0%, #CB9646 100%);
+    color: white;
+}
+
+.NativeDatepicker {
+    width: 20px;
+    height: 20px;
+    background: transparent url(../img/ERP_icon_calendar.png) no-repeat center center;
+    background-size: contain;
+    vertical-align: middle;
+    margin: auto 16px;
+}
+
+.NativeDatepicker__input {
+    padding: 0;
+    margin: 0;
+}
+
+.attachment-field,
+.file-attachment {
+    display: flex;
+}
+
+.attachment-field {
+    margin-bottom: 15px;
+}
+
+.file-attachment {
+    margin-bottom: 8px;
+}
+
+.files {
+    width: 100%;
+}
+
+.attachment-field label {
+    width: 220px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.file-attachment p {
+    color: var(--smoke);
+    font-size: 14px;
+    margin: auto 40px;
+    margin-left: 0;
+    width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-attachment button {
+    border: none;
+    cursor: pointer;
+    background: transparent;
+}
+
+#Attachment {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* checkbox */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #d6d6d6;
+}
+
+.checkbox-container input:checked~.checkmark {
+    background-color: #2196F3;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked~.checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+#add-row {
+    margin-top: 12px;
+    margin-bottom: 50px;
+}
+.add-entry {
+    cursor: pointer;
+    display: flex;
+    border: none;
+    align-items: center;
+    color: var(--smoke);
+}
+.add-entry p {
+    width: auto;
+    margin: auto;
+    margin-left: 16px;
+    font-size: 14px;
+}
+tbody {
+    background: transparent;
+}
+tbody td {
+    font-weight: 500;
+    font-size: 15px;
+    padding: 0px;
+    text-align: left;
+    margin-bottom: 8px;
+    border: 5px solid #ededed;
+    border-top: 0;
+    border-bottom: 0;
+    border-collapse: collapse;
+}
+thead th:first-child {
+    padding-left: 0px;
+}
+tbody td:first-child {
+    padding-left: 0px;
+    border-left: 0px;
+}
+tbody td:last-child {
+    padding-right: 0px;
+    border-right: 0px;
+}
+td .date-picker,
+td select,
+td input {
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+}
+thead th {
+    text-align: center;
+}
+td select {
+    width: 130px;
+}
+#hours {
+    margin-right: 10px;
+}

@@ -1,0 +1,54 @@
+thead th,
+tbody td {
+    /*min-width: 100px;*/
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+table.popup-table tbody tr td,
+table.trsct-table tbody tr td,
+table.trsct-table thead tr th {
+    /*min-width: 100px;*/
+    text-align: center
+}
+
+button.add-new {
+    /*background-color: aquamarine;
+    color: white;*/
+}
+
+/*Imported from submission.css -- Start*/
+.input-search {
+    margin-top: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.label-field {
+    width: 100%;
+}
+
+div.search-input {
+    display: flex;
+}
+
+div.search-input input,
+div.search-input select {
+    padding: 14px 20px;
+    font-family: 'Roboto', sans-serif;
+    outline: none;
+    background: #D6D6D6;
+    border: none;
+    font-size: 14px;
+    display: flex;
+}
+
+div.search-input input,
+div.search-input select {
+    box-sizing: border-box;
+    width: 100%;
+    line-height: normal;
+}
+/*Imported from submission.css -- End*/

@@ -1,0 +1,104 @@
+﻿/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 30px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 70%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    /*background-color: #6caee0;*/
+    background-image: url('/_layouts/15/Sambu.MasterPages/assets/img/Bg.png');
+    color: white;
+}
+
+.modal-header h2 {
+    color: white;
+}
+
+.modal-body {
+    padding: 2px 16px;
+}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: white;
+    /*color: white;*/
+    float: left;
+    width: 97.6%;
+}
+
+#delete {
+    background-color: #D30101;
+    color: white;
+}
+
+div.user-input select,
+div.user-input input,
+div.date-picker input {
+    border-color: #00000000 !important;
+    border-width: 2px !important;
+    border-style: solid !important;
+}
+
+div.user-input select.required-invalid,
+div.user-input input.required-invalid,
+div.date-picker input.required-invalid {
+    border-color: red !important;
+    border-width: 2px !important;
+    border-style: solid !important;
+}
+
+a.invalid-minitext {
+    color: red;
+    font-size: 12px;
+    font-style: italic;
+    text-decoration: none;
+}
+
+table.popup-table tbody.popup-table-body tr.popup-table-row td {
+    border: 0px !important;
+}
+
+table.popup-table tbody tr td {
+    /*min-width: 100px;*/
+    text-align: center
+}
+
+.popup-pagination {
+    display: inline-block;
+}
+
+.popup-pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    margin: 0 4px;
+    cursor:pointer;
+    text-align: center;
+}

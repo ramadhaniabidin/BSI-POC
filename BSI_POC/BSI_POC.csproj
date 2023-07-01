@@ -219,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
