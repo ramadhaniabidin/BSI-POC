@@ -64,12 +64,13 @@
     txt.id = "reason";
     txt.style.width = "100%";
     txt.style.height = "auto";
-    txt.addEventListener('input', function () {
-        const inputBox = document.getElementById("reason");
-        inputBox.style.height = "auto";
-        inputBox.style.height = inputBox.scrollHeight + "px";
-        console.log(inputBox);
-    })
+    txt.oninput = "adjustHeight";
+    //txt.addEventListener('input', function () {
+    //    const inputBox = document.getElementById("reason");
+    //    inputBox.style.height = "auto";
+    //    inputBox.style.height = inputBox.scrollHeight + "px";
+    //    console.log(inputBox);
+    //})
     cell5.appendChild(txt);
 
 

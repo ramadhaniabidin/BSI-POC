@@ -92,7 +92,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <input class="myInput" type="text">
+                        <p style="text-align:center">1</p>
                     </td>
                     <td>
                         <select style="width: 90%;">
