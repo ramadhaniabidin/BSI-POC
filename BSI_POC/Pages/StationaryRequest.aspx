@@ -38,13 +38,15 @@
             <div class="row">
                 <div class="col">
                     <label>Applicant</label>
-                    <input class="header-input" type="text"/>
+                    <asp:TextBox ID="applicant" runat="server" CssClass="header-input"></asp:TextBox>
+                    <%--<input class="header-input" type="text"/>--%>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label>Department</label>
-                    <input class="header-input" type="text"/>
+                    <asp:TextBox ID="department" runat="server" CssClass="header-input"></asp:TextBox>
+                    <%--<input class="header-input" type="text"/>--%>
                 </div>
             </div>
         </div>
@@ -54,19 +56,22 @@
             <div class="row">
                 <div class="col">
                     <label>Role</label>
-                    <input class="header-input" type="text"/>
+                    <asp:TextBox ID="role" runat="server" CssClass="header-input"></asp:TextBox>
+                    <%--<input class="header-input" type="text"/>--%>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label>Employee ID</label>
-                    <input class="header-input" type="text"/>
+                    <asp:TextBox ID="employee_id" runat="server" CssClass="header-input"></asp:TextBox>
+                    <%--<input class="header-input" type="text"/>--%>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label>Extension</label>
-                    <input class="header-input" type="text"/>
+                    <asp:TextBox ID="extension" runat="server" CssClass="header-input"></asp:TextBox>
+                    <%--<input class="header-input" type="text"/>--%>
                 </div>
             </div>
         </div>
