@@ -80,7 +80,6 @@
         <label class="myLabel-detail" style="font-size:large">Request Detail</label>
         <hr style="width: 100%; background-color: black; height:2px;"/>
         <table class="myTable" id="semprot_lahan">   
- 
             <thead>                            
                 <tr>                                                                                                   
                     <th style="width: 3%">No.</th>                                                                                                   
@@ -117,7 +116,8 @@
         <p style="text-align:center; border:solid thin; width:74.4%">&copy; <%: DateTime.Now.Year %> - PT Mitsubishi Motors Krama Yudha Sales Indonesia</p>
     </div>
     <div class="row">
-        <button class="btn" style="width:5%; background-color:green; color:white">Submit</button>
+        <%--<button class="btn" style="width:5%; background-color:green; color:white">Submit</button>--%>
+        <asp:Button runat="server" Text="Submit" OnClick="btnInsert" CssClass="submit-button"/>
         <button class="btn btn-danger" style="width:5%; color:white">Close</button>
     </div>
 </asp:Content>

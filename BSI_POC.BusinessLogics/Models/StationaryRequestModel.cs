@@ -16,15 +16,16 @@ namespace BSI_POC.BusinessLogics.Models
         public string folio_no { get; set; }
         public string applicant { get; set; }
         public string department { get; set; }
+        public string role { get; set; }
         public string employee_id { get; set; }
         public string employee_name { get; set; }
         public string extension { get; set; }
         public int status_id { get; set; }
         public string remarks { get; set; }
         public string created_by { get; set; }
-        public string created_date { get; set; }
+        public DateTime created_date { get; set; }
         public string modified_by { get; set; }
-        public string modified_date { get; set; }
+        public DateTime modified_date { get; set; }
     }
 
     public class StationaryRequestDetailModel

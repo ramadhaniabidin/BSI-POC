@@ -83,3 +83,11 @@
     background-color: gainsboro;
     border-width: thin;
 }
+
+.submit-button{
+    width: 5%;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+    border: none;
+}
