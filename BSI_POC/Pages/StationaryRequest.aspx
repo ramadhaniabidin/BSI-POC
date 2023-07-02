@@ -31,7 +31,8 @@
             <div class="row">
                 <div class="col">
                     <label>Folio No</label>
-                    <input class="header-input" type="text"/>
+                    <asp:TextBox ID="folio_no" runat="server" CssClass="header-input"></asp:TextBox>
+                    <%--<input class="header-input" type="text"/>--%>
                 </div>
             </div>
             <div class="row">
