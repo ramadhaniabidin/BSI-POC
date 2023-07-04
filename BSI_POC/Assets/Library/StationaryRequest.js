@@ -143,26 +143,54 @@ app.controller('ctrl', function ($scope, svc) {
         //for (var i = 0; i < $scope.details_data.length; i++) {
         //    $scope.detailArray.push($scope.details_data[i]);
         //}
+        //forEach(i in $scope.rows){
+        //    console.log(i);
+        //}
 
-        $scope.detailArray.push($scope.details_data);
-        console.log($scope.detailArray);
+        for (i of $scope.rows) {
+            console.log(i);
+        }
+
+        /*console.log($scope.rows)*/
+
+        /*$scope.detailArray.push($scope.details_data);*/
+        /*console.log($scope.detailArray);*/
 
 
-        svc.svc_InsertDetailData($scope.detailArray).
-            then(function (response) {
-                var resp_data = JSON.parse(response.data.d);
-                console.log(resp_data);
-                if (resp_data.ProcessSuccess) {
-                    window.alert("Success, Writen detail ID : " + resp_data.InfoMessage.toString());
-                    window.location.href = '/Pages/StationaryRequest.aspx';
-                }
-                else {
-                    window.alert("Error : " + resp_data.InfoMessage);
-                }
-            });
+        //svc.svc_InsertDetailData($scope.details_data).
+        //    then(function (response) {
+        //        var resp_data = JSON.parse(response.data.d);
+        //        console.log(resp_data);
+        //        if (resp_data.ProcessSuccess) {
+        //            window.alert("Success, Writen detail ID : " + resp_data.InfoMessage.toString());
+        //            window.location.href = '/Pages/StationaryRequest.aspx';
+        //        }
+        //        else {
+        //            window.alert("Error : " + resp_data.InfoMessage);
+        //        }
+        //    });
 
 
 
     }
+
+    $scope.rows = [{
+        item_name: '',
+        uom: '',
+        request_qty: '',
+        reason: ''
+    }];
+
+    $scope.itemNames = ['A4 Paper', 'Pencil', 'Marker', 'Envelope'];
+
+    $scope.addRow = function () {
+        $scope.rows.push({
+            item_name: '',
+            uom: '',
+            request_qty: '',
+            reason: ''
+        });
+    };
+
 
 })

@@ -6,4 +6,3 @@ C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.Busine
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.BusinessLogics\obj\Debug\BSI_POC.BusinessLogics.csproj.CopyComplete
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.BusinessLogics\obj\Debug\BSI_POC.BusinessLogics.dll
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.BusinessLogics\obj\Debug\BSI_POC.BusinessLogics.pdb
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.BusinessLogics\obj\Debug\BSI_POC.BusinessLogics.csproj.AssemblyReference.cache

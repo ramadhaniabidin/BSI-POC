@@ -56,6 +56,7 @@
     for (const i of celss) {
         const inp = document.createElement('input');
         inp.type = "text";
+        inp.setAttribute('ng-model', 'details_data.uom')
         inp.style.width = "95%";
         i.appendChild(inp);
     }
