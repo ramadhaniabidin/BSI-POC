@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="../Assets/Library/angular.min.js"></script>
+    <script src="../Assets/Library/angular-filter.js"></script>
     <script src="../Assets/Library/StationaryRequest.js"></script>
     <script src="../Assets/Library/MyJavaScript.js"></script>
 </asp:Content>
@@ -35,21 +36,18 @@
                 <div class="row">
                     <div class="col">
                         <label>Folio No</label>
-                        <%--<asp:TextBox ID="folio_no" runat="server" CssClass="header-input"></asp:TextBox>--%>
                         <input class="header-input" type="text" runat="server" ng-model="header_data.folio_no"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label>Applicant</label>
-                        <%--<asp:TextBox ID="applicant" runat="server" CssClass="header-input"></asp:TextBox>--%>
                         <input class="header-input" type="text" runat="server" ng-model="header_data.applicant"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label>Department</label>
-                        <%--<asp:TextBox ID="department" runat="server" CssClass="header-input"></asp:TextBox>--%>
                         <input class="header-input" type="text" ng-model="header_data.department" runat="server"/>
                     </div>
                 </div>
@@ -60,21 +58,18 @@
                 <div class="row">
                     <div class="col">
                         <label>Role</label>
-                        <%--<asp:TextBox ID="role" runat="server" CssClass="header-input"></asp:TextBox>--%>
                         <input class="header-input" type="text" runat="server" ng-model="header_data.role"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label>Employee ID</label>
-                        <%--<asp:TextBox ID="employee_id" runat="server" CssClass="header-input"></asp:TextBox>--%>
                         <input class="header-input" type="text" runat="server" ng-model="header_data.employee_id"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label>Extension</label>
-                        <%--<asp:TextBox ID="extension" runat="server" CssClass="header-input"></asp:TextBox>--%>
                         <input class="header-input" type="text" runat="server" ng-model="header_data.extension"/>
                     </div>
                 </div>
@@ -105,7 +100,6 @@
                             </select>
                         </td>
                         <td>
-                            <%--<input class="myInput" type="text" ng-model="row.uom">--%>
                             <select style="width:95%" ng-model="row.uom" ng-options="i for i in uoms">
 
                             </select>

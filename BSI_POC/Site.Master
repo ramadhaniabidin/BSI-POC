@@ -14,10 +14,18 @@
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="Assets/Library/jqueryUI/jquery-ui.min.css"/>
+    <script src="Assets/Library/jquery.min.js"></script>
+    <script src="Assets/Library/jqueryUI/jquery-ui.min.js"></script>
+    <script src="Assets/Library/angular.min.js"></script>
+    <script src="Assets/Library/angular-filter.js"></script>
+    <script src="Assets/Library/BaseLogic.js"></script>
+
 
 </head>
 <body>
     <form runat="server">
+
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -47,6 +55,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" runat="server" href="~/">Application name</a>
+                    <a class="navbar-brand" runat="server" href="~/About">About</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">

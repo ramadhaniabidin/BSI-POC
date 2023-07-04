@@ -7,12 +7,17 @@ using BSI_POC.BusinessLogics.Models;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using BSI_POC.BusinessLogics.Common;
 
 namespace BSI_POC.BusinessLogics.Controller
 {
     public class StationaryRequestController
     {
         string connectionString = ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;
+        DatabaseManager db = new DatabaseManager();
+        SqlConnection conn = new SqlConnection();
+        SqlDataReader reader = null;
+        DataTable dt = new DataTable();
         public bool InsertHeaderData(StationaryRequestHeaderModel header)
         {
             //string connectionString = ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;
@@ -79,6 +84,63 @@ namespace BSI_POC.BusinessLogics.Controller
             }
 
             return roles;
+        }
+
+        public StationaryRequestHeaderModel GetDataHeader(string folio_no)
+        {
+            try
+            {
+                dt = new DataTable();
+                db.OpenConnection(ref conn);
+                db.cmd.CommandText = "dbo.get_header_data_by_folio_no";
+                db.cmd.CommandType = CommandType.StoredProcedure;
+                db.cmd.Parameters.Clear();
+                db.AddInParameter(db.cmd, "folio_no", folio_no);
+                reader = db.cmd.ExecuteReader();
+                dt.Load(reader);
+                db.CloseDataReader(reader);
+                db.CloseConnection(ref conn);
+
+                if(dt.Rows.Count > 0)
+                {
+                    return Utility.ConvertDataTableToList<StationaryRequestHeaderModel>(dt)[0];
+                }
+                else
+                {
+                    return new StationaryRequestHeaderModel();
+                }
+            }
+            catch (Exception ex)
+            {
+                db.CloseConnection(ref conn);
+                throw ex;
+            }
+        }
+
+        public List<StationaryRequestDetailModel> GetDataDetails(string folio_no)
+        {
+            try
+            {
+                dt = new DataTable();
+                db.OpenConnection(ref conn);
+                db.cmd.CommandText = "dbo.get_detail_data_by_folio_no";
+                db.cmd.CommandType = CommandType.StoredProcedure;
+                db.cmd.Parameters.Clear();
+                db.AddInParameter(db.cmd, "folio_no", folio_no);
+                reader = db.cmd.ExecuteReader();
+                dt.Load(reader);
+                db.CloseDataReader(reader);
+                db.CloseConnection(ref conn);
+                if (dt.Rows.Count > 0)
+                    return Utility.ConvertDataTableToList<StationaryRequestDetailModel>(dt);
+                else
+                    return new List<StationaryRequestDetailModel>();
+            }
+            catch (Exception ex)
+            {
+                db.CloseConnection(ref conn);
+                throw ex;
+            }
         }
     }
 }

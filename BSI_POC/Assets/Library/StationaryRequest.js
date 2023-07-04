@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', []);
+﻿var app = angular.module('app', ['angular.filter']);
 
 app.directive('button', function () {
     return {
@@ -33,6 +33,24 @@ app.directive('loading', ['$http', function ($http) {
 }]);
 
 app.service("svc", function ($http) {
+
+    this.svc_GetData = function (folio_no) {
+        var param = {
+            folio_no: folio_no,
+        }
+
+        console.log(param);
+        var response = $http({
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/GetDataByFolioNo",
+            data: JSON.stringify(param),
+            dataType: "json"
+        })
+    }
+
+
+
+
     this.svc_InsertHeaderData = function (header) {
         var param = {
             'header': header
@@ -111,6 +129,8 @@ app.controller('ctrl', function ($scope, svc) {
         request_qty: '',
         reason: '',
     }
+
+    $scope.Items = [];
 
     //$scope.detail_table = document.getElementById("semprot_lahan");
     //$scope.row_detail = $scope.detail_table.getElementsByTagName("tr");
@@ -226,22 +246,28 @@ app.controller('ctrl', function ($scope, svc) {
         $scope.InsertDataDetail();
     }
 
-    //$scope.insertData = function () {
-    //    $scope.InsertDataHeader().then(function () {
-    //        $scope.InsertDataDetail();
-    //    });
-    //};
-
     $scope.roles = ["Internal Section Head", "Internal Dept Head", "GA Staff", "GA Section Head", "Requestor"]
-
-    //svc.RolesData()
-    //    .then(function (response) {
-    //        $scope.roles.push = response.data;
-    //    })
-    //    .catch(function (error) {
-    //        console.log("Error getting roles:", error);
-    //    });
     $scope.approver = '';
 
     $scope.approver_list = ["Section Head", "Dept Head"];
+
+    $scope.GetData = function () {
+        var folio_no = GetQueryString()["folio_no"];
+        console.log(folio_no);
+
+
+        var proc = svc.svc_GetData(folio_no);
+        proc.then(function (response) {
+            var data = JSON.parse(response.data.d);
+
+            if (data.ProcessSuccess) {
+                var h = data._header;
+                $scope.header_data = h;
+                $scope.Items = data._detail;
+            }
+            else {
+                console.log(data.InfoMessage);
+            }
+        })
+    }
 })

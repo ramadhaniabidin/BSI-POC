@@ -13,5 +13,17 @@ namespace BSI_POC
         {
 
         }
+
+        protected void btn_Login(object sender, EventArgs e)
+        {
+            try
+            {
+                Response.Redirect("Home.aspx");
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

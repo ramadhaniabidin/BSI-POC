@@ -149,5 +149,33 @@ namespace BSI_POC.WebServices
             return roles;
         }
 
+        [WebMethod]
+        public string GetDataByFolioNo(string folio_no)
+        {
+            try
+            {
+                var header = controller.GetDataHeader(folio_no);
+                var detail = controller.GetDataDetails(folio_no);
+
+                var result = new
+                {
+                    ProcessSuccess = true,
+                    InfoMessage = "OK",
+                    _header = header,
+                    _detail = detail,
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+            catch (Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.Message
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
     }
 }
