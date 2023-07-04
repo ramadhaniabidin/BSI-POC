@@ -141,5 +141,13 @@ namespace BSI_POC.WebServices
             return outputString;
         }
 
+        [WebMethod]
+        public List<string> GetRoles()
+        {
+            List<string> roles = controller.GetRoleData();
+
+            return roles;
+        }
+
     }
 }

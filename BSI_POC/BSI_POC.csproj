@@ -130,6 +130,7 @@
     <Content Include="Assets\Library\angular.min.js" />
     <Content Include="Assets\Library\BaseLogic.js" />
     <Content Include="Assets\Library\bootstrap\bootstrap.bundle.min.js" />
+    <Content Include="Assets\Library\Home.js" />
     <Content Include="Assets\Library\jquery.min.js" />
     <Content Include="Assets\Library\jqueryUI\base\accordion.css" />
     <Content Include="Assets\Library\jqueryUI\base\all.css" />
@@ -230,7 +231,10 @@
     <Content Include="Assets\css\Phosphor-regular\Phosphor.woff2" />
     <Content Include="Assets\css\Phosphor-regular\selection.json" />
     <Content Include="Assets\Library\bootstrap\bootstrap.bundle.min.js.map" />
+    <Content Include="Home.aspx" />
+    <Content Include="Login.asmx" />
     <Content Include="Login.aspx" />
+    <Content Include="WebServices\Home.asmx" />
     <Content Include="WebServices\StationaryRequest.asmx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Pages\StationaryRequest.aspx" />
@@ -295,6 +299,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.asmx.cs">
+      <DependentUpon>Login.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -330,6 +345,10 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\Home.asmx.cs">
+      <DependentUpon>Home.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\StationaryRequest.asmx.cs">
       <DependentUpon>StationaryRequest.asmx</DependentUpon>

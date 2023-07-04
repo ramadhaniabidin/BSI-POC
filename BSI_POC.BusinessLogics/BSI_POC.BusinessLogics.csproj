@@ -47,7 +47,9 @@
   <ItemGroup>
     <Compile Include="Common\DatabaseManager.cs" />
     <Compile Include="Common\Utility.cs" />
+    <Compile Include="Controller\HomeController.cs" />
     <Compile Include="Controller\StationaryRequestController.cs" />
+    <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\StationaryRequestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -31,6 +31,7 @@ namespace BSI_POC.BusinessLogics.Controller
             cmd.Parameters.AddWithValue("@created_date", header.created_date);
             cmd.Parameters.AddWithValue("@modified_by", header.modified_by);
             cmd.Parameters.AddWithValue("@modified_date", header.modified_date);
+            cmd.Parameters.AddWithValue("@status_id", header.status_id);
 
             con.Open();
             cmd.ExecuteNonQuery();
@@ -54,6 +55,30 @@ namespace BSI_POC.BusinessLogics.Controller
             cmd.ExecuteNonQuery();
             con.Close();
             return true;
+        }
+
+        public List<string> GetRoleData()
+        {
+            List<string> roles = new List<string>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT name FROM BSI_POC.dbo.master_roles";
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string roleName = reader.GetString(0);
+                    roles.Add(roleName);
+                }
+
+                reader.Close();
+            }
+
+            return roles;
         }
     }
 }

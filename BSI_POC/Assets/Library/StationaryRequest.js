@@ -63,6 +63,27 @@ app.service("svc", function ($http) {
 
         return response;
     }
+
+    //this.RolesData = function () {
+
+    //    //var response = $http({
+    //    //    method: 'get',
+    //    //    url: "/WebServices/StationaryRequest.asmx/GetRoles?"
+    //    //})
+
+    //    //return response.data;
+
+    //};
+
+    this.RolesData = function () {
+        return $http({
+            method: 'get',
+            url: "/WebServices/StationaryRequest.asmx/GetRoles"
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+
 })
 
 app.controller('ctrl', function ($scope, svc) {
@@ -74,7 +95,7 @@ app.controller('ctrl', function ($scope, svc) {
         employee_id: '',
         employee_name: 'Dhani',
         extension: '',
-        status_id: 2,
+        status_id: -1,
         remarks: '',
         created_by: 'Dhani',
         created_date: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
@@ -95,8 +116,11 @@ app.controller('ctrl', function ($scope, svc) {
     //$scope.row_detail = $scope.detail_table.getElementsByTagName("tr");
     //$scope.row_count = $scope.row_detail.length;
 
-
+    
     $scope.InsertDataHeader = function () {
+        if (($scope.approver == "Section Head") || ($scope.approver == "Dept Head")) {
+            $scope.header_data.status_id = 1
+        }
         var params = {
             header: {
                 folio_no: $scope.header_data.folio_no,
@@ -170,6 +194,11 @@ app.controller('ctrl', function ($scope, svc) {
         for (i of $scope.rows) {
             console.log(i.item_name + ', ' + i.uom + ', ' + i.request_qty + ', ' + i.reason);
         }
+        if (($scope.approver == "Section Head") || ($scope.approver == "Dept Head")) {
+            $scope.header_data.status_id = 1
+        }
+
+        console.log($scope.header_data.status_id);
     }
 
     $scope.rows = [{
@@ -203,4 +232,16 @@ app.controller('ctrl', function ($scope, svc) {
     //    });
     //};
 
+    $scope.roles = ["Internal Section Head", "Internal Dept Head", "GA Staff", "GA Section Head", "Requestor"]
+
+    //svc.RolesData()
+    //    .then(function (response) {
+    //        $scope.roles.push = response.data;
+    //    })
+    //    .catch(function (error) {
+    //        console.log("Error getting roles:", error);
+    //    });
+    $scope.approver = '';
+
+    $scope.approver_list = ["Section Head", "Dept Head"];
 })

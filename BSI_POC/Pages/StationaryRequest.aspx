@@ -120,9 +120,24 @@
         <div class="row">
             <p style="text-align:center; border:solid thin; width:74.4%">&copy; <%: DateTime.Now.Year %> - PT Mitsubishi Motors Krama Yudha Sales Indonesia</p>
         </div>
-        <div class="row" style="display:contents">
+        <div class="row" style=" width:75%;">
+            <label class="myLabel" style="font-size:large">Approval Action</label>
+            <hr style="width: 100%; background-color: black; height:2px; margin-bottom:0%";/>
+            <div class="col">
+                <input type="radio" id="approve" value="approve" name="action"/><label for="approve" style="width:5%; padding-left:3px; padding-bottom: 3px; color:green">Approve</label>
+                <input type="radio" id="reject" value="reject" name="action"/><label for="reject" style="width:5%; padding-left:3px; padding-bottom: 3px; color:red">Reject</label>
+            </div>
+        </div>
+        <div class="row" style=" width:75%;">
+            <div class="col">
+                <strong> Next Approval : </strong>
+                <select style="margin-bottom: 10px" ng-options="i for i in approver_list" ng-model="approver">
+
+                </select>
+            </div>
+        </div>
+        <div class="row">
             <button class="btn" style="width:5%; background-color:green; color:white" ng-click="insertData()">Submit</button>
-            <%--<asp:Button runat="server" Text="Submit" OnClick="btnInsert" CssClass="submit-button"/>--%>
             <button class="btn btn-danger" style="width:5%; color:white" ng-click="CekTabel()">Cek</button>
         </div>
     </div>
