@@ -17,31 +17,31 @@ namespace BSI_POC.Pages
 
         }
 
-        protected void btnInsert(object sender, EventArgs e)
-        {
-            StationaryRequestHeaderModel header = new StationaryRequestHeaderModel
-            {
-                folio_no = folio_no.Text,
-                applicant = applicant.Text,
-                department = department.Text,
-                role = role.Text,
-                employee_id = employee_id.Text,
-                employee_name = "dhani",
-                extension = extension.Text,
-                created_by = "dhani",
-                created_date = DateTime.Now.Date,
-                modified_by = "dhani",
-                modified_date = DateTime.Now.Date
-            };
+        //protected void btnInsert(object sender, EventArgs e)
+        //{
+        //    StationaryRequestHeaderModel header = new StationaryRequestHeaderModel
+        //    {
+        //        folio_no = folio_no.Text,
+        //        applicant = applicant.Text,
+        //        department = department.Text,
+        //        role = role.Text,
+        //        employee_id = employee_id.Text,
+        //        employee_name = "dhani",
+        //        extension = extension.Text,
+        //        created_by = "dhani",
+        //        created_date = DateTime.Now.Date,
+        //        modified_by = "dhani",
+        //        modified_date = DateTime.Now.Date
+        //    };
 
-            controller.InsertData(header);
+        //    controller.InsertData(header);
 
-            folio_no.Text = "";
-            applicant.Text = "";
-            department.Text = "";
-            role.Text = "";
-            employee_id.Text = "";
-            extension.Text = "";
-        }
+        //    folio_no.Text = "";
+        //    applicant.Text = "";
+        //    department.Text = "";
+        //    role.Text = "";
+        //    employee_id.Text = "";
+        //    extension.Text = "";
+        //}
     }
 }

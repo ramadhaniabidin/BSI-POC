@@ -203,6 +203,7 @@
     <Content Include="Assets\Library\moment.js\moment-with-locales.min.js" />
     <Content Include="Assets\Library\MyJavaScript.js" />
     <Content Include="Assets\Library\ng-file-upload.min.js" />
+    <Content Include="Assets\Library\StationaryRequest.js" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
