@@ -49,14 +49,14 @@ app.service("svc", function ($http) {
     }
 
 
-    this.svc_InsertDetailData = function (detail) {
+    this.svc_InsertDetailData = function (details) {
         var param = {
-            'detail': detail
+            'details': details
         }
 
         var response = $http({
             method: "post",
-            url: "/WebServices/StationaryRequest.asmx.InsertDetailData",
+            url: "/WebServices/StationaryRequest.asmx/InsertDetailData",
             data: JSON.stringify(param),
             datatype: "json"
         })
@@ -131,66 +131,76 @@ app.controller('ctrl', function ($scope, svc) {
     }
 
     $scope.InsertDataDetail = function () {
-        $scope.detailArray = [];
-        //var det = {
-        //    header_id = $scope.details_data.header_id,
-        //    no = $scope.details_data.no,
-        //    item_name = $scope.details_data.item_name,
-        //    uom = $scope.details_data.uom,
-        //    request_qty = $scope.details_data.request_qty,
-        //    reason = $scope.details_data.reason
-        //}
-        //for (var i = 0; i < $scope.details_data.length; i++) {
-        //    $scope.detailArray.push($scope.details_data[i]);
-        //}
-        //forEach(i in $scope.rows){
-        //    console.log(i);
-        //}
 
         for (i of $scope.rows) {
-            console.log(i);
+            var params = {
+                details: {
+                    //header_id: '',
+                    //no: '',
+                    item_name: i.item_name,
+                    uom: i.uom,
+                    request_qty: parseInt(i.request_qty, 10),
+                    reason: i.reason
+                }
+            }
+
+            console.log(params);
+            svc.svc_InsertDetailData(params.details).
+                then(function (response) {
+                    var resp_data = JSON.parse(response.data.d);
+                    console.log(resp_data);
+                    if (resp_data.ProcessSuccess) {
+                        window.alert("Success, Writen detail ID : " + resp_data.InfoMessage.toString());
+                        window.location.href = '/Pages/StationaryRequest.aspx';
+                    }
+                    else {
+                        window.alert("Error : " + resp_data.InfoMessage);
+                    }
+                })
         }
 
-        /*console.log($scope.rows)*/
-
-        /*$scope.detailArray.push($scope.details_data);*/
-        /*console.log($scope.detailArray);*/
-
-
-        //svc.svc_InsertDetailData($scope.details_data).
-        //    then(function (response) {
-        //        var resp_data = JSON.parse(response.data.d);
-        //        console.log(resp_data);
-        //        if (resp_data.ProcessSuccess) {
-        //            window.alert("Success, Writen detail ID : " + resp_data.InfoMessage.toString());
-        //            window.location.href = '/Pages/StationaryRequest.aspx';
-        //        }
-        //        else {
-        //            window.alert("Error : " + resp_data.InfoMessage);
-        //        }
-        //    });
+        //for (i of $scope.rows) {
+        //    console.log(i.item_name);
+        //}
 
 
+    };
 
+    $scope.CekTabel = function () {
+        for (i of $scope.rows) {
+            console.log(i.item_name + ', ' + i.uom + ', ' + i.request_qty + ', ' + i.reason);
+        }
     }
 
     $scope.rows = [{
         item_name: '',
         uom: '',
-        request_qty: '',
+        request_qty: 0,
         reason: ''
     }];
 
     $scope.itemNames = ['A4 Paper', 'Pencil', 'Marker', 'Envelope'];
+    $scope.uoms = ["Rim", "Piece"];
 
     $scope.addRow = function () {
         $scope.rows.push({
             item_name: '',
             uom: '',
-            request_qty: '',
+            request_qty: 0,
             reason: ''
         });
     };
 
+
+    $scope.insertData = function () {
+        $scope.InsertDataHeader();
+        $scope.InsertDataDetail();
+    }
+
+    //$scope.insertData = function () {
+    //    $scope.InsertDataHeader().then(function () {
+    //        $scope.InsertDataDetail();
+    //    });
+    //};
 
 })

@@ -87,7 +87,7 @@ namespace BSI_POC.WebServices
         }
 
         [WebMethod]
-        public string InsertDetailData(List<StationaryRequestDetailModel> details)
+        public string InsertDetailData(StationaryRequestDetailModel details)
         {
             var outputString = "";
             var jsSerializer = new JavaScriptSerializer();

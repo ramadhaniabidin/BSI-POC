@@ -230,6 +230,7 @@
     <Content Include="Assets\css\Phosphor-regular\Phosphor.woff2" />
     <Content Include="Assets\css\Phosphor-regular\selection.json" />
     <Content Include="Assets\Library\bootstrap\bootstrap.bundle.min.js.map" />
+    <Content Include="Login.aspx" />
     <Content Include="WebServices\StationaryRequest.asmx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Pages\StationaryRequest.aspx" />
@@ -293,6 +294,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\StationaryRequest.aspx.cs">
       <DependentUpon>StationaryRequest.aspx</DependentUpon>

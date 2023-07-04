@@ -39,25 +39,20 @@ namespace BSI_POC.BusinessLogics.Controller
             return true;
         }
 
-        public bool InsertDetailData(List<StationaryRequestDetailModel> detail)
+        public bool InsertDetailData(StationaryRequestDetailModel detail)
         {
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.insertDetailData", con);
+            cmd.CommandType = CommandType.StoredProcedure;
 
-            foreach (var i in detail)
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@item_name", detail.item_name);
+            cmd.Parameters.AddWithValue("@uom", detail.uom);
+            cmd.Parameters.AddWithValue("@request_qty", detail.request_qty);
+            cmd.Parameters.AddWithValue("@reason", detail.reason);
 
-                cmd.Parameters.AddWithValue("@no", i.no);
-                cmd.Parameters.AddWithValue("@item_name", i.item_name);
-                cmd.Parameters.AddWithValue("@uom", i.uom);
-                cmd.Parameters.AddWithValue("@request_qty", i.request_qty);
-                cmd.Parameters.AddWithValue("@reason", i.reason);
-
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
             return true;
         }
     }

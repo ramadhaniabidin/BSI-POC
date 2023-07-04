@@ -81,5 +81,4 @@ function adjustHeight() {
     const inputBox = document.getElementById("reason");
     inputBox.style.height = "auto";
     inputBox.style.height = inputBox.scrollHeight + "px";
-    console.log(inputBox);
 }
