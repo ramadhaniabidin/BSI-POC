@@ -44,7 +44,7 @@ namespace BSI_POC.BusinessLogics.Controller
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.insertDetailData", con);
 
-            foreach(var i in detail)
+            foreach (var i in detail)
             {
                 cmd.CommandType = CommandType.StoredProcedure;
 

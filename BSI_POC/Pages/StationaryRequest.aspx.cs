@@ -11,7 +11,7 @@ namespace BSI_POC.Pages
 {
     public partial class StationaryRequest : System.Web.UI.Page
     {
-        TestController controller = new TestController();
+        StationaryRequestController controller = new StationaryRequestController();
         protected void Page_Load(object sender, EventArgs e)
         {
 

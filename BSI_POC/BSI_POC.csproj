@@ -230,6 +230,7 @@
     <Content Include="Assets\css\Phosphor-regular\Phosphor.woff2" />
     <Content Include="Assets\css\Phosphor-regular\selection.json" />
     <Content Include="Assets\Library\bootstrap\bootstrap.bundle.min.js.map" />
+    <Content Include="WebServices\StationaryRequest.asmx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Pages\StationaryRequest.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -321,6 +322,10 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\StationaryRequest.asmx.cs">
+      <DependentUpon>StationaryRequest.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

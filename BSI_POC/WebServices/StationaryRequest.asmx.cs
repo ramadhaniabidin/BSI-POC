@@ -5,8 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
-using BSI_POC.BusinessLogics.Controller;
 using BSI_POC.BusinessLogics.Models;
+using BSI_POC.BusinessLogics.Controller;
+
 
 namespace BSI_POC.WebServices
 {
@@ -37,10 +38,10 @@ namespace BSI_POC.WebServices
             var jsSerializer = new JavaScriptSerializer();
             try
             {
-                if(header != null)
+                if (header != null)
                 {
-                    var retID = controller.InsertHeaderData(header); 
-                    if(retID == true)
+                    var retID = controller.InsertHeaderData(header);
+                    if (retID == true)
                     {
                         var result = new
                         {
@@ -92,10 +93,10 @@ namespace BSI_POC.WebServices
             var jsSerializer = new JavaScriptSerializer();
             try
             {
-                if(details != null)
+                if (details != null)
                 {
                     var retID = controller.InsertDetailData(details);
-                    if(retID == true)
+                    if (retID == true)
                     {
                         var result = new
                         {
@@ -124,7 +125,7 @@ namespace BSI_POC.WebServices
                     outputString = jsSerializer.Serialize(result);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var currDT = $"[{DateTime.Now.ToString(("dd-MM-yyyy HH:mm:ss.fff"))}]";
                 var currMt = $"{GetType().Namespace}.{GetType().Name} {nameof(InsertHeaderData)}()";
