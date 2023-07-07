@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', []);
+﻿var app = angular.module('app', ['ngCookies']);
 app.directive('button', function () {
     return {
         restrict: 'E',
@@ -43,10 +43,22 @@ app.service("svc", function ($http) {
         });
         return response;
     }
+
+    this.svc_GetRoleId = function () {
+        var response = $http({
+            method: "post",
+            url: "/WebServices/Login.asmx/GetRoleId",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        })
+
+        return response;
+    }
 });
 
-app.controller('ctrl', function ($scope, svc) {
+app.controller('ctrl', function ($scope, $cookies, $window, svc) {
     $scope.Items = [];
+    $scope.role_id = '';
     $scope.ListData = function () {
         try {
             var proc = svc.svc_ListData();
@@ -67,5 +79,37 @@ app.controller('ctrl', function ($scope, svc) {
 
     }
 
+    $scope.GetCookie = function () {
+        console.log($cookies.get('email'));
+    }
+
+    $window.onbeforeunload = function (event) {
+        $cookies.remove('email');
+    };
+
+
+    $scope.GetRoleID = function () {
+        try {
+            var proc = svc.svc_GetRoleId();
+
+            proc.then(function (response) {
+                var data = JSON.parse(response.data.d);
+                console.log(data);
+                if (data.ProcessSuccess) {
+                    $scope.Items = data.id;
+                    console.log(data.id);
+                } else {
+                    console.log(data.InfoMessage);
+                }
+
+            });
+        } catch (e) {
+            alert(e.message);
+        }
+
+    }
+
+
     $scope.ListData();
+    $scope.GetRoleID();
 });
