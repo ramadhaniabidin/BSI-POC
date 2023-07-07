@@ -12,5 +12,6 @@ namespace BSI_POC.BusinessLogics.Models
         public string folio_no { get; set; }
         public int status_id { get; set; }
         public DateTime created_date { get; set; }
+        public string created_by { get; set; }
     }
 }
