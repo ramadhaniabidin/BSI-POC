@@ -138,10 +138,11 @@
                 <button id="close" class="btn btn-danger" style="width:5%; color:white" ng-click="ConfirmStationary()">Close</button><br />
                 <button id="delivered" class="btn btn-primary" style="width:5%; color:white" ng-click="CekTabel()">Delivered</button>
             </div>
-            
+            <button id="LogOut" class="btn btn-danger" style="width:5%; color:white" ng-click="LogOut()">LogOut</button>    
         </div>
-
+        
     </div>
+    
 
 </asp:Content>
 
