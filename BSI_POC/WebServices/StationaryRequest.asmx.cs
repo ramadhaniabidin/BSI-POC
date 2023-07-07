@@ -7,7 +7,8 @@ using System.Web.Script.Serialization;
 using System.Web.Services;
 using BSI_POC.BusinessLogics.Models;
 using BSI_POC.BusinessLogics.Controller;
-
+using System.Net;
+using System.Threading.Tasks;
 
 namespace BSI_POC.WebServices
 {
@@ -30,9 +31,18 @@ namespace BSI_POC.WebServices
             return "Hello World";
         }
 
+        [WebMethod]
+        public void CallNWC(int header_id)
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            NintexWorkflowCloud nwc = new NintexWorkflowCloud();
+            nwc.url = "https://npp-elistec.workflowcloud.com/api/v1/workflow/published/65d09917-4464-4c39-8bb8-78e4c993fc20/instances?token=B6F2ShnEku4f1N8wygGKDlB5OHsFRxaDeAh31JUUfRdaHiwBcZkxM38wE97R5vCQljAThp";
+            Task.Run(async () => { await controller.startWorkFlow(nwc, header_id); }).Wait();
+        }
+
 
         [WebMethod]
-        public string InsertHeaderData(StationaryRequestHeaderModel header)
+        public string InsertHeaderData(StationaryRequestHeaderModel header, List<StationaryRequestDetailModel> detail)
         {
             var outputString = "";
             var jsSerializer = new JavaScriptSerializer();
@@ -40,8 +50,14 @@ namespace BSI_POC.WebServices
             {
                 if (header != null)
                 {
-                    var retID = controller.InsertHeaderData(header);
-                    if (retID == true)
+                    int retID = controller.InsertHeaderData(header, detail);
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    NintexWorkflowCloud nwc = new NintexWorkflowCloud();
+                    nwc.url = "https://npp-elistec.workflowcloud.com/api/v1/workflow/published/65d09917-4464-4c39-8bb8-78e4c993fc20/instances?token=B6F2ShnEku4f1N8wygGKDlB5OHsFRxaDeAh31JUUfRdaHiwBcZkxM38wE97R5vCQljAThp";
+                    Task.Run(async () => { await controller.startWorkFlow(nwc, retID); }).Wait();
+                    Console.Write(retID);
+
+                    if (retID != 0)
                     {
                         var result = new
                         {
@@ -69,6 +85,7 @@ namespace BSI_POC.WebServices
                     };
                     outputString = jsSerializer.Serialize(result);
                 }
+
             }
             catch (Exception ex)
             {
@@ -82,6 +99,7 @@ namespace BSI_POC.WebServices
                 };
                 outputString = jsSerializer.Serialize(result);
             }
+
 
             return outputString;
         }
@@ -176,6 +194,8 @@ namespace BSI_POC.WebServices
                 return new JavaScriptSerializer().Serialize(result);
             }
         }
+
+
 
     }
 }

@@ -26,6 +26,7 @@ namespace BSI_POC.BusinessLogics.Models
         public DateTime created_date { get; set; }
         public string modified_by { get; set; }
         public DateTime modified_date { get; set; }
+        public int approver_target_role_id { get; set; }
     }
 
     public class StationaryRequestDetailModel

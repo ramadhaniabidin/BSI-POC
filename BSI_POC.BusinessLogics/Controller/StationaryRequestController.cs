@@ -8,6 +8,10 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using BSI_POC.BusinessLogics.Common;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web.Script.Serialization;
 
 namespace BSI_POC.BusinessLogics.Controller
 {
@@ -18,8 +22,9 @@ namespace BSI_POC.BusinessLogics.Controller
         SqlConnection conn = new SqlConnection();
         SqlDataReader reader = null;
         DataTable dt = new DataTable();
-        public bool InsertHeaderData(StationaryRequestHeaderModel header)
+        public int InsertHeaderData(StationaryRequestHeaderModel header, List<StationaryRequestDetailModel> detail)
         {
+            int header_id = 0;
             //string connectionString = ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.insertHeaderData", con);
@@ -37,12 +42,43 @@ namespace BSI_POC.BusinessLogics.Controller
             cmd.Parameters.AddWithValue("@modified_by", header.modified_by);
             cmd.Parameters.AddWithValue("@modified_date", header.modified_date);
             cmd.Parameters.AddWithValue("@status_id", header.status_id);
+            cmd.Parameters.AddWithValue("@approver_target_role_id", header.approver_target_role_id);
 
             con.Open();
-            cmd.ExecuteNonQuery();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                header_id = reader.GetInt32(0);
+            }
+
+            //int header_id = reader.GetInt32(0);
+
+            reader.Close();
             con.Close();
 
-            return true;
+            foreach (var d in detail)
+            {
+
+                cmd = new SqlCommand("dbo.insertDetailData", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@folio_no", header.folio_no);
+                cmd.Parameters.AddWithValue("@header_id", header_id);
+                cmd.Parameters.AddWithValue("@no", d.no);
+                cmd.Parameters.AddWithValue("@item_name", d.item_name);
+                cmd.Parameters.AddWithValue("@uom", d.uom);
+                cmd.Parameters.AddWithValue("@request_qty", d.request_qty);
+                cmd.Parameters.AddWithValue("@reason", d.reason);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+
+
+
+            return header_id;
         }
 
         public bool InsertDetailData(StationaryRequestDetailModel detail)
@@ -86,78 +122,35 @@ namespace BSI_POC.BusinessLogics.Controller
             return roles;
         }
 
-        //public StationaryRequestHeaderModel GetDataHeader(string folio_no)
-        //{
-        //    try
-        //    {
-        //        dt = new DataTable();
-        //        db.OpenConnection(ref conn);
-        //        db.cmd.CommandText = "dbo.get_header_data_by_folio_no";
-        //        db.cmd.CommandType = CommandType.StoredProcedure;
-        //        db.cmd.Parameters.Clear();
-        //        db.AddInParameter(db.cmd, "@folio_no", folio_no);
-        //        reader = db.cmd.ExecuteReader();
-        //        dt.Load(reader);
-        //        db.CloseDataReader(reader);
-        //        db.CloseConnection(ref conn);
-
-        //        if (dt.Rows.Count > 0)
-        //        {
-        //            return Utility.ConvertDataTableToList<StationaryRequestHeaderModel>(dt)[0];
-        //        }
-        //        else
-        //        {
-        //            return new StationaryRequestHeaderModel();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        db.CloseConnection(ref conn);
-        //        throw ex;
-        //    }
-        //}
-
         public StationaryRequestHeaderModel GetDataHeader(string folio_no)
         {
-            StationaryRequestHeaderModel header = null;
-
-            SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("dbo.get_header_data_by_folio_no", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@folio_no", folio_no);
-
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            if (reader.Read())
+            try
             {
-                header = new StationaryRequestHeaderModel();
-                header.id = Convert.ToInt32(reader["id"]);
-                header.folio_no = reader["folio_no"].ToString();
-                header.applicant = reader["applicant"].ToString();
-                header.department = reader["department"].ToString();
-                header.role = reader["role"].ToString();
-                header.employee_id = reader["employee_id"].ToString();
-                header.employee_name = reader["employee_name"].ToString();
-                header.extension = reader["extension"].ToString();
-                header.status_id = Convert.ToInt32(reader["status_id"]);
-                header.remarks = reader["remarks"].ToString();
-                header.created_by = reader["created_by"].ToString();
+                dt = new DataTable();
+                db.OpenConnection(ref conn);
+                db.cmd.CommandText = "dbo.get_header_data_by_folio_no";
+                db.cmd.CommandType = CommandType.StoredProcedure;
+                db.cmd.Parameters.Clear();
+                db.AddInParameter(db.cmd, "folio_no", folio_no);
+                reader = db.cmd.ExecuteReader();
+                dt.Load(reader);
+                db.CloseDataReader(reader);
+                db.CloseConnection(ref conn);
 
-                string dateString = reader["created_date"].ToString();
-                long timeStamp = long.Parse(dateString.Substring(6, dateString.Length - 8));
-                DateTime created_date = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(timeStamp);
-                DateTime modified_date = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(timeStamp);
-
-
-                header.created_date = created_date;
-                header.modified_by = reader["modified_by"].ToString();
-                header.modified_date = modified_date;
+                if (dt.Rows.Count > 0)
+                {
+                    return Utility.ConvertDataTableToList<StationaryRequestHeaderModel>(dt)[0];
+                }
+                else
+                {
+                    return new StationaryRequestHeaderModel();
+                }
             }
-            reader.Close();
-            con.Close();
-            return header;
-
+            catch (Exception ex)
+            {
+                db.CloseConnection(ref conn);
+                throw ex;
+            }
         }
 
         public List<StationaryRequestDetailModel> GetDataDetails(string folio_no)
@@ -182,6 +175,40 @@ namespace BSI_POC.BusinessLogics.Controller
             catch (Exception ex)
             {
                 db.CloseConnection(ref conn);
+                throw ex;
+            }
+        }
+
+        public async Task<string> startWorkFlow(NintexWorkflowCloud nwc, int header_id)
+        {
+            try
+            {
+                nwc.param = new NWCParamModel();
+                nwc.param.startData = new StartData();
+                nwc.param.startData.se_transactionid = header_id;
+
+                //string sBody = JsonConvert.SerializeObject(nwc.param);
+                string sBody = new JavaScriptSerializer().Serialize(nwc.param);
+
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(nwc.url);
+
+                client.DefaultRequestHeaders
+                    .Accept
+                    .Add(new MediaTypeWithQualityHeaderValue("application/json")); //ACCEPT Header
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, nwc.url);
+                request.Content = new StringContent(sBody, Encoding.UTF8, "application/json");
+
+                using (var response = await client.SendAsync(request))
+                {
+                    response.EnsureSuccessStatusCode();
+                    var result = await response.Content.ReadAsStringAsync();
+                    return result; //instance guid
+                }
+            }
+            catch (AggregateException ex)
+            {
                 throw ex;
             }
         }
