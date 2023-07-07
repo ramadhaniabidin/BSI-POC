@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['angular.filter']);
+﻿var app = angular.module('app', ['angular.filter', 'ngCookies']);
 
 app.directive('button', function () {
     return {
@@ -39,7 +39,7 @@ app.service("svc", function ($http) {
             folio_no: folio_no,
         }
 
-        console.log(param);
+        /*console.log(param);*/
         var response = $http({
             method: "post",
             url: "/WebServices/StationaryRequest.asmx/GetDataByFolioNo",
@@ -53,9 +53,10 @@ app.service("svc", function ($http) {
 
 
 
-    this.svc_InsertHeaderData = function (header) {
+    this.svc_InsertHeaderData = function (header, detail) {
         var param = {
-            'header': header
+            'header': header,
+            'detail': detail,
         }
 
         var response = $http({
@@ -64,6 +65,22 @@ app.service("svc", function ($http) {
             data: JSON.stringify(param),
             datatype: "json"
         });
+
+        return response;
+    }
+
+    this.svc_ConfirmStationary = function (header, detail) {
+        var param = {
+            'header': header,
+            'detail': detail,
+        }
+
+        var response = $http({
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/InsertHeaderData",
+            data: JSON.stringify(param),
+            datatype: "json"
+        })
 
         return response;
     }
@@ -84,17 +101,6 @@ app.service("svc", function ($http) {
         return response;
     }
 
-    //this.RolesData = function () {
-
-    //    //var response = $http({
-    //    //    method: 'get',
-    //    //    url: "/WebServices/StationaryRequest.asmx/GetRoles?"
-    //    //})
-
-    //    //return response.data;
-
-    //};
-
     this.RolesData = function () {
         return $http({
             method: 'get',
@@ -104,23 +110,38 @@ app.service("svc", function ($http) {
         });
     };
 
+    this.svc_GetRoleID = function (email) {
+        var param = {
+            email: email
+        }
+
+        var response = $http({
+            method: "post",
+            url: "/WebServices/Login.asmx/GetRoleId",
+            data: JSON.stringify(param),
+            dataType: "json"
+        });
+        return response;
+    }
+
 })
 
-app.controller('ctrl', function ($scope, svc) {
+app.controller('ctrl', function ($scope, $cookies, svc) {
     $scope.header_data = {
         folio_no: '',
         applicant: '',
         department: '',
         role: '',
-        employee_id: '',
+        employee_id: 1,
         employee_name: 'Dhani',
         extension: '',
-        status_id: -1,
+        status_id: 1,
         remarks: '',
         created_by: 'Dhani',
         created_date: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
         modified_by: 'Dhani',
         modified_date: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
+        approver_target_role_id: 0,
     };
 
     $scope.details_data = {
@@ -134,15 +155,27 @@ app.controller('ctrl', function ($scope, svc) {
 
     $scope.Items = [];
 
-    //$scope.detail_table = document.getElementById("semprot_lahan");
-    //$scope.row_detail = $scope.detail_table.getElementsByTagName("tr");
-    //$scope.row_count = $scope.row_detail.length;
-
-    
     $scope.InsertDataHeader = function () {
-        if (($scope.approver == "Section Head") || ($scope.approver == "Dept Head")) {
-            $scope.header_data.status_id = 1
+        var detail = []
+        for (var i = 0; i < $scope.rows.length; i++) {
+            detail.push({
+                item_name: $scope.rows[i].item_name,
+                no: i + 1,
+                uom: $scope.rows[i].uom,
+                request_qty: $scope.rows[i].request_qty,
+                reason: $scope.rows[i].reason,
+            })
         }
+
+        $scope.created_date = new moment().format("DD-MMM-YYYY");
+        $scope.created_dateFormatted = new moment($scope.created_date, "DD-MMM-YYYY").format("YYYY-MM-DD HH:mm:ss");
+        if ($scope.approver == "Internal Section Head") {
+            $scope.header_data.approver_target_role_id = 1
+        }
+        else if ($scope.approver == "Internal Dept Head") {
+            $scope.header_data.approver_target_role_id = 2
+        }
+
         var params = {
             header: {
                 folio_no: $scope.header_data.folio_no,
@@ -155,25 +188,83 @@ app.controller('ctrl', function ($scope, svc) {
                 status_id: $scope.header_data.status_id,
                 remarks: $scope.header_data.remarks,
                 created_by: $scope.header_data.created_by,
-                created_date: $scope.header_data.created_date,
+                created_date: $scope.created_dateFormatted,
                 modified_by: $scope.header_data.modified_by,
-                modified_date: $scope.header_data.modified_date
-            }
+                modified_date: $scope.created_dateFormatted,
+                approver_target_role_id: $scope.header_data.approver_target_role_id,
+            },
+            detail: detail,
         }
 
         console.log(params);
-        svc.svc_InsertHeaderData(params.header).
+        svc.svc_InsertHeaderData(params.header, params.detail).
             then(function (response) {
                 var resp_data = JSON.parse(response.data.d);
                 console.log(resp_data);
                 if (resp_data.ProcessSuccess) {
-                    window.alert("Success, Writen header ID : " + resp_data.InfoMessage.toString());
-                    window.location.href = '/Pages/StationaryRequest.aspx';
+                    window.alert("Successfully Insert/Update data, Status : " + resp_data.InfoMessage.toString());
+                    window.location.href = '/Home.aspx';
                 }
                 else {
                     window.alert("Error : " + resp_data.InfoMessage);
                 }
             });
+    }
+
+    $scope.ConfirmStationary = function () {
+        var detail = []
+        for (var i = 0; i < $scope.rows.length; i++) {
+            detail.push({
+                item_name: $scope.rows[i].item_name,
+                no: i + 1,
+                uom: $scope.rows[i].uom,
+                request_qty: $scope.rows[i].request_qty,
+                reason: $scope.rows[i].reason,
+            })
+        }
+
+        $scope.created_date = new moment().format("DD-MMM-YYYY");
+        $scope.created_dateFormatted = new moment($scope.created_date, "DD-MMM-YYYY").format("YYYY-MM-DD HH:mm:ss");
+        if ($scope.approver == "Internal Section Head") {
+            $scope.header_data.approver_target_role_id = 1
+        }
+        else if ($scope.approver == "Internal Dept Head") {
+            $scope.header_data.approver_target_role_id = 2
+        }
+
+        var params = {
+            header: {
+                folio_no: $scope.header_data.folio_no,
+                applicant: $scope.header_data.applicant,
+                department: $scope.header_data.department,
+                role: $scope.header_data.role,
+                employee_id: $scope.header_data.employee_id,
+                employee_name: $scope.header_data.employee_name,
+                extension: $scope.header_data.extension,
+                status_id: 6,
+                remarks: $scope.header_data.remarks,
+                created_by: $scope.header_data.created_by,
+                created_date: $scope.created_dateFormatted,
+                modified_by: $scope.header_data.modified_by,
+                modified_date: $scope.created_dateFormatted,
+                approver_target_role_id: $scope.header_data.approver_target_role_id,
+            },
+            detail: detail,
+        }
+
+        svc.svc_ConfirmStationary(params.header, params.detail).
+            then(function (response) {
+                var resp_data = JSON.parse(response.data.d);
+                console.log(resp_data);
+                if (resp_data.ProcessSuccess) {
+                    window.alert("Successfully Insert/Update data, Status : " + resp_data.InfoMessage.toString());
+                    window.location.href = '/Home.aspx';
+                }
+                else {
+                    window.alert("Error : " + resp_data.InfoMessage);
+                }
+            });
+
     }
 
     $scope.InsertDataDetail = function () {
@@ -196,8 +287,8 @@ app.controller('ctrl', function ($scope, svc) {
                     var resp_data = JSON.parse(response.data.d);
                     console.log(resp_data);
                     if (resp_data.ProcessSuccess) {
-                        window.alert("Success, Writen detail ID : " + resp_data.InfoMessage.toString());
-                        window.location.href = '/Pages/StationaryRequest.aspx';
+                        window.alert("Successfully Insert/Update data, Status : " + resp_data.InfoMessage.toString());
+                        window.location.href = '/Home.aspx';
                     }
                     else {
                         window.alert("Error : " + resp_data.InfoMessage);
@@ -214,17 +305,25 @@ app.controller('ctrl', function ($scope, svc) {
 
     $scope.CekTabel = function () {
         for (i of $scope.rows) {
-            console.log(i.item_name + ', ' + i.uom + ', ' + i.request_qty + ', ' + i.reason);
+            console.log($scope.rows.length + ', ' + i.uom + ', ' + i.request_qty + ', ' + i.reason);
         }
+
+        //for (var i = 0; i < $scope.rows.length; i++){
+        //    console.log('Index : ' + (i + 1) + ', Item name : ' + $scope.rows[i].item_name)
+        //}
+
         if (($scope.approver == "Section Head") || ($scope.approver == "Dept Head")) {
             $scope.header_data.status_id = 1
         }
+        $scope.created_date = new moment().format("DD-MMM-YYYY").toString();
+        $scope.created_dateFormatted = new moment($scope.created_date, "DD-MMM-YYYY").format("YYYY-MM-DD HH:mm:ss").toString();
 
-        console.log($scope.header_data.status_id);
+        /*console.log($scope.header_data.status_id + ', ' + $scope.created_dateFormatted + ', ' + $scope.approve_value);*/
     }
 
     $scope.rows = [{
         item_name: '',
+        no: '',
         uom: '',
         request_qty: 0,
         reason: ''
@@ -236,6 +335,7 @@ app.controller('ctrl', function ($scope, svc) {
     $scope.addRow = function () {
         $scope.rows.push({
             item_name: '',
+            no: '',
             uom: '',
             request_qty: 0,
             reason: ''
@@ -248,29 +348,85 @@ app.controller('ctrl', function ($scope, svc) {
         $scope.InsertDataDetail();
     }
 
+    $scope.role_id = 0;
+
     $scope.roles = ["Internal Section Head", "Internal Dept Head", "GA Staff", "GA Section Head", "Requestor"]
     $scope.approver = '';
 
-    $scope.approver_list = ["Section Head", "Dept Head"];
+    $scope.approver_list = ["Internal Section Head", "Internal Dept Head"];
+
+    $scope.approve_value = '';
 
     $scope.GetData = function () {
         var folio_no = GetQueryString()["folio_no"];
-        console.log(folio_no);
+
+
+        console.log(folio_no + ', ' + $scope.approve_value + ', ' + $cookies.get('email'));
 
 
         var proc = svc.svc_GetData(folio_no);
         proc.then(function (response) {
             var data = JSON.parse(response.data.d);
+            /*console.log(data);*/
 
             if (data.ProcessSuccess) {
                 var h = data._header;
                 $scope.header_data = h;
-                $scope.Items = data._detail;
+                $scope.rows = data._detail;
+                console.log(data._header);
+                console.log(data._detail);
             }
             else {
                 console.log(data.InfoMessage);
             }
         })
+
+
+        var appr = document.getElementById("approver");
+        var approval = document.getElementById("approval");
+        var submit = document.getElementById("submit");
+        var close = document.getElementById("close");
+        var delivered = document.getElementById("delivered");
+
+        var proc1 = svc.svc_GetRoleID($cookies.get('email'));
+        proc1.then(function (response) {
+            var data = JSON.parse(response.data.d);
+            if (data.ProcessSuccess) {
+                $scope.role_id = data.id;
+                console.log($scope.role_id);
+                if (($scope.role_id === 0) || ($scope.role_id === undefined)) {
+                    approval.style.display = "none";
+                    delivered.style.diplay = "none";
+                }
+                else if (($scope.role_id === 1) || ($scope.role_id === 2)) {
+                    delivered.style.display = "none";
+                    appr.style.display = "none";
+                }
+
+                else if (($scope.role_id === 3) || ($scope.role_id === 4)) {
+                    delivered.style.display = "none";
+                    appr.style.display = "none";
+                }
+            }
+            else {
+                console.log(data.InfoMessage);
+            }
+        })
+
+    }
+
+    $scope.GetCookie = function () {
+        console.log($cookies.get('email'));
+    }
+
+    $scope.DeleteCookie = function () {
+        document.cookie = 'email =; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'role_id =; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    }
+
+    $scope.LogOut = function () {
+        $scope.DeleteCookie();
+        window.location.href = "/Login.aspx";
     }
 
     $scope.GetData();
