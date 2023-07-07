@@ -53,6 +53,7 @@
     <Compile Include="Controller\StationaryRequestController.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\StationaryRequestModel.cs" />
+    <Compile Include="Models\WorkFlowModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
