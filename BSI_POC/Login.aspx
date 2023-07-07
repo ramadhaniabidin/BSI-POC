@@ -27,11 +27,21 @@
             width: 60%;
         }
     </style>
+    
+    <script src="/Assets/Library/jquery.min.js"></script>
+    <script src="/Assets/Library/jqueryUI/jquery-ui.min.js"></script>
+    <script src="/Assets/Library/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-cookies.js"></script>
+    <script src="/Assets/Library/Pager.js"></script>
+    <script src="/Assets/Library/angular-filter.js"></script>
+    <script src="/Assets/Library/BaseLogic.js"></script>
+    <script src="/Assets/Library/Home.js"></script>
+    <script src="/Assets/Library/Login.js"></script>
 
 </head>
 <body class="bg-gradient-primary" style="background-color:red">
     <form id="form1" runat="server">
-        <div class="custom-centered ">
+        <div class="custom-centered " ng-app="app" ng-controller="ctrl">
 
             <!-- Outer Row -->
             <div class="row justify-content-center">
@@ -52,27 +62,32 @@
                                         </div>
                                         <div class="user">
                                             <div class="form-group">
-                                                <asp:TextBox ID="txtEmail" runat="server" class="form-control form-control-user" placeholder="Enter Email Address..."></asp:TextBox>
+                                                <%--<asp:TextBox ID="txtEmail" runat="server" class="form-control form-control-user" placeholder="Enter Email Address...">
+
+                                                </asp:TextBox>--%>
+                                                <input type="text" runat="server" class="form-control form-control-user" placeholder="Enter Email Address..." ng-model="login_email"/>
+
                                                 <%--                                            <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Enter Email Address...">--%>
                                             </div>
                                             <div class="form-group">
-                                                <asp:TextBox ID="txtPassword" runat="server" class="form-control form-control-user" placeholder="Password" TextMode="Password"></asp:TextBox>
+                                                <%--<asp:TextBox ID="txtPassword" runat="server" class="form-control form-control-user" placeholder="Password" TextMode="Password"></asp:TextBox>--%>
                                                 <%--                                            <input type="password" class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Password">--%>
                                             </div>
                                             <div class="form-group">
                                                 <div class="custom-control custom-checkbox small">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck" ng-click="SetCookies()">
                                                     <label class="custom-control-label" for="customCheck">
                                                         Remember
                                                     Me</label>
                                                 </div>
                                             </div>
 
-                                            <asp:Button ID="btnLogin" runat="server" 
-                                                class="btn btn-primary btn-user btn-block" Text="Login" OnClick="btn_Login"/>
+<%--                                            <asp:Button ID="btnLogin" runat="server" 
+                                                class="btn btn-primary btn-user btn-block" Text="Login" OnClick="LoginButton"/>--%>
+                                            <button class="btn btn-primary btn-user btn-block" ng-click="LoginButton()">Login</button>
                                             <%--                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </a>--%>

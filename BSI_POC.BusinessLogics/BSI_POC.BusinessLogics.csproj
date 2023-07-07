@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,7 @@
     <Compile Include="Common\DatabaseManager.cs" />
     <Compile Include="Common\Utility.cs" />
     <Compile Include="Controller\HomeController.cs" />
+    <Compile Include="Controller\LoginController.cs" />
     <Compile Include="Controller\StationaryRequestController.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\StationaryRequestModel.cs" />

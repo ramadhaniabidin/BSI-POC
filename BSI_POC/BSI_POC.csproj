@@ -130,6 +130,7 @@
     <Content Include="Assets\Home.js" />
     <Content Include="Assets\images\download.png" />
     <Content Include="Assets\images\logo.png" />
+    <Content Include="Assets\images\prodia-text.png" />
     <Content Include="Assets\Library\angular-filter.js" />
     <Content Include="Assets\Library\angular-route.min.js" />
     <Content Include="Assets\Library\angular.min.js" />
@@ -206,11 +207,16 @@
     <Content Include="Assets\Library\jqueryUI\images\ui-icons_ffe180_256x240.png" />
     <Content Include="Assets\Library\jqueryUI\jquery-ui.min.css" />
     <Content Include="Assets\Library\jqueryUI\jquery-ui.min.js" />
+    <Content Include="Assets\Library\Login.js" />
     <Content Include="Assets\Library\moment.js\moment-with-locales.min.js" />
     <Content Include="Assets\Library\MyJavaScript.js" />
     <Content Include="Assets\Library\ng-file-upload.min.js" />
+    <Content Include="Assets\Library\Pager.js" />
     <Content Include="Assets\Library\StationaryRequest.js" />
     <Content Include="Assets\vendor\fontawesome-free\css\all.min.css" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-brands-400.svg" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-regular-400.svg" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.svg" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -238,10 +244,22 @@
     <Content Include="Assets\css\Phosphor-regular\selection.json" />
     <Content Include="Assets\Library\bootstrap\bootstrap.bundle.min.js.map" />
     <Content Include="Home.aspx" />
-    <Content Include="Login.asmx" />
     <Content Include="Login.aspx" />
     <Content Include="WebServices\Home.asmx" />
+    <Content Include="WebServices\Login.asmx" />
     <Content Include="WebServices\StationaryRequest.asmx" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-brands-400.eot" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-brands-400.ttf" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-brands-400.woff" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-brands-400.woff2" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-regular-400.eot" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-regular-400.ttf" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-regular-400.woff" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-regular-400.woff2" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.eot" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.ttf" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.woff" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Pages\StationaryRequest.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -312,10 +330,6 @@
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Login.asmx.cs">
-      <DependentUpon>Login.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -354,6 +368,10 @@
     </Compile>
     <Compile Include="WebServices\Home.asmx.cs">
       <DependentUpon>Home.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Login.asmx.cs">
+      <DependentUpon>Login.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\StationaryRequest.asmx.cs">

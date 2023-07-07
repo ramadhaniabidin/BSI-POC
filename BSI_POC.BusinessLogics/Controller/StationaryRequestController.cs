@@ -86,35 +86,78 @@ namespace BSI_POC.BusinessLogics.Controller
             return roles;
         }
 
+        //public StationaryRequestHeaderModel GetDataHeader(string folio_no)
+        //{
+        //    try
+        //    {
+        //        dt = new DataTable();
+        //        db.OpenConnection(ref conn);
+        //        db.cmd.CommandText = "dbo.get_header_data_by_folio_no";
+        //        db.cmd.CommandType = CommandType.StoredProcedure;
+        //        db.cmd.Parameters.Clear();
+        //        db.AddInParameter(db.cmd, "@folio_no", folio_no);
+        //        reader = db.cmd.ExecuteReader();
+        //        dt.Load(reader);
+        //        db.CloseDataReader(reader);
+        //        db.CloseConnection(ref conn);
+
+        //        if (dt.Rows.Count > 0)
+        //        {
+        //            return Utility.ConvertDataTableToList<StationaryRequestHeaderModel>(dt)[0];
+        //        }
+        //        else
+        //        {
+        //            return new StationaryRequestHeaderModel();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        db.CloseConnection(ref conn);
+        //        throw ex;
+        //    }
+        //}
+
         public StationaryRequestHeaderModel GetDataHeader(string folio_no)
         {
-            try
-            {
-                dt = new DataTable();
-                db.OpenConnection(ref conn);
-                db.cmd.CommandText = "dbo.get_header_data_by_folio_no";
-                db.cmd.CommandType = CommandType.StoredProcedure;
-                db.cmd.Parameters.Clear();
-                db.AddInParameter(db.cmd, "folio_no", folio_no);
-                reader = db.cmd.ExecuteReader();
-                dt.Load(reader);
-                db.CloseDataReader(reader);
-                db.CloseConnection(ref conn);
+            StationaryRequestHeaderModel header = null;
 
-                if(dt.Rows.Count > 0)
-                {
-                    return Utility.ConvertDataTableToList<StationaryRequestHeaderModel>(dt)[0];
-                }
-                else
-                {
-                    return new StationaryRequestHeaderModel();
-                }
-            }
-            catch (Exception ex)
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand("dbo.get_header_data_by_folio_no", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@folio_no", folio_no);
+
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
             {
-                db.CloseConnection(ref conn);
-                throw ex;
+                header = new StationaryRequestHeaderModel();
+                header.id = Convert.ToInt32(reader["id"]);
+                header.folio_no = reader["folio_no"].ToString();
+                header.applicant = reader["applicant"].ToString();
+                header.department = reader["department"].ToString();
+                header.role = reader["role"].ToString();
+                header.employee_id = reader["employee_id"].ToString();
+                header.employee_name = reader["employee_name"].ToString();
+                header.extension = reader["extension"].ToString();
+                header.status_id = Convert.ToInt32(reader["status_id"]);
+                header.remarks = reader["remarks"].ToString();
+                header.created_by = reader["created_by"].ToString();
+
+                string dateString = reader["created_date"].ToString();
+                long timeStamp = long.Parse(dateString.Substring(6, dateString.Length - 8));
+                DateTime created_date = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(timeStamp);
+                DateTime modified_date = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(timeStamp);
+
+
+                header.created_date = created_date;
+                header.modified_by = reader["modified_by"].ToString();
+                header.modified_date = modified_date;
             }
+            reader.Close();
+            con.Close();
+            return header;
+
         }
 
         public List<StationaryRequestDetailModel> GetDataDetails(string folio_no)

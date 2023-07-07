@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link href="Assets/css/Home.css" rel="stylesheet"/>
 
-    <script src="../Assets/Library/angular.min.js"></script>
+
     <script src="Assets/Library/Home.js"></script>
     <script src="../Assets/Library/MyJavaScript.js"></script>
     <script src="Assets/Home.js"></script>
@@ -12,7 +12,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 
-    <div id="mySidenav" class="sidenav">
+    <div id="mySidenav" class="sidenav" style="display: none">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a runat="server" href="~/">Home</a>
         <a runat="server" href="/About">About</a>
@@ -20,7 +20,7 @@
         <a runat="server" href="/Pages/StationaryRequest">Stationary Request</a>
     </div>
 
-    <span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
+    <span style="font-size:20px;cursor:pointer; display:none" onclick="openNav()">&#9776; Menu</span>
 
     <table class="table" ng-app="app" ng-controller="ctrl">
       <thead class="thead-dark">

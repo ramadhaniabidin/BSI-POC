@@ -46,6 +46,8 @@ app.service("svc", function ($http) {
             data: JSON.stringify(param),
             dataType: "json"
         })
+
+        return response;
     }
 
 
@@ -270,4 +272,6 @@ app.controller('ctrl', function ($scope, svc) {
             }
         })
     }
+
+    $scope.GetData();
 })
