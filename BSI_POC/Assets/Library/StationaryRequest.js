@@ -394,16 +394,17 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
             if (data.ProcessSuccess) {
                 $scope.role_id = data.id;
                 console.log($scope.role_id);
+                $cookies.put('role_id', $scope.role_id);
                 if (($scope.role_id === 0) || ($scope.role_id === undefined)) {
                     approval.style.display = "none";
                     delivered.style.diplay = "none";
                 }
-                else if (($scope.role_id === 1) || ($scope.role_id === 2)) {
+                if (($scope.role_id === 1) || ($scope.role_id === 2)) {
                     delivered.style.display = "none";
                     appr.style.display = "none";
                 }
 
-                else if (($scope.role_id === 3) || ($scope.role_id === 4)) {
+                if (($scope.role_id === 3) || ($scope.role_id === 4)) {
                     delivered.style.display = "none";
                     appr.style.display = "none";
                 }
