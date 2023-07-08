@@ -46,7 +46,6 @@ app.service("svc", function ($http) {
         return response;
     }
 
-
 });
 
 app.controller('ctrl', function ($scope, $cookies, svc) {
@@ -60,6 +59,7 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
             var data = JSON.parse(response.data.d);
 
             if (data.ProcessSuccess) {
+                window.localStorage.setItem('role_id', data.id);
                 console.log(data.id);
             }
             else {
@@ -77,14 +77,21 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
     }
 
     $scope.LoginButton = function () {
-        $cookies.put('email', $scope.login_email, { expires: 'session' });
-        window.location.href = '/Home.aspx';
+        svc.svc_GetRoleID($scope.login_email).then(function (response) {
+            var data = JSON.parse(response.data.d);
+            window.localStorage.setItem('role_id', data.id);
+            window.localStorage.setItem('email', $scope.login_email);
+
+            window.location.href = '/Home.aspx';
+        })
+
+
+
     }
 
     $scope.cek_email = function () {
         console.log($scope.login_email);
     }
 
-    /*$scope.GetRoleID();*/
-    $scope.cek_email();
+/*    $scope.GetRoleID();*/
 });

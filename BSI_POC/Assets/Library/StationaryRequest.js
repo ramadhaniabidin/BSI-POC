@@ -388,31 +388,31 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
         var close = document.getElementById("close");
         var delivered = document.getElementById("delivered");
 
-        var proc1 = svc.svc_GetRoleID($cookies.get('email'));
+        var proc1 = svc.svc_GetRoleID(window.localStorage.getItem('email'));
         proc1.then(function (response) {
             var data = JSON.parse(response.data.d);
             if (data.ProcessSuccess) {
+                window.localStorage.setItem('role_id', data.id);
                 $scope.role_id = data.id;
-                console.log($scope.role_id);
-                $cookies.put('role_id', $scope.role_id);
-                if (($scope.role_id === 0) || ($scope.role_id === undefined)) {
-                    approval.style.display = "none";
-                    delivered.style.diplay = "none";
-                }
-                if (($scope.role_id === 1) || ($scope.role_id === 2)) {
-                    delivered.style.display = "none";
-                    appr.style.display = "none";
-                }
-
-                if (($scope.role_id === 3) || ($scope.role_id === 4)) {
-                    delivered.style.display = "none";
-                    appr.style.display = "none";
-                }
             }
             else {
                 console.log(data.InfoMessage);
             }
         })
+
+        console.log(window.localStorage.getItem('email'));
+        console.log(window.localStorage.getItem('role_id'));
+
+        if ($scope.role_id === 0) {
+            approval.style.display = "none";
+        }
+        else if (($scope.role_id === 1) || ($scope.role_id === 2)) {
+            appr.style.display = "none";
+        }
+
+        else if (($scope.role_id === 3) || ($scope.role_id === 4)) {
+            appr.style.display = "none";
+        }
 
     }
 
@@ -420,13 +420,9 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
         console.log($cookies.get('email'));
     }
 
-    $scope.DeleteCookie = function () {
-        document.cookie = 'email =; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = 'role_id =; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    }
-
     $scope.LogOut = function () {
-        $scope.DeleteCookie();
+        window.localStorage.removeItem('email');
+        window.localStorage.removeItem('role_id');
         window.location.href = "/Login.aspx";
     }
 

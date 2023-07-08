@@ -44,14 +44,17 @@ app.service("svc", function ($http) {
         return response;
     }
 
-    this.svc_GetRoleId = function () {
+    this.svc_GetRoleID = function (email) {
+        var param = {
+            email: email
+        }
+
         var response = $http({
             method: "post",
             url: "/WebServices/Login.asmx/GetRoleId",
-            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(param),
             dataType: "json"
-        })
-
+        });
         return response;
     }
 });
@@ -89,23 +92,18 @@ app.controller('ctrl', function ($scope, $cookies, $window, svc) {
 
 
     $scope.GetRoleID = function () {
-        try {
-            var proc = svc.svc_GetRoleId();
+        var proc1 = svc.svc_GetRoleID(window.localStorage.getItem('email'));
+        proc1.then(function (response) {
+            var data = JSON.parse(response.data.d);
+            if (data.ProcessSuccess) {
+                window.localStorage.setItem('role_id', data.id);
+                $scope.role_id = data.id;
+            }
+            else {
+                console.log(data.InfoMessage);
+            }
+        })
 
-            proc.then(function (response) {
-                var data = JSON.parse(response.data.d);
-                console.log(data);
-                if (data.ProcessSuccess) {
-                    $scope.Items = data.id;
-                    console.log(data.id);
-                } else {
-                    console.log(data.InfoMessage);
-                }
-
-            });
-        } catch (e) {
-            alert(e.message);
-        }
 
     }
 
