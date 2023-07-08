@@ -363,6 +363,12 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
         var submit = document.getElementById("submit");
         var close = document.getElementById("close");
         var delivered = document.getElementById("delivered");
+        var folio_no = document.getElementById("ContentPlaceHolder1_folio_no");
+        var applicant = document.getElementById("ContentPlaceHolder1_applicant");
+        var department = document.getElementById("ContentPlaceHolder1_department");
+        var role = document.getElementById("ContentPlaceHolder1_role");
+        var employee_id = document.getElementById("ContentPlaceHolder1_employee_id");
+        var extension = document.getElementById("ContentPlaceHolder1_extension");
 
         console.log(window.localStorage.getItem('email'));
         console.log(window.localStorage.getItem('role_id'));
@@ -370,17 +376,20 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
         console.log($scope.role_id);
 
         if ($scope.role_id === '0') {
-            console.log($scope.role_id);
             approval.style.display = "none";
 
         }
         else if (($scope.role_id === '1') || ($scope.role_id === '2')) {
-            console.log($scope.role_id);
             appr.style.display = "none";
+            folio_no.setAttribute('readonly', 'readonly');
+            applicant.setAttribute('readonly', 'readonly');
+            department.setAttribute('readonly', 'readonly');
+            role.setAttribute('readonly', 'readonly');
+            employee_id.setAttribute('readonly', 'readonly');
+            extension.setAttribute('readonly', 'readonly');
         }
 
         else if (($scope.role_id === '3') || ($scope.role_id === '4')) {
-            console.log($scope.role_id);
             appr.style.display = "none";
         }
 

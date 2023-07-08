@@ -39,19 +39,19 @@
                     <div class="row">
                         <div class="col">
                             <label>Folio No</label>
-                            <input class="header-input" type="text" runat="server" ng-model="header_data.folio_no"/>
+                            <input id="folio_no" class="header-input" type="text" runat="server" ng-model="header_data.folio_no"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label>Applicant</label>
-                            <input class="header-input" type="text" runat="server" ng-model="header_data.applicant"/>
+                            <input id="applicant" class="header-input" type="text" runat="server" ng-model="header_data.applicant"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label>Department</label>
-                            <input class="header-input" type="text" ng-model="header_data.department" runat="server"/>
+                            <input id="department" class="header-input" type="text" ng-model="header_data.department" runat="server"/>
                         </div>
                     </div>
                 </div>
@@ -61,19 +61,19 @@
                     <div class="row">
                         <div class="col">
                             <label>Role</label>
-                            <input class="header-input" type="text" runat="server" ng-model="header_data.role"/>
+                            <input id="role" class="header-input" type="text" runat="server" ng-model="header_data.role"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label>Employee ID</label>
-                            <input class="header-input" type="text" runat="server" ng-model="header_data.employee_id"/>
+                            <input id="employee_id" class="header-input" type="text" runat="server" ng-model="header_data.employee_id"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label>Extension</label>
-                            <input class="header-input" type="text" runat="server" ng-model="header_data.extension"/>
+                            <input id="extension" class="header-input" type="text" runat="server" ng-model="header_data.extension"/>
                         </div>
                     </div>
                 </div>
