@@ -229,7 +229,7 @@ namespace BSI_POC.BusinessLogics.Controller
                 // konversi req body ke JSON
 
                 var jsonBody = JsonConvert.SerializeObject(requestBody);
-                var HttpContent = new StringContent(jsonBody, System.Text.Encoding.UTF8, "application/json");
+                var HttpContent = new StringContent(jsonBody, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(url, HttpContent);
                 var responseJson = await response.Content.ReadAsStringAsync();
                 dynamic responseObject = JsonConvert.DeserializeObject(responseJson);

@@ -59,8 +59,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <span>Utilities</span>
+                <a class="nav-link collapsed" href="/Pages/StationaryRequest.aspx">
+                    <span>New Request</span>
                 </a>
             </li>
 
