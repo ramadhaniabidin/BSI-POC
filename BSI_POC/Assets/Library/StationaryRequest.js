@@ -348,7 +348,7 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
         $scope.InsertDataDetail();
     }
 
-    $scope.role_id = 0;
+    $scope.role_id = '';
 
     $scope.roles = ["Internal Section Head", "Internal Dept Head", "GA Staff", "GA Section Head", "Requestor"]
     $scope.approver = '';
@@ -358,61 +358,51 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
     $scope.approve_value = '';
 
     $scope.GetData = function () {
-        var folio_no = GetQueryString()["folio_no"];
-
-
-        console.log(folio_no + ', ' + $scope.approve_value + ', ' + $cookies.get('email'));
-
-
-        var proc = svc.svc_GetData(folio_no);
-        proc.then(function (response) {
-            var data = JSON.parse(response.data.d);
-            /*console.log(data);*/
-
-            if (data.ProcessSuccess) {
-                var h = data._header;
-                $scope.header_data = h;
-                $scope.rows = data._detail;
-                console.log(data._header);
-                console.log(data._detail);
-            }
-            else {
-                console.log(data.InfoMessage);
-            }
-        })
-
-
         var appr = document.getElementById("approver");
         var approval = document.getElementById("approval");
         var submit = document.getElementById("submit");
         var close = document.getElementById("close");
         var delivered = document.getElementById("delivered");
 
-        var proc1 = svc.svc_GetRoleID(window.localStorage.getItem('email'));
-        proc1.then(function (response) {
+        console.log(window.localStorage.getItem('email'));
+        console.log(window.localStorage.getItem('role_id'));
+        $scope.role_id = window.localStorage.getItem('role_id');
+        console.log($scope.role_id);
+
+        if ($scope.role_id === '0') {
+            console.log($scope.role_id);
+            approval.style.display = "none";
+
+        }
+        else if (($scope.role_id === '1') || ($scope.role_id === '2')) {
+            console.log($scope.role_id);
+            appr.style.display = "none";
+        }
+
+        else if (($scope.role_id === '3') || ($scope.role_id === '4')) {
+            console.log($scope.role_id);
+            appr.style.display = "none";
+        }
+
+        var folio_no = GetQueryString()["folio_no"];
+        var proc = svc.svc_GetData(folio_no);
+        proc.then(function (response) {
             var data = JSON.parse(response.data.d);
             if (data.ProcessSuccess) {
-                window.localStorage.setItem('role_id', data.id);
-                $scope.role_id = data.id;
+                var h = data._header;
+                $scope.header_data = h;
+                $scope.rows = data._detail;
+                console.log(data._header);
+                console.log(data._detail);
+
             }
             else {
                 console.log(data.InfoMessage);
             }
         })
 
-        console.log(window.localStorage.getItem('email'));
-        console.log(window.localStorage.getItem('role_id'));
 
-        if ($scope.role_id === 0) {
-            approval.style.display = "none";
-        }
-        else if (($scope.role_id === 1) || ($scope.role_id === 2)) {
-            appr.style.display = "none";
-        }
 
-        else if (($scope.role_id === 3) || ($scope.role_id === 4)) {
-            appr.style.display = "none";
-        }
 
     }
 

@@ -79,7 +79,7 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
     $scope.LoginButton = function () {
         svc.svc_GetRoleID($scope.login_email).then(function (response) {
             var data = JSON.parse(response.data.d);
-            window.localStorage.setItem('role_id', data.id);
+            window.localStorage.setItem('role_id', data.id.toString());
             window.localStorage.setItem('email', $scope.login_email);
 
             window.location.href = '/Home.aspx';
