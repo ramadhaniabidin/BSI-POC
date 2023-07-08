@@ -226,7 +226,7 @@ namespace BSI_POC.BusinessLogics.Controller
                     grant_type = "clienr_credentials"
                 };
 
-                // konversi req body ke JSON
+                
 
                 var jsonBody = JsonConvert.SerializeObject(requestBody);
                 var HttpContent = new StringContent(jsonBody, Encoding.UTF8, "application/json");
