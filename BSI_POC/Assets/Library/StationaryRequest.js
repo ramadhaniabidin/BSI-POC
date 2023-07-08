@@ -369,6 +369,7 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
         var role = document.getElementById("ContentPlaceHolder1_role");
         var employee_id = document.getElementById("ContentPlaceHolder1_employee_id");
         var extension = document.getElementById("ContentPlaceHolder1_extension");
+        var details = document.getElementById("semprot_lahan");
 
         console.log(window.localStorage.getItem('email'));
         console.log(window.localStorage.getItem('role_id'));
@@ -387,6 +388,7 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
             role.setAttribute('readonly', 'readonly');
             employee_id.setAttribute('readonly', 'readonly');
             extension.setAttribute('readonly', 'readonly');
+            details.style.pointerEvents = "none";
         }
 
         else if (($scope.role_id === '3') || ($scope.role_id === '4')) {
