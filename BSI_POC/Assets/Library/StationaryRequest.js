@@ -380,7 +380,7 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
             approval.style.display = "none";
 
         }
-        else if (($scope.role_id === '1') || ($scope.role_id === '2')) {
+        else if (($scope.role_id === '1') || ($scope.role_id === '2') || ($scope.role_id === '3') || ($scope.role_id === '4')) {
             appr.style.display = "none";
             folio_no.setAttribute('readonly', 'readonly');
             applicant.setAttribute('readonly', 'readonly');
@@ -391,9 +391,9 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
             details.style.pointerEvents = "none";
         }
 
-        else if (($scope.role_id === '3') || ($scope.role_id === '4')) {
-            appr.style.display = "none";
-        }
+        //else if (($scope.role_id === '3') || ($scope.role_id === '4')) {
+        //    appr.style.display = "none";
+        //}
 
         var folio_no = GetQueryString()["folio_no"];
         var proc = svc.svc_GetData(folio_no);
