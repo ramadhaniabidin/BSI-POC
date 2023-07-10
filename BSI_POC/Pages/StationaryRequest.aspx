@@ -121,8 +121,8 @@
                 <label class="myLabel" style="font-size:large">Approval Action</label>
                 <hr style="width: 100%; background-color: black; height:2px; margin-bottom:0%";/>
                 <div class="col">
-                    <input type="radio" id="approve" value="approve" name="action" ng-model="approve_value"/><label for="approve" style="width:5%; padding-left:3px; padding-bottom: 3px; color:green">Approve</label>
-                    <input type="radio" id="reject" value="reject" name="action" ng-model="approve_value"/><label for="reject" style="width:5%; padding-left:3px; padding-bottom: 3px; color:red">Reject</label>
+                    <input type="radio" id="approve" value="Approve" name="action" ng-model="approve_value"/><label for="approve" style="width:5%; padding-left:3px; padding-bottom: 3px; color:green">Approve</label>
+                    <input type="radio" id="reject" value="Reject" name="action" ng-model="approve_value"/><label for="reject" style="width:5%; padding-left:3px; padding-bottom: 3px; color:red">Reject</label>
                 </div>
             </div>
             <div class="row" style=" width:90%;">
@@ -135,10 +135,12 @@
             </div>
             <div class="row">
                 <button id="submit" class="btn" style="width:5%; background-color:green; color:white" ng-click="InsertDataHeader()">Submit</button><br />
+                <button id="approve_action" class="btn" style="width:5%; background-color:green; color:white" ng-click="ApproveRequest()">Submit</button>
                 <button id="close" class="btn btn-danger" style="width:5%; color:white" ng-click="ConfirmStationary()">Close</button><br />
                 <button id="delivered" class="btn btn-primary" style="width:5%; color:white; display:none" ng-click="CekTabel()">Delivered</button>
             </div>
             <button id="LogOut" class="btn btn-danger" style="width:5%; color:white" ng-click="LogOut()">LogOut</button>    
+            <button ng-click="Cek_Aproval()">Cek</button>
         </div>
         
     </div>

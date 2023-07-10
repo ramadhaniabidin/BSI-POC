@@ -213,52 +213,67 @@ namespace BSI_POC.BusinessLogics.Controller
             }
         }
 
-        public async Task<string> GetToken()
+        public string GetToken()
         {
             string url = "https://us.nintex.io/authentication/v1/token";
-            using(HttpClient client = new HttpClient())
+            //using (HttpClient client = new HttpClient())
+            //{
+            //    Ini untuk membuat request body
+            //   var requestBody = new
+            //   {
+            //       client_id = "f7bbb84b-b114-4120-9a5f-b0557b6dbee2",
+            //       client_secret = "sNNtUWsKIRJtSsOtTsJPLtSsMNJMLtUsMPtUsI2VsJtWsINMtPsNtW2MtVsRtUUsFRtSTWsFMtTVsPFtRsK2osFtTsP2jsLOKtRsMM2p",
+            //       grant_type = "clienr_credentials"
+            //   };
+
+
+
+            //    var jsonBody = JsonConvert.SerializeObject(requestBody);
+            //    var HttpContent = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            //    var response = client.PostAsync(url, HttpContent).Result;
+            //    var responseJson = response.Content.ReadAsStringAsync().Result;
+            //    dynamic responseObject = JsonConvert.DeserializeObject(responseJson);
+
+            //    string accessToken = responseObject.access_token;
+
+            //    return accessToken;
+            //}
+
+            HttpClient client = new HttpClient();
+            var requestBody = new
             {
-                // Ini untuk membuat request body
-                var requestBody = new
-                {
-                    client_id = "f7bbb84b-b114-4120-9a5f-b0557b6dbee2",
-                    client_secret = "sNNtUWsKIRJtSsOtTsJPLtSsMNJMLtUsMPtUsI2VsJtWsINMtPsNtW2MtVsRtUUsFRtSTWsFMtTVsPFtRsK2osFtTsP2jsLOKtRsMM2p",
-                    grant_type = "clienr_credentials"
-                };
+                client_id = "f7bbb84b-b114-4120-9a5f-b0557b6dbee2",
+                client_secret = "sNNtUWsKIRJtSsOtTsJPLtSsMNJMLtUsMPtUsI2VsJtWsINMtPsNtW2MtVsRtUUsFRtSTWsFMtTVsPFtRsK2osFtTsP2jsLOKtRsMM2p",
+                grant_type = "client_credentials"
+            };
+            var jsonBody = JsonConvert.SerializeObject(requestBody);
+            var HttpContent = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            var response = client.PostAsync(url, HttpContent).Result;
+            var responseJson = response.Content.ReadAsStringAsync().Result;
+            var responseObject = JsonConvert.DeserializeObject<dynamic>(responseJson);
+            string accessToken = responseObject.access_token;
 
-                
 
-                var jsonBody = JsonConvert.SerializeObject(requestBody);
-                var HttpContent = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(url, HttpContent);
-                var responseJson = await response.Content.ReadAsStringAsync();
-                dynamic responseObject = JsonConvert.DeserializeObject(responseJson);
-
-                string accessToken = responseObject.access_token;
-
-                return accessToken;
-            }
+            return accessToken;
         }
 
-        public async Task<IEnumerable<dynamic>> GetTasks()
+        public IEnumerable<dynamic> GetTasks()
         {
             string url = "https://us.nintex.io/workflows/v2/tasks";
-            string token = await GetToken();
+            string token = GetToken();
 
-            using(HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
-                var response = await client.GetAsync(url);
+            var response = client.GetAsync(url).Result;
 
-                var responseJson = await response.Content.ReadAsStringAsync();
+            var responseJson = response.Content.ReadAsStringAsync().Result;
 
-                dynamic responseObject = JsonConvert.DeserializeObject(responseJson);
+            dynamic responseObject = JsonConvert.DeserializeObject(responseJson);
 
-                var tasks = responseObject.tasks;
+            var tasks = responseObject.tasks;
 
-                return tasks;
-            }
+            return tasks;
         }
     }
 }

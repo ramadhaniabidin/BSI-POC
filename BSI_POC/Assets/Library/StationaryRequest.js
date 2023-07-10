@@ -50,7 +50,39 @@ app.service("svc", function ($http) {
         return response;
     }
 
+    this.svc_ApproveRequest = function (header_id, approval_value) {
+        var param = {
+            'header_id': header_id,
+            'approval_value': approval_value
+        }
 
+        var response = $http({
+            method: "patch",
+            url: "/WebServices/StationaryRequest.asmx/ApprovalTask",
+            data: JSON.stringify(param),
+            dataType: "json",
+        })
+
+        console.log(response);
+
+        return response;
+    }
+
+    this.svc_GetTaskAndAssignmentID = function (header_id) {
+        var param = {
+            'header_id': header_id,
+        }
+
+        var response = $http({
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/GetTaskAndAssignmentID",
+            data: JSON.stringify(param),
+            dataType: "json",
+        });
+        console.log(response)
+
+        return response;
+    }
 
 
     this.svc_InsertHeaderData = function (header, detail) {
@@ -370,6 +402,8 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
         var employee_id = document.getElementById("ContentPlaceHolder1_employee_id");
         var extension = document.getElementById("ContentPlaceHolder1_extension");
         var details = document.getElementById("semprot_lahan");
+        var btn_submit = document.getElementById("submit");
+        var btn_approve = document.getElementById("approve_action");
 
         console.log(window.localStorage.getItem('email'));
         console.log(window.localStorage.getItem('role_id'));
@@ -378,17 +412,20 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
 
         if ($scope.role_id === '0') {
             approval.style.display = "none";
+            btn_approve.style.display = "none";
 
         }
         else if (($scope.role_id === '1') || ($scope.role_id === '2') || ($scope.role_id === '3') || ($scope.role_id === '4')) {
             appr.style.display = "none";
             folio_no.setAttribute('readonly', 'readonly');
+
             applicant.setAttribute('readonly', 'readonly');
             department.setAttribute('readonly', 'readonly');
             role.setAttribute('readonly', 'readonly');
             employee_id.setAttribute('readonly', 'readonly');
             extension.setAttribute('readonly', 'readonly');
             details.style.pointerEvents = "none";
+            btn_submit.style.display = "none";
         }
 
         //else if (($scope.role_id === '3') || ($scope.role_id === '4')) {
@@ -417,14 +454,48 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
 
     }
 
-    $scope.GetCookie = function () {
-        console.log($cookies.get('email'));
-    }
 
     $scope.LogOut = function () {
         window.localStorage.removeItem('email');
         window.localStorage.removeItem('role_id');
         window.location.href = "/Login.aspx";
+    }
+
+    $scope.Cek_Aproval = function () {
+        /*console.log($scope.approve_value);*/
+        
+        var proc = svc.svc_GetTaskAndAssignmentID($scope.header_data.id);
+        proc.then(function (response) {
+
+            var data = JSON.parse(response.data.d);
+            console.log(data);
+            if (data.ProcessSuccess) {
+                console.log(data.task_id);
+                console.log(data.assignment_id);
+            }
+            else {
+                console.log(data.InfoMessage);
+            }
+        })
+        console.log($scope.header_data.id);
+    }
+
+    $scope.ApproveRequest = function () {
+        var header_id = $scope.header_data.id;
+        var approval_value = $scope.approve_value;
+
+        svc.svc_ApproveRequest(header_id, approval_value).
+            then(function (response) {
+                var resp_data = JSON.parse(response.data.d);
+                console.log(resp_data);
+                if (resp_data.ProcessSuccess) {
+                    window.alert("Successfully Approving/Rejecting Request");
+                    window.location.href = '/Home.aspx';
+                }
+                else {
+                    window.alert("Error : " + resp_data.InfoMessage);
+                }
+            })
     }
 
     $scope.GetData();

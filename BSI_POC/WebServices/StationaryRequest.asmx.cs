@@ -9,6 +9,9 @@ using BSI_POC.BusinessLogics.Models;
 using BSI_POC.BusinessLogics.Controller;
 using System.Net;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace BSI_POC.WebServices
 {
@@ -195,7 +198,107 @@ namespace BSI_POC.WebServices
             }
         }
 
+        [WebMethod]
+        public string GetTaskAndAssignmentID(int header_id)
+        {
+            try
+            {
+                string token = controller.GetToken();
+                var tasks = controller.GetTasks();
+                Console.WriteLine(JsonConvert.SerializeObject(tasks));
+                var task = tasks.FirstOrDefault(t => t["name"].ToString().Contains($"{header_id}"));
 
+                string task_id = Convert.ToString(task["id"]);
+                string assignmentID = Convert.ToString(task["taskAssignments"][0]["id"]);
+                
+                var result = new
+                {
+                    ProcessSuccess = true,
+                    InfoMessage = "OK",
+                    task_id = task_id,
+                    assignment_id = assignmentID
+                };
+
+                return new JavaScriptSerializer().Serialize(result);
+            }
+            catch(Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.Message
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+        [WebMethod]
+        public string ApprovalTask(int header_id, string approval_value)
+        {
+            
+            try
+            {
+                var client = new HttpClient();
+                
+
+                string token = controller.GetToken();
+                Console.WriteLine(token);
+                var tasks = controller.GetTasks();
+
+                var task = tasks.FirstOrDefault(t => t["name"].ToString().Contains($"{header_id}"));
+
+                string task_id = Convert.ToString(task["id"]);
+                string assignmentID = Convert.ToString(task["taskAssignments"][0]["id"]);
+
+                string url = $"https://us.nintex.io/workflows/v2/tasks/" + $"{task_id}/assignments/{assignmentID}";
+
+                //var HttpPATCH = ;
+
+                Console.Write(url);
+
+                var request = new HttpRequestMessage
+                {
+                    Method = new HttpMethod("PATCH"),
+                    RequestUri = new Uri(url),
+                    Headers =
+                        {
+                            { "Accept", "application/json, application/problem+json" },
+                            { "Authorization", $"Bearer {token}" }
+                        },
+                    Content = new StringContent($"{{\n  \"outcome\": \"{approval_value}\"\n}}")
+                    {
+                        Headers =
+                            {
+                                ContentType = new MediaTypeHeaderValue("application/json")
+                            }
+                    }
+                };
+
+                using (var response = client.SendAsync(request).Result)
+                {
+                    response.EnsureSuccessStatusCode();
+                    var body = response.Content.ReadAsStringAsync();
+                }
+
+
+                var result = new
+                {
+                    ProcessSuccess = true,
+                    InfoMessage = "OK"
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+
+            catch(Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.Message
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
 
     }
 }
