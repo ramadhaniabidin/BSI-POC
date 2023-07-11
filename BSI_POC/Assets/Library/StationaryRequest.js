@@ -50,19 +50,36 @@ app.service("svc", function ($http) {
         return response;
     }
 
-    this.svc_ApproveRequest = function (header_id, approval_value) {
+    this.svc_GetDataByID = function (header_id) {
         var param = {
-            'header_id': header_id,
-            'approval_value': approval_value
+            header_id: header_id,
         }
 
         var response = $http({
-            method: "patch",
-            url: "/WebServices/StationaryRequest.asmx/ApprovalTask",
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/GetDataByID",
             data: JSON.stringify(param),
-            dataType: "json",
+            dataType: "json"
         })
 
+        return response;
+    }
+
+    this.svc_ApproveRequest = function (approval_value, task_id, assignmnet_id) {
+        var param = {
+            'approval_value': approval_value,
+            'task_id': task_id,
+            'assignment_id': assignmnet_id
+        }
+
+        var config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        };
+
+        var url = "/WebServices/StationaryRequest.asmx/ApproveRequest";
+        var response = $http.post(url, param, config);
         console.log(response);
 
         return response;
@@ -79,7 +96,23 @@ app.service("svc", function ($http) {
             data: JSON.stringify(param),
             dataType: "json",
         });
-        console.log(response)
+
+        return response;
+    }
+
+    this.svc_GetToken = function (client_id, client_secret, grant_type) {
+        var param = {
+            'client_id': client_id,
+            'client_secret': client_secret,
+            'grant_type': grant_type
+        }
+
+        var response = $http({
+            method: "POST",
+            url: "/WebServices/StationaryRequest.asmx/GetToken",
+            data: JSON.stringify(param),
+            dataType: "json"
+        })
 
         return response;
     }
@@ -158,7 +191,7 @@ app.service("svc", function ($http) {
 
 })
 
-app.controller('ctrl', function ($scope, $cookies, svc) {
+app.controller('ctrl', function ($scope,  svc) {
     $scope.header_data = {
         folio_no: '',
         applicant: '',
@@ -184,8 +217,29 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
         request_qty: '',
         reason: '',
     }
+    $scope.task_id = '';
+    $scope.assignment_id = '';
+    $scope.token = '';
 
     $scope.Items = [];
+
+    $scope.GetToken = function () {
+        var client_id = "f7bbb84b-b114-4120-9a5f-b0557b6dbee2";
+        var client_secret = "sNNtUWsKIRJtSsOtTsJPLtSsMNJMLtUsMPtUsI2VsJtWsINMtPsNtW2MtVsRtUUsFRtSTWsFMtTVsPFtRsK2osFtTsP2jsLOKtRsMM2p";
+        var grant_type = "client_credentials";
+
+        var proc = svc.svc_GetToken(client_id, client_secret, grant_type);
+        proc.then(function (response) {
+            var data = JSON.parse(response.data.d);
+            if (data.ProcessSuccess) {
+                $scope.token = data.token;
+                console.log($scope.token);
+            }
+            else {
+                console.log(data.InfoMessage);
+            }
+        })
+    }
 
     $scope.InsertDataHeader = function () {
         var detail = []
@@ -389,6 +443,8 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
 
     $scope.approve_value = '';
 
+
+
     $scope.GetData = function () {
         var appr = document.getElementById("approver");
         var approval = document.getElementById("approval");
@@ -405,10 +461,7 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
         var btn_submit = document.getElementById("submit");
         var btn_approve = document.getElementById("approve_action");
 
-        console.log(window.localStorage.getItem('email'));
-        console.log(window.localStorage.getItem('role_id'));
         $scope.role_id = window.localStorage.getItem('role_id');
-        console.log($scope.role_id);
 
         if ($scope.role_id === '0') {
             approval.style.display = "none";
@@ -433,25 +486,31 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
         //}
 
         var folio_no = GetQueryString()["folio_no"];
-        var proc = svc.svc_GetData(folio_no);
-        proc.then(function (response) {
-            var data = JSON.parse(response.data.d);
-            if (data.ProcessSuccess) {
-                var h = data._header;
-                $scope.header_data = h;
-                $scope.rows = data._detail;
-                console.log(data._header);
-                console.log(data._detail);
 
-            }
-            else {
-                console.log(data.InfoMessage);
-            }
-        })
+        console.log("Folio No:" + folio_no + "")
 
+        if ((folio_no !== undefined) || (folio_no !== null) || (folio_no !== '')) {
+            console.log("Jajal")
 
+            var proc = svc.svc_GetData(folio_no);
+            proc.then(function (response) {
+                var data = JSON.parse(response.data.d);
+                if (data.ProcessSuccess) {
+                    var h = data._header;
+                    $scope.header_data = h;
+                    $scope.rows = data._detail;
+                    console.log(data._header);
+                    console.log(data._detail);
 
+                    $scope.Cek_Aproval();
 
+                }
+                else {
+                    console.log(data.InfoMessage);
+                }
+            })
+        }
+        
     }
 
 
@@ -470,8 +529,12 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
             var data = JSON.parse(response.data.d);
             console.log(data);
             if (data.ProcessSuccess) {
-                console.log(data.task_id);
-                console.log(data.assignment_id);
+                $scope.task_id = data.task_id;
+                $scope.assignment_id = data.assignment_id;
+
+                console.log($scope.task_id);
+                console.log($scope.assignment_id);
+
             }
             else {
                 console.log(data.InfoMessage);
@@ -484,19 +547,29 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
         var header_id = $scope.header_data.id;
         var approval_value = $scope.approve_value;
 
-        svc.svc_ApproveRequest(header_id, approval_value).
+        svc.svc_ApproveRequest(approval_value, $scope.task_id, $scope.assignment_id).
             then(function (response) {
                 var resp_data = JSON.parse(response.data.d);
                 console.log(resp_data);
                 if (resp_data.ProcessSuccess) {
-                    window.alert("Successfully Approving/Rejecting Request");
+                    console.log("Successfully Approving/Rejecting Request");
                     window.location.href = '/Home.aspx';
                 }
                 else {
-                    window.alert("Error : " + resp_data.InfoMessage);
+                    console.log("Error : " + resp_data.InfoMessage);
                 }
+            })
+            .catch(function (error) {
+                console.log("Error: " + error.statusText);
             })
     }
 
+    $scope.Cek = function () {
+        console.log($scope.task_id);
+        console.log($scope.assignment_id);
+    }
+
+
+
     $scope.GetData();
-})
+ })

@@ -14,6 +14,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    
     <div ng-app="app" ng-controller="ctrl">
         <div class="row" style="padding-left: 10px">
             <div class="row" style="width: 90%;">
@@ -140,7 +141,8 @@
                 <button id="delivered" class="btn btn-primary" style="width:5%; color:white; display:none" ng-click="CekTabel()">Delivered</button>
             </div>
             <button id="LogOut" class="btn btn-danger" style="width:5%; color:white" ng-click="LogOut()">LogOut</button>    
-            <button ng-click="Cek_Aproval()">Cek</button>
+            <button ng-click="Cek()">Cek</button>
+            <button ng-click="GetToken()">Get Token</button>
         </div>
         
     </div>

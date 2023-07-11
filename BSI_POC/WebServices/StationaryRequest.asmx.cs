@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace BSI_POC.WebServices
 {
@@ -199,11 +200,39 @@ namespace BSI_POC.WebServices
         }
 
         [WebMethod]
+        public string GetDataByID(int header_id)
+        {
+            try
+            {
+                var header = controller.GetDataHeaderByID(header_id);
+                var detail = controller.GetDataDetailByID(header_id);
+
+                var result = new
+                {
+                    ProcessSuccess = true,
+                    InfoMessage = "OK",
+                    _header = header,
+                    _detail = detail,
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+            catch (Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.Message
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+        [WebMethod]
         public string GetTaskAndAssignmentID(int header_id)
         {
             try
             {
-                string token = controller.GetToken();
+                //string token = controller.GetToken();
                 var tasks = controller.GetTasks();
                 Console.WriteLine(JsonConvert.SerializeObject(tasks));
                 var task = tasks.FirstOrDefault(t => t["name"].ToString().Contains($"{header_id}"));
@@ -233,54 +262,30 @@ namespace BSI_POC.WebServices
         }
 
         [WebMethod]
-        public string ApprovalTask(int header_id, string approval_value)
+        public string ApproveRequest(string approval_value, string task_id, string assignment_id)
         {
             
             try
             {
-                var client = new HttpClient();
-                
-
                 string token = controller.GetToken();
-                Console.WriteLine(token);
-                var tasks = controller.GetTasks();
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var task = tasks.FirstOrDefault(t => t["name"].ToString().Contains($"{header_id}"));
+                var payload = new { outcome = approval_value };
+                var jsonPayload = JsonConvert.SerializeObject(payload);
+                var stringContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-                string task_id = Convert.ToString(task["id"]);
-                string assignmentID = Convert.ToString(task["taskAssignments"][0]["id"]);
-
-                string url = $"https://us.nintex.io/workflows/v2/tasks/" + $"{task_id}/assignments/{assignmentID}";
-
-                //var HttpPATCH = ;
-
-                Console.Write(url);
-
-                var request = new HttpRequestMessage
-                {
-                    Method = new HttpMethod("PATCH"),
-                    RequestUri = new Uri(url),
-                    Headers =
-                        {
-                            { "Accept", "application/json, application/problem+json" },
-                            { "Authorization", $"Bearer {token}" }
-                        },
-                    Content = new StringContent($"{{\n  \"outcome\": \"{approval_value}\"\n}}")
-                    {
-                        Headers =
-                            {
-                                ContentType = new MediaTypeHeaderValue("application/json")
-                            }
-                    }
-                };
-
-                using (var response = client.SendAsync(request).Result)
-                {
-                    response.EnsureSuccessStatusCode();
-                    var body = response.Content.ReadAsStringAsync();
-                }
+                string url = $"https://us.nintex.io/workflows/v2/tasks/{task_id}/assignments/{assignment_id}";
 
 
+                var request = new HttpRequestMessage(new HttpMethod("PATCH"), url);
+                request.Content = stringContent;
+
+                var response = client.SendAsync(request).Result;
+
+              
+                var responseBody = response.Content.ReadAsStringAsync();
+ 
                 var result = new
                 {
                     ProcessSuccess = true,
@@ -289,6 +294,48 @@ namespace BSI_POC.WebServices
                 return new JavaScriptSerializer().Serialize(result);
             }
 
+            catch(Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.Message
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+        [WebMethod]
+        public string GetToken(string client_id, string client_secret, string grant_type)
+        {
+            string url = "https://us.nintex.io/authentication/v1/token";
+            try
+            {
+                HttpClient client = new HttpClient();
+                var requestBody = new
+                {
+                    client_id = client_id,
+                    client_secret = client_secret,
+                    grant_type = grant_type
+                };
+
+                var jsonBody = JsonConvert.SerializeObject(requestBody);
+                var HttpContent = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+                var response = client.PostAsync(url, HttpContent).Result;
+                var responseJson = response.Content.ReadAsStringAsync().Result;
+                var responseObject = JsonConvert.DeserializeObject<dynamic>(responseJson);
+
+                string accessToken = responseObject.access_token;
+
+                var result = new
+                {
+                    ProcessSuccess = true,
+                    InfoMessage = "OK",
+                    token = accessToken
+                };
+
+                return new JavaScriptSerializer().Serialize(result);
+            }
             catch(Exception ex)
             {
                 var result = new

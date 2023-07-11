@@ -57,9 +57,25 @@ app.service("svc", function ($http) {
         });
         return response;
     }
+
+    this.svc_GetTaskAndAssignmentID = function (header_id) {
+        var param = {
+            'header_id': header_id,
+        }
+
+        var response = $http({
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/GetTaskAndAssignmentID",
+            data: JSON.stringify(param),
+            dataType: "json",
+        });
+        console.log(response)
+
+        return response;
+    }
 });
 
-app.controller('ctrl', function ($scope, $cookies, $window, svc) {
+app.controller('ctrl', function ($scope, svc) {
     $scope.Items = [];
     $scope.role_id = '';
     $scope.ListData = function () {
@@ -86,9 +102,6 @@ app.controller('ctrl', function ($scope, $cookies, $window, svc) {
         console.log($cookies.get('email'));
     }
 
-    $window.onbeforeunload = function (event) {
-        $cookies.remove('email');
-    };
 
 
     $scope.GetRoleID = function () {
@@ -104,6 +117,13 @@ app.controller('ctrl', function ($scope, $cookies, $window, svc) {
             }
         })
 
+
+    }
+
+    $scope.CekRequest = function (header_id) {
+
+
+        window.location.href = "/Pages/StationaryRequest.aspx?folio_no=" + header_id;
 
     }
 

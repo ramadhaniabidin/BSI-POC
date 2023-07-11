@@ -122,6 +122,37 @@ namespace BSI_POC.BusinessLogics.Controller
             return roles;
         }
 
+        public StationaryRequestHeaderModel GetDataHeaderByID(int header_id)
+        {
+            try
+            {
+                dt = new DataTable();
+                db.OpenConnection(ref conn);
+                db.cmd.CommandText = "dbo.get_header_data_by_id";
+                db.cmd.CommandType = CommandType.StoredProcedure;
+                db.cmd.Parameters.Clear();
+                db.AddInParameter(db.cmd, "header_id", header_id);
+                reader = db.cmd.ExecuteReader();
+                dt.Load(reader);
+                db.CloseDataReader(reader);
+                db.CloseConnection(ref conn);
+
+                if (dt.Rows.Count > 0)
+                {
+                    return Utility.ConvertDataTableToList<StationaryRequestHeaderModel>(dt)[0];
+                }
+                else
+                {
+                    return new StationaryRequestHeaderModel();
+                }
+            }
+            catch (Exception ex)
+            {
+                db.CloseConnection(ref conn);
+                throw ex;
+            }
+        }
+
         public StationaryRequestHeaderModel GetDataHeader(string folio_no)
         {
             try
@@ -145,6 +176,32 @@ namespace BSI_POC.BusinessLogics.Controller
                 {
                     return new StationaryRequestHeaderModel();
                 }
+            }
+            catch (Exception ex)
+            {
+                db.CloseConnection(ref conn);
+                throw ex;
+            }
+        }
+
+        public List<StationaryRequestDetailModel> GetDataDetailByID(int header_id)
+        {
+            try
+            {
+                dt = new DataTable();
+                db.OpenConnection(ref conn);
+                db.cmd.CommandText = "dbo.get_data_details_by_id";
+                db.cmd.CommandType = CommandType.StoredProcedure;
+                db.cmd.Parameters.Clear();
+                db.AddInParameter(db.cmd, "header_id", header_id);
+                reader = db.cmd.ExecuteReader();
+                dt.Load(reader);
+                db.CloseDataReader(reader);
+                db.CloseConnection(ref conn);
+                if (dt.Rows.Count > 0)
+                    return Utility.ConvertDataTableToList<StationaryRequestDetailModel>(dt);
+                else
+                    return new List<StationaryRequestDetailModel>();
             }
             catch (Exception ex)
             {
@@ -216,28 +273,6 @@ namespace BSI_POC.BusinessLogics.Controller
         public string GetToken()
         {
             string url = "https://us.nintex.io/authentication/v1/token";
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    Ini untuk membuat request body
-            //   var requestBody = new
-            //   {
-            //       client_id = "f7bbb84b-b114-4120-9a5f-b0557b6dbee2",
-            //       client_secret = "sNNtUWsKIRJtSsOtTsJPLtSsMNJMLtUsMPtUsI2VsJtWsINMtPsNtW2MtVsRtUUsFRtSTWsFMtTVsPFtRsK2osFtTsP2jsLOKtRsMM2p",
-            //       grant_type = "clienr_credentials"
-            //   };
-
-
-
-            //    var jsonBody = JsonConvert.SerializeObject(requestBody);
-            //    var HttpContent = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-            //    var response = client.PostAsync(url, HttpContent).Result;
-            //    var responseJson = response.Content.ReadAsStringAsync().Result;
-            //    dynamic responseObject = JsonConvert.DeserializeObject(responseJson);
-
-            //    string accessToken = responseObject.access_token;
-
-            //    return accessToken;
-            //}
 
             HttpClient client = new HttpClient();
             var requestBody = new
