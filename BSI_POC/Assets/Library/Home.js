@@ -176,6 +176,14 @@ app.controller('ctrl', function ($scope, svc) {
                 var data = JSON.parse(response.data.d);
                 console.log(data);
                 if (data.ProcessSuccess) {
+                    
+                    for (i of data.items) {
+                        i.created_date = parseInt((i.created_date).substring(6, i.created_date.length - 2));
+                        i.created_date = new Date(i.created_date).toDateString();
+                        /*var date = new Date(ticks).toDateString();*/
+
+                        /*console.log(i.created_date);*/
+                    }
                     $scope.Items = data.items;
                     console.log($scope.Items);
                     //console.log($scope.task_id);
@@ -230,6 +238,14 @@ app.controller('ctrl', function ($scope, svc) {
                 var data = JSON.parse(response.data.d);
                 console.log(data);
                 if (data.ProcessSuccess) {
+                    for (i of data.items) {
+                        i.created_date = parseInt((i.created_date).substring(6, i.created_date.length - 2));
+                        i.created_date = new Date(i.created_date).toDateString();
+                        /*var date = new Date(ticks).toDateString();*/
+
+                        /*console.log(i.created_date);*/
+                    }
+
                     $scope.Item = data.items;
                     console.log($scope.Item);
                     //console.log($scope.task_id);

@@ -24,7 +24,7 @@
                   <th scope="col">Folio No.</th>
                   <th scope="col">Status</th>
                   <th scope="col">Submitted By</th>
-                  <%--<th scope="col">Submitted Date</th>--%>
+                  <th scope="col">Submitted Date</th>
                 </tr>
               </thead>
               <tbody>
@@ -33,7 +33,7 @@
                       <td><a href="/Pages/StationaryRequest.aspx?folio_no={{i.folio_no}}" target="_blank">{{i.folio_no}}</a></td>
                       <td>{{i.status_id}}</td>
                       <td>{{i.created_by}}</td>
-                      <%--<td>{{i.created_date}}</td>--%>
+                      <td>{{i.created_date}}</td>
                   </tr>
               </tbody>
             </table>
@@ -49,7 +49,7 @@
                   <th scope="col">Folio No.</th>
                   <th scope="col">Status</th>
                   <th scope="col">Submitted By</th>
-                  <%--<th scope="col">Submitted Date</th>--%>
+                  <th scope="col">Submitted Date</th>
                 </tr>
               </thead>
               <tbody>
@@ -58,7 +58,7 @@
                       <td><a href="/Pages/StationaryRequest.aspx?folio_no={{i.folio_no}}" target="_blank">{{i.folio_no}}</a></td>
                       <td>{{i.status_id}}</td>
                       <td>{{i.created_by}}</td>
-                      <%--<td>{{i.created_date}}</td>--%>
+                      <td>{{i.created_date}}</td>
                   </tr>
               </tbody>
             </table>
