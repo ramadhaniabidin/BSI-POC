@@ -127,6 +127,7 @@
     <Content Include="Assets\css\Design\transaction-patch.css" />
     <Content Include="Assets\css\Design\transaction.css" />
     <Content Include="Assets\css\sb-admin-2.css" />
+    <Content Include="Assets\css\sb-admin-2.min.css" />
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\css\table.css" />
     <Content Include="Assets\Home.js" />
