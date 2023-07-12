@@ -492,11 +492,14 @@ app.controller('ctrl', function ($scope,  svc) {
 
         var folio_no = GetQueryString()["folio_no"];
 
+        console.log(folio_no);
 
+        if ((folio_no === undefined) || (folio_no === null) || (folio_no === '')) {
+            console.log("Folio no: undefined, masukkan data baru");
+            delivered.style.display = "none";
+        }
 
-
-
-        if ((folio_no !== undefined) || (folio_no !== null) || (folio_no !== '')) {
+        else {
 
             var proc = svc.svc_GetData(folio_no);
             proc.then(function (response) {
@@ -511,7 +514,7 @@ app.controller('ctrl', function ($scope,  svc) {
                     console.log("Folio No:" + folio_no);
                     console.log("status_id: " + $scope.header_data.status_id);
 
-                    if (($scope.header_data.status_id !== 3) && (window.localStorage.getItem("role_id") !== "0")) {
+                    if (($scope.header_data.status_id !== 3) && (window.localStorage.getItem("role_id") === "0")) {
                         delivered.style.display = "none";
                     }
 
