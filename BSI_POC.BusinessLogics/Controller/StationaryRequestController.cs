@@ -43,6 +43,7 @@ namespace BSI_POC.BusinessLogics.Controller
             cmd.Parameters.AddWithValue("@modified_date", header.modified_date);
             cmd.Parameters.AddWithValue("@status_id", header.status_id);
             cmd.Parameters.AddWithValue("@approver_target_role_id", header.approver_target_role_id);
+            cmd.Parameters.AddWithValue("@current_approver_role", header.current_approver_role);
 
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();

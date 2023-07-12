@@ -6,6 +6,7 @@ using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using BSI_POC.BusinessLogics.Controller;
+using Newtonsoft.Json;
 
 namespace BSI_POC.WebServices
 {
@@ -21,6 +22,7 @@ namespace BSI_POC.WebServices
     public class Home : System.Web.Services.WebService
     {
         HomeController controller = new HomeController();
+        readonly StationaryRequestController stationaryRequestController = new StationaryRequestController();
 
         [WebMethod]
         public string HelloWorld()
@@ -46,6 +48,60 @@ namespace BSI_POC.WebServices
 
             }
             catch (Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.Message
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+        [WebMethod]
+        public string ListDataByID(int current_approver_role)
+        {
+            try
+            {
+                var data = controller.ListDataByID(current_approver_role);
+                var result = new
+                {
+                    ProcessSuccess = true,
+                    InfoMessage = "OK",
+                    items = data,
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+            catch(Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.Message
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+
+        [WebMethod]
+        public string GetTasksList(string assignee)
+        {
+            try
+            {
+                var tasks = stationaryRequestController.GetTasks();
+                var tasksJson = JsonConvert.SerializeObject(tasks);
+                var task = tasks.FirstOrDefault(t => t["taskAssignments"][0]["assignee"].ToString().Contains($"{assignee}"));
+                var taskJson = JsonConvert.SerializeObject(task);
+                var result = new
+                {
+                    ProcessSuccess = true,
+                    InfoMessage = "OK",
+                    tasksJson
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+            catch(Exception ex)
             {
                 var result = new
                 {

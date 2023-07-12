@@ -38,5 +38,39 @@ namespace BSI_POC.BusinessLogics.Controller
                 throw ex;
             }
         }
+
+        public List<HomeModel> ListDataByID(int current_approver_role)
+        {
+            try
+            {
+                dt = new DataTable();
+                db.OpenConnection(ref conn);
+                db.cmd.CommandText = "dbo.list_data_by_id";
+                db.cmd.CommandType = CommandType.StoredProcedure;
+                db.cmd.Parameters.Clear();
+                db.AddInParameter(db.cmd, "current_approver_role", current_approver_role);
+                reader = db.cmd.ExecuteReader();
+                dt.Load(reader);
+                db.CloseDataReader(reader);
+                db.CloseConnection(ref conn);
+
+                return Utility.ConvertDataTableToList<HomeModel>(dt);
+
+                //if(dt.Rows.Count > 0)
+                //{
+                //    return Utility.ConvertDataTableToList<HomeModel>(dt);
+                //}
+                //else
+                //{
+                //    return new HomeModel();
+                //}
+            }
+
+            catch(Exception ex)
+            {
+                db.CloseConnection(ref conn);
+                throw ex;
+            }
+        }
     }
 }

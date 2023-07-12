@@ -16,7 +16,7 @@
 
         
 
-        <div class="row" style="padding-top: 5px;">
+        <div id="listData" class="row" style="padding-top: 5px;">
             <table class="table">
               <thead class="thead-dark">
                 <tr style="background-color:darkgray">
@@ -29,6 +29,31 @@
               </thead>
               <tbody>
                   <tr ng-repeat="i in Items">
+                      <td>{{$index+1}}</td>
+                      <td><a href="/Pages/StationaryRequest.aspx?folio_no={{i.folio_no}}" target="_blank">{{i.folio_no}}</a></td>
+                      <td>{{i.status_id}}</td>
+                      <td>{{i.created_by}}</td>
+                      <%--<td>{{i.created_date}}</td>--%>
+                  </tr>
+              </tbody>
+            </table>
+
+            
+        </div>
+        
+        <div id="listDataByID" class="row" style="padding-top: 5px;">
+            <table class="table">
+              <thead class="thead-dark">
+                <tr style="background-color:darkgray">
+                  <th scope="col">#</th>
+                  <th scope="col">Folio No.</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Submitted By</th>
+                  <%--<th scope="col">Submitted Date</th>--%>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="i in Item">
                       <td>{{$index+1}}</td>
                       <td><a href="/Pages/StationaryRequest.aspx?folio_no={{i.folio_no}}" target="_blank">{{i.folio_no}}</a></td>
                       <td>{{i.status_id}}</td>

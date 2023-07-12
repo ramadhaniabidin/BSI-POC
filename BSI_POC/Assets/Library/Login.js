@@ -79,10 +79,21 @@ app.controller('ctrl', function ($scope, $cookies, svc) {
     $scope.LoginButton = function () {
         svc.svc_GetRoleID($scope.login_email).then(function (response) {
             var data = JSON.parse(response.data.d);
-            window.localStorage.setItem('role_id', data.id.toString());
-            window.localStorage.setItem('email', $scope.login_email);
 
-            window.location.href = '/Home.aspx';
+            console.log(data.email_account);
+            if (data.email_account.toString() === undefined || (data.email_account.toString() === '')) {
+
+                window.alert("Akun Email tidak terdaftar/valid !!");
+            }
+            else {
+                window.localStorage.setItem('role_id', data.id.toString());
+                window.localStorage.setItem('email', $scope.login_email);
+                window.location.href = '/Home.aspx';
+            }
+
+
+
+            
         })
 
 

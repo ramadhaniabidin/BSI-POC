@@ -53,7 +53,7 @@
                             <!-- Nested Row within Card Body -->
                             <div class="row">
                                 <div class="col-lg-5"                                    
-                                    style="background: url('Assets/images/download.png'); background-size: contain; height:385px;">
+                                    style="background: url('Assets/images/download.png'); background-size: contain; height:385px; left:10px;">
                                 </div>
                                 <div class="col-lg-7">
                                     <div class="p-5">

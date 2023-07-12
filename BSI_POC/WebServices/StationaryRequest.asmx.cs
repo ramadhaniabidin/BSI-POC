@@ -235,7 +235,7 @@ namespace BSI_POC.WebServices
                 //string token = controller.GetToken();
                 var tasks = controller.GetTasks();
                 Console.WriteLine(JsonConvert.SerializeObject(tasks));
-                var task = tasks.FirstOrDefault(t => t["name"].ToString().Contains($"{header_id}"));
+                var task = tasks.FirstOrDefault(t => t.name.ToString().Contains($"{header_id}"));
 
                 string task_id = Convert.ToString(task["id"]);
                 string assignmentID = Convert.ToString(task["taskAssignments"][0]["id"]);
@@ -346,6 +346,7 @@ namespace BSI_POC.WebServices
                 return new JavaScriptSerializer().Serialize(result);
             }
         }
+
 
     }
 }

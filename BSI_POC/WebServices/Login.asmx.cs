@@ -64,12 +64,14 @@ namespace BSI_POC.WebServices
 
             try
             {
-                int role_id = controller.GetRoleId(email);
+                int role_id = controller.GetRoleId(email).Item1;
+                string email_account = controller.GetRoleId(email).Item2;
                 var result = new
                 {
                     ProcessSuccess = true,
                     InfoMessage = "OK",
-                    id = role_id
+                    id = role_id,
+                    email_account
                 };
                 return new JavaScriptSerializer().Serialize(result);
             }

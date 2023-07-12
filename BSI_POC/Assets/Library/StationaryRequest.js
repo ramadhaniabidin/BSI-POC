@@ -207,6 +207,7 @@ app.controller('ctrl', function ($scope,  svc) {
         modified_by: 'Dhani',
         modified_date: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
         approver_target_role_id: 0,
+        current_approver_role: 0,
     };
 
     $scope.details_data = {
@@ -233,6 +234,7 @@ app.controller('ctrl', function ($scope,  svc) {
             var data = JSON.parse(response.data.d);
             if (data.ProcessSuccess) {
                 $scope.token = data.token;
+                /*window.localStorage.setItem("token", $scope.token);*/
                 console.log($scope.token);
             }
             else {
@@ -257,9 +259,11 @@ app.controller('ctrl', function ($scope,  svc) {
         $scope.created_dateFormatted = new moment($scope.created_date, "DD-MMM-YYYY").format("YYYY-MM-DD HH:mm:ss");
         if ($scope.approver == "Internal Section Head") {
             $scope.header_data.approver_target_role_id = 1
+            $scope.header_data.current_approver_role = 1
         }
         else if ($scope.approver == "Internal Dept Head") {
             $scope.header_data.approver_target_role_id = 2
+            $scope.header_data.current_approver_role = 2
         }
 
         var params = {
@@ -278,6 +282,7 @@ app.controller('ctrl', function ($scope,  svc) {
                 modified_by: $scope.header_data.modified_by,
                 modified_date: $scope.created_dateFormatted,
                 approver_target_role_id: $scope.header_data.approver_target_role_id,
+                current_approver_role: $scope.header_data.current_approver_role,
             },
             detail: detail,
         }
@@ -481,16 +486,22 @@ app.controller('ctrl', function ($scope,  svc) {
             btn_submit.style.display = "none";
         }
 
+
+
         //else if (($scope.role_id === '3') || ($scope.role_id === '4')) {
         //    appr.style.display = "none";
         //}
 
         var folio_no = GetQueryString()["folio_no"];
 
-        console.log("Folio No:" + folio_no + "")
+        console.log("Folio No:" + folio_no);
+        console.log("status_id: " + $scope.header_data.status_id);
+        if ($scope.header_data.status_id !== 3) {
+            delivered.style.display = "none";
+        }
+
 
         if ((folio_no !== undefined) || (folio_no !== null) || (folio_no !== '')) {
-            console.log("Jajal")
 
             var proc = svc.svc_GetData(folio_no);
             proc.then(function (response) {
@@ -552,7 +563,7 @@ app.controller('ctrl', function ($scope,  svc) {
                 var resp_data = JSON.parse(response.data.d);
                 console.log(resp_data);
                 if (resp_data.ProcessSuccess) {
-                    console.log("Successfully Approving/Rejecting Request");
+                    window.alert("Successfully Approving/Rejecting Request");
                     window.location.href = '/Home.aspx';
                 }
                 else {

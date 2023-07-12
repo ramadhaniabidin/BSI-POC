@@ -1,14 +1,9 @@
 ﻿using BSI_POC.BusinessLogics.Common;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.SessionState;
 
 namespace BSI_POC.BusinessLogics.Controller
 {
@@ -35,10 +30,11 @@ namespace BSI_POC.BusinessLogics.Controller
             }
         }
 
-        public int GetRoleId(string email)
+        public Tuple<int, string> GetRoleId(string email)
         {
             //string email = (string)context.Session["email"];
             int role_id = 0;
+            string email_account = "";
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.getRoleId", con);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -51,8 +47,11 @@ namespace BSI_POC.BusinessLogics.Controller
             while (reader.Read())
             {
                 role_id = reader.GetInt32(0);
+                email_account = reader.GetString(1);
             }
-            return role_id;
+
+            Console.WriteLine(email_account);
+            return new Tuple<int, string>(role_id, email_account);
         }
 
         //public int GetRoleId(string email)

@@ -138,7 +138,7 @@
                 <button id="submit" class="btn" style="width:5%; background-color:green; color:white" ng-click="InsertDataHeader()">Submit</button><br />
                 <button id="approve_action" class="btn" style="width:5%; background-color:green; color:white" ng-click="ApproveRequest()">Submit</button>
                 <button id="close" class="btn btn-danger" style="width:5%; color:white" ng-click="ConfirmStationary()">Close</button><br />
-                <button id="delivered" class="btn btn-primary" style="width:5%; color:white; display:none" ng-click="CekTabel()">Delivered</button>
+                <button id="delivered" class="btn btn-primary" style="width:5%; color:white;" ng-click="CekTabel()">Delivered</button>
             </div>
             <button id="LogOut" class="btn btn-danger" style="width:5%; color:white" ng-click="LogOut()">LogOut</button>    
             <button ng-click="Cek()">Cek</button>
