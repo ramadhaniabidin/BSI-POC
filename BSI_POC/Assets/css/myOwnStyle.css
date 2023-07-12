@@ -114,3 +114,28 @@
     background-color: black;
     height: 2px;
 }
+
+#submit{
+    width: 5%;
+    background-color: green;
+    color: white;
+    margin-right: 5px;
+}
+
+#close{
+    width: 5%;
+    color: white;
+    margin-right: 5px;
+}
+
+#approve_action {
+    width: 5%;
+    background-color: green;
+    color: white;
+}
+
+#LogOut{
+    width: 5%;
+    color: white;
+    margin-top: 10px;
+}

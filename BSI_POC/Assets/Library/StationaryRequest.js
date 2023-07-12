@@ -485,11 +485,6 @@ app.controller('ctrl', function ($scope,  svc) {
         }
 
 
-
-        //else if (($scope.role_id === '3') || ($scope.role_id === '4')) {
-        //    appr.style.display = "none";
-        //}
-
         var folio_no = GetQueryString()["folio_no"];
 
         console.log(folio_no);
@@ -514,8 +509,20 @@ app.controller('ctrl', function ($scope,  svc) {
                     console.log("Folio No:" + folio_no);
                     console.log("status_id: " + $scope.header_data.status_id);
 
-                    if (($scope.header_data.status_id !== 3) && (window.localStorage.getItem("role_id") === "0")) {
-                        delivered.style.display = "none";
+                    //Jika status_id = 3 dan yang current login role_id = 4 maka tombol deliver akan dimunculkan;
+
+                    if (($scope.header_data.status_id === 3) && ((window.localStorage.getItem("role_id") === "4")) || (window.localStorage.getItem("role_id") === "3")) {
+                        delivered.style.display = "block";
+                        approval.style.display = "none";
+                        btn_approve.style.display = "none";
+                    }
+
+                    //if (($scope.header_data.status_id !== 3) && (window.localStorage.getItem("role_id") === "0")) {
+                    //    delivered.style.display = "none";
+                    //}
+
+                    if (window.localStorage.getItem("role_id") === "0") {
+                        approval.style.display = "none";
                     }
 
                     $scope.Cek_Aproval();
