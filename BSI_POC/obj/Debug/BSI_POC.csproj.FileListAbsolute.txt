@@ -53,6 +53,7 @@ C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\ro
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\Antlr3.Runtime.dll
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\AspNet.ScriptManager.bootstrap.dll
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\AspNet.ScriptManager.jQuery.dll
+C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\BSI_POC.BusinessLogics.dll
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\Microsoft.AspNet.FriendlyUrls.dll
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
@@ -62,8 +63,9 @@ C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\Mi
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\Newtonsoft.Json.dll
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.Optimization.dll
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\WebGrease.dll
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.Optimization.xml
+C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\BSI_POC.BusinessLogics.pdb
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\Newtonsoft.Json.xml
+C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.Optimization.xml
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\Antlr3.Runtime.pdb
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\Microsoft.AspNet.FriendlyUrls.xml
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml

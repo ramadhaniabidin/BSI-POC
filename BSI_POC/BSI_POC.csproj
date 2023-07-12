@@ -45,11 +45,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -80,9 +84,6 @@
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -106,6 +107,118 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="Assets\css\bootstrap\bootstrap-grid.min.css" />
+    <Content Include="Assets\css\bootstrap\bootstrap-utilities.min.css" />
+    <Content Include="Assets\css\bootstrap\bootstrap.min.css" />
+    <Content Include="Assets\css\bootstrap\bootstrap_importer.css" />
+    <Content Include="Assets\css\customLogin.css" />
+    <Content Include="Assets\css\entry.css" />
+    <Content Include="Assets\css\Home.css" />
+    <Content Include="Assets\css\list.css" />
+    <Content Include="Assets\css\Login.css" />
+    <Content Include="Assets\css\myOwnStyle.css" />
+    <Content Include="Assets\css\Phosphor-regular\Phosphor.svg" />
+    <Content Include="Assets\css\Phosphor-regular\style.css" />
+    <Content Include="Assets\css\Design\form.css" />
+    <Content Include="Assets\css\Design\index.css" />
+    <Content Include="Assets\css\Design\sharedPatch.css" />
+    <Content Include="Assets\css\Design\submission-patch.css" />
+    <Content Include="Assets\css\Design\submission.css" />
+    <Content Include="Assets\css\Design\transaction-patch.css" />
+    <Content Include="Assets\css\Design\transaction.css" />
+    <Content Include="Assets\css\sb-admin-2.css" />
+    <Content Include="Assets\css\style.css" />
+    <Content Include="Assets\css\table.css" />
+    <Content Include="Assets\Home.js" />
+    <Content Include="Assets\images\download.png" />
+    <Content Include="Assets\images\logo.png" />
+    <Content Include="Assets\images\prodia-text.png" />
+    <Content Include="Assets\Library\angular-filter.js" />
+    <Content Include="Assets\Library\angular-route.min.js" />
+    <Content Include="Assets\Library\angular.min.js" />
+    <Content Include="Assets\Library\BaseLogic.js" />
+    <Content Include="Assets\Library\bootstrap\bootstrap.bundle.min.js" />
+    <Content Include="Assets\Library\Home.js" />
+    <Content Include="Assets\Library\jquery.min.js" />
+    <Content Include="Assets\Library\jqueryUI\base\accordion.css" />
+    <Content Include="Assets\Library\jqueryUI\base\all.css" />
+    <Content Include="Assets\Library\jqueryUI\base\autocomplete.css" />
+    <Content Include="Assets\Library\jqueryUI\base\base.css" />
+    <Content Include="Assets\Library\jqueryUI\base\button.css" />
+    <Content Include="Assets\Library\jqueryUI\base\checkboxradio.css" />
+    <Content Include="Assets\Library\jqueryUI\base\controlgroup.css" />
+    <Content Include="Assets\Library\jqueryUI\base\core.css" />
+    <Content Include="Assets\Library\jqueryUI\base\datepicker.css" />
+    <Content Include="Assets\Library\jqueryUI\base\dialog.css" />
+    <Content Include="Assets\Library\jqueryUI\base\draggable.css" />
+    <Content Include="Assets\Library\jqueryUI\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Assets\Library\jqueryUI\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\base\menu.css" />
+    <Content Include="Assets\Library\jqueryUI\base\progressbar.css" />
+    <Content Include="Assets\Library\jqueryUI\base\resizable.css" />
+    <Content Include="Assets\Library\jqueryUI\base\selectable.css" />
+    <Content Include="Assets\Library\jqueryUI\base\selectmenu.css" />
+    <Content Include="Assets\Library\jqueryUI\base\slider.css" />
+    <Content Include="Assets\Library\jqueryUI\base\sortable.css" />
+    <Content Include="Assets\Library\jqueryUI\base\spinner.css" />
+    <Content Include="Assets\Library\jqueryUI\base\tabs.css" />
+    <Content Include="Assets\Library\jqueryUI\base\theme.css" />
+    <Content Include="Assets\Library\jqueryUI\base\tooltip.css" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-bg_glass_100_e4f1fb_1x400.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-bg_glass_50_3baae3_1x400.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-bg_glass_80_d7ebf9_1x400.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-bg_highlight-soft_100_deedf7_1x100.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-bg_highlight-soft_25_ffef8f_1x100.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-icons_2694e8_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-icons_3d80b3_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-icons_72a7cf_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\cupertino\jquery-ui.min.css" />
+    <Content Include="Assets\Library\jqueryUI\flick\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Assets\Library\jqueryUI\flick\images\ui-bg_highlight-soft_100_f6f6f6_1x100.png" />
+    <Content Include="Assets\Library\jqueryUI\flick\images\ui-bg_highlight-soft_25_0073ea_1x100.png" />
+    <Content Include="Assets\Library\jqueryUI\flick\images\ui-bg_highlight-soft_50_dddddd_1x100.png" />
+    <Content Include="Assets\Library\jqueryUI\flick\images\ui-icons_0073ea_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\flick\images\ui-icons_454545_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\flick\images\ui-icons_666666_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\flick\images\ui-icons_ff0084_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\flick\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\flick\jquery-ui.min.css" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-bg_diagonals-medium_20_d34d17_40x40.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-bg_gloss-wave_45_817865_500x100.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-bg_gloss-wave_60_fece2f_500x100.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-bg_gloss-wave_70_ffdd57_500x100.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-bg_gloss-wave_90_fff9e5_500x100.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-bg_highlight-soft_100_feeebd_1x100.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-bg_inset-soft_30_ffffff_1x100.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-icons_3d3d3d_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-icons_bd7b00_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-icons_d19405_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-icons_eb990f_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-icons_ed9f26_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-icons_fadc7a_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\images\ui-icons_ffe180_256x240.png" />
+    <Content Include="Assets\Library\jqueryUI\jquery-ui.min.css" />
+    <Content Include="Assets\Library\jqueryUI\jquery-ui.min.js" />
+    <Content Include="Assets\Library\Login.js" />
+    <Content Include="Assets\Library\moment.js\moment-with-locales.min.js" />
+    <Content Include="Assets\Library\MyJavaScript.js" />
+    <Content Include="Assets\Library\ng-file-upload.min.js" />
+    <Content Include="Assets\Library\Pager.js" />
+    <Content Include="Assets\Library\StationaryRequest.js" />
+    <Content Include="Assets\vendor\fontawesome-free\css\all.min.css" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-brands-400.svg" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-regular-400.svg" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.svg" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -124,6 +237,31 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Assets\css\bootstrap\bootstrap-grid.min.css.map" />
+    <Content Include="Assets\css\bootstrap\bootstrap-utilities.min.css.map" />
+    <Content Include="Assets\css\bootstrap\bootstrap.min.css.map" />
+    <Content Include="Assets\css\Phosphor-regular\Phosphor.ttf" />
+    <Content Include="Assets\css\Phosphor-regular\Phosphor.woff" />
+    <Content Include="Assets\css\Phosphor-regular\Phosphor.woff2" />
+    <Content Include="Assets\css\Phosphor-regular\selection.json" />
+    <Content Include="Assets\Library\bootstrap\bootstrap.bundle.min.js.map" />
+    <Content Include="Home.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="WebServices\Home.asmx" />
+    <Content Include="WebServices\Login.asmx" />
+    <Content Include="WebServices\StationaryRequest.asmx" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-brands-400.eot" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-brands-400.ttf" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-brands-400.woff" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-brands-400.woff2" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-regular-400.eot" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-regular-400.ttf" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-regular-400.woff" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-regular-400.woff2" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.eot" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.ttf" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.woff" />
+    <Content Include="Assets\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Pages\StationaryRequest.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -187,6 +325,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\StationaryRequest.aspx.cs">
       <DependentUpon>StationaryRequest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -216,6 +368,18 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
+    <Compile Include="WebServices\Home.asmx.cs">
+      <DependentUpon>Home.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Login.asmx.cs">
+      <DependentUpon>Login.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\StationaryRequest.asmx.cs">
+      <DependentUpon>StationaryRequest.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -230,6 +394,12 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BSI_POC.BusinessLogics\BSI_POC.BusinessLogics.csproj">
+      <Project>{38127690-abf3-4662-97c7-3ba25265fc86}</Project>
+      <Name>BSI_POC.BusinessLogics</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
