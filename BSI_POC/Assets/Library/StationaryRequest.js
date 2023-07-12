@@ -134,15 +134,31 @@ app.service("svc", function ($http) {
         return response;
     }
 
-    this.svc_ConfirmStationary = function (header, detail) {
+    this.svc_DeliverStationary = function (header_id) {
         var param = {
-            'header': header,
-            'detail': detail,
+            'header_id': header_id,
         }
 
         var response = $http({
             method: "post",
-            url: "/WebServices/StationaryRequest.asmx/InsertHeaderData",
+            url: "/WebServices/StationaryRequest.asmx/DeliverStationary",
+            data: JSON.stringify(param),
+            datatype: "json"
+        });
+
+        console.log(param);
+
+        return response;
+    }
+
+    this.svc_ConfirmStationary = function (header_id) {
+        var param = {
+            'header_id': header_id
+        }
+
+        var response = $http({
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/ConfirmStationary",
             data: JSON.stringify(param),
             datatype: "json"
         })
@@ -224,6 +240,25 @@ app.controller('ctrl', function ($scope,  svc) {
 
     $scope.Items = [];
 
+    $scope.DeliverStationary = function () {
+        var header_id = $scope.header_data.id;
+
+        console.log(header_id);
+
+        var proc = svc.svc_DeliverStationary(header_id);
+        proc.then(function (response) {
+            var data = JSON.parse(response.data.d);
+            console.log(data);
+            if (data.ProcessSuccess) {
+                window.alert("Successfully Delivering stationary to the requestor, Status : " + data.InfoMessage.toString());
+                window.location.href = '/Home.aspx';
+            }
+            else {
+                window.alert("Error : " + data.InfoMessage);
+            }
+        })
+    }
+
     $scope.GetToken = function () {
         var client_id = "f7bbb84b-b114-4120-9a5f-b0557b6dbee2";
         var client_secret = "sNNtUWsKIRJtSsOtTsJPLtSsMNJMLtUsMPtUsI2VsJtWsINMtPsNtW2MtVsRtUUsFRtSTWsFMtTVsPFtRsK2osFtTsP2jsLOKtRsMM2p";
@@ -303,52 +338,15 @@ app.controller('ctrl', function ($scope,  svc) {
     }
 
     $scope.ConfirmStationary = function () {
-        var detail = []
-        for (var i = 0; i < $scope.rows.length; i++) {
-            detail.push({
-                item_name: $scope.rows[i].item_name,
-                no: i + 1,
-                uom: $scope.rows[i].uom,
-                request_qty: $scope.rows[i].request_qty,
-                reason: $scope.rows[i].reason,
-            })
-        }
+        var header_id = $scope.header_data.id;
+        console.log("header_id: " + header_id);
 
-        $scope.created_date = new moment().format("DD-MMM-YYYY");
-        $scope.created_dateFormatted = new moment($scope.created_date, "DD-MMM-YYYY").format("YYYY-MM-DD HH:mm:ss");
-        if ($scope.approver == "Internal Section Head") {
-            $scope.header_data.approver_target_role_id = 1
-        }
-        else if ($scope.approver == "Internal Dept Head") {
-            $scope.header_data.approver_target_role_id = 2
-        }
-
-        var params = {
-            header: {
-                folio_no: $scope.header_data.folio_no,
-                applicant: $scope.header_data.applicant,
-                department: $scope.header_data.department,
-                role: $scope.header_data.role,
-                employee_id: $scope.header_data.employee_id,
-                employee_name: $scope.header_data.employee_name,
-                extension: $scope.header_data.extension,
-                status_id: 6,
-                remarks: $scope.header_data.remarks,
-                created_by: $scope.header_data.created_by,
-                created_date: $scope.created_dateFormatted,
-                modified_by: $scope.header_data.modified_by,
-                modified_date: $scope.created_dateFormatted,
-                approver_target_role_id: $scope.header_data.approver_target_role_id,
-            },
-            detail: detail,
-        }
-
-        svc.svc_ConfirmStationary(params.header, params.detail).
+        svc.svc_ConfirmStationary(header_id).
             then(function (response) {
                 var resp_data = JSON.parse(response.data.d);
                 console.log(resp_data);
                 if (resp_data.ProcessSuccess) {
-                    window.alert("Successfully Insert/Update data, Status : " + resp_data.InfoMessage.toString());
+                    window.alert("Successfully closing request, Status : " + resp_data.InfoMessage.toString());
                     window.location.href = '/Home.aspx';
                 }
                 else {
@@ -494,11 +492,8 @@ app.controller('ctrl', function ($scope,  svc) {
 
         var folio_no = GetQueryString()["folio_no"];
 
-        console.log("Folio No:" + folio_no);
-        console.log("status_id: " + $scope.header_data.status_id);
-        if ($scope.header_data.status_id !== 3) {
-            delivered.style.display = "none";
-        }
+
+
 
 
         if ((folio_no !== undefined) || (folio_no !== null) || (folio_no !== '')) {
@@ -512,6 +507,13 @@ app.controller('ctrl', function ($scope,  svc) {
                     $scope.rows = data._detail;
                     console.log(data._header);
                     console.log(data._detail);
+
+                    console.log("Folio No:" + folio_no);
+                    console.log("status_id: " + $scope.header_data.status_id);
+
+                    if (($scope.header_data.status_id !== 3) && (window.localStorage.getItem("role_id") !== "0")) {
+                        delivered.style.display = "none";
+                    }
 
                     $scope.Cek_Aproval();
 

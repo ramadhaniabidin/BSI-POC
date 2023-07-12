@@ -82,6 +82,21 @@ namespace BSI_POC.BusinessLogics.Controller
             return header_id;
         }
 
+        public bool ConfirmStationary(int header_id)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand("dbo.ConfirmStationary", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@header_id", header_id);
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            return true;
+        }
+
         public bool InsertDetailData(StationaryRequestDetailModel detail)
         {
             SqlConnection con = new SqlConnection(connectionString);

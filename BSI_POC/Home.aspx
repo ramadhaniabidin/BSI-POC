@@ -16,7 +16,7 @@
 
         
 
-        <div id="listData" class="row" style="padding-top: 5px;">
+        <div id="listData" class="row">
             <table class="table">
               <thead class="thead-dark">
                 <tr style="background-color:darkgray">
@@ -41,7 +41,7 @@
             
         </div>
         
-        <div id="listDataByID" class="row" style="padding-top: 5px;">
+        <div id="listDataByID" class="row">
             <table class="table">
               <thead class="thead-dark">
                 <tr style="background-color:darkgray">

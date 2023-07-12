@@ -109,6 +109,82 @@ namespace BSI_POC.WebServices
         }
 
         [WebMethod]
+        public string ConfirmStationary(int header_id)
+        {
+            try
+            {
+                bool condition;
+                condition = controller.ConfirmStationary(header_id);
+
+                if(condition == true)
+                {
+                    var result = new
+                    {
+                        ProcessSuccess = true,
+                        InfoMessage = "OK"
+                    };
+
+                    return new JavaScriptSerializer().Serialize(result);
+                }
+
+                else
+                {
+                    var result = new
+                    {
+                        ProcessSuccess = false,
+                        InfoMessage = "Error"
+                    };
+                    return new JavaScriptSerializer().Serialize(result);
+                }
+
+            }
+            catch(Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.GetType().Name + ", " + ex.Message
+                };
+
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+
+        [WebMethod]
+        public string DeliverStationary(int header_id)
+        {
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                NintexWorkflowCloud nwc = new NintexWorkflowCloud();
+                nwc.url = "https://npp-elistec.workflowcloud.com/api/v1/workflow/published/65d09917-4464-4c39-8bb8-78e4c993fc20/instances?token=B6F2ShnEku4f1N8wygGKDlB5OHsFRxaDeAh31JUUfRdaHiwBcZkxM38wE97R5vCQljAThp";
+                Task.Run(async () => { await controller.startWorkFlow(nwc, header_id); }).Wait();
+
+                var result = new
+                {
+                    ProcessSuccess = true,
+                    InfoMessage = "OK"
+                };
+
+                return new JavaScriptSerializer().Serialize(result);
+            }
+            catch(Exception ex)
+            {
+                var currDT = $"[{DateTime.Now.ToString(("dd-MM-yyyy HH:mm:ss.fff"))}]";
+                var currMt = $"{GetType().Namespace}.{GetType().Name} {nameof(InsertHeaderData)}()";
+                Debug.WriteLine($"{currDT}{currMt}|{ex.GetType().Name},{ex.Message}\n Source: {ex.Source}\n{ex.StackTrace}");
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.GetType().Name + ", " + ex.Message
+                };
+
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+        [WebMethod]
         public string InsertDetailData(StationaryRequestDetailModel details)
         {
             var outputString = "";

@@ -24,8 +24,8 @@
                             <img class="logo" src="../Assets/images/logo.png"/>
                         </div>
                         <div class="col">
-                            <p style="text-align:left; font-size:9px; font-weight:bold; margin-bottom: 0px; padding-top: 5px;">Mitsubishi Motors Authorized Distributor</p>
-                            <p style="text-align:left; font-size:13px; font-weight:bold; ">PT Mitsubishi Motors Krama Yudha Sales Indonesia</p>
+                            <p id="logo_atas">Mitsubishi Motors Authorized Distributor</p>
+                            <p id="logo_bawah">PT Mitsubishi Motors Krama Yudha Sales Indonesia</p>
                         </div>
 
                     </div>
@@ -34,8 +34,8 @@
 
             </div>
             <div class="row" style="justify-content:center; width:90%;">
-                <label class="myLabel" style="font-size:large; padding-top:5px;">Application ID</label>
-                <hr style="width: 100%; background-color: black; height:2px;"/>
+                <label class="myLabel">Application ID</label>
+                <hr class="separator"/>
                 <div class="col-5">
                     <div class="row">
                         <div class="col">
@@ -81,8 +81,8 @@
             </div>
 
             <div class="row" style="justify-content: center; width:90%">
-                <label class="myLabel-detail" style="font-size:large">Request Detail</label>
-                <hr style="width: 100%; background-color: black; height:2px;"/>
+                <label class="myLabel-detail">Request Detail</label>
+                <hr class="separator"/>
                 <table class="myTable" id="semprot_lahan">
                     <thead>
                         <tr>
@@ -138,7 +138,7 @@
                 <button id="submit" class="btn" style="width:5%; background-color:green; color:white" ng-click="InsertDataHeader()">Submit</button><br />
                 <button id="approve_action" class="btn" style="width:5%; background-color:green; color:white" ng-click="ApproveRequest()">Submit</button>
                 <button id="close" class="btn btn-danger" style="width:5%; color:white" ng-click="ConfirmStationary()">Close</button><br />
-                <button id="delivered" class="btn btn-primary" style="width:5%; color:white;" ng-click="CekTabel()">Delivered</button>
+                <button id="delivered" class="btn btn-primary" style="width:5%; color:white;" ng-click="DeliverStationary()">Delivered</button>
             </div>
             <button id="LogOut" class="btn btn-danger" style="width:5%; color:white" ng-click="LogOut()">LogOut</button>    
             <button ng-click="Cek()">Cek</button>
