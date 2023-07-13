@@ -50,6 +50,21 @@ app.service("svc", function ($http) {
         return response;
     }
 
+    this.svc_GetCurrentLoginData = function (role_id) {
+        var param = {
+            'role_id': role_id,
+        }
+
+        var response = $http({
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/GetCurrentLoginData",
+            data: JSON.stringify(param),
+            dataType: "json"
+        })
+
+        return response;
+    }
+
     this.svc_GetDataByID = function (header_id) {
         var param = {
             header_id: header_id,
@@ -207,9 +222,47 @@ app.service("svc", function ($http) {
 
 })
 
-app.controller('ctrl', function ($scope,  svc) {
+app.controller('ctrl', function ($scope, svc) {
+    $scope.GetCurrentLoginData = function () {
+        var role_id = parseInt(window.localStorage.getItem("role_id"));
+
+        var proc = svc.svc_GetCurrentLoginData(role_id);
+        proc.then(function (response) {
+            var data = JSON.parse(response.data.d);
+            console.log(data);
+            $scope.header_data.applicant = data.data.name;
+            $scope.header_data.department = data.data.department;
+            $scope.header_data.role = data.data.role;
+            $scope.header_data.employee_id = data.data.id;
+            /*console.log($scope.header_data.applicant);*/
+/*            console.log(data.data.name);*/
+        })
+    }
+
+
+    function generateString() {
+        const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const numbers = "0123456789";
+
+        let firstTwoDigits = '';
+        for (let i = 0; i < 2; i++) {
+            const randomIndex = Math.floor(Math.random() * alphabets.length);
+            firstTwoDigits += alphabets[randomIndex];
+        }
+
+        let lastThreeDigits = '';
+        for (let i = 0; i < 3; i++) {
+            const randomIndex = Math.floor(Math.random() * numbers.length);
+            lastThreeDigits += numbers[randomIndex];
+        }
+
+        const output = firstTwoDigits + lastThreeDigits;
+        return output;
+    }
+
+
     $scope.header_data = {
-        folio_no: '',
+        folio_no: 'Generated on submit',
         applicant: '',
         department: '',
         role: '',
@@ -303,7 +356,7 @@ app.controller('ctrl', function ($scope,  svc) {
 
         var params = {
             header: {
-                folio_no: $scope.header_data.folio_no,
+                folio_no: '',
                 applicant: $scope.header_data.applicant,
                 department: $scope.header_data.department,
                 role: $scope.header_data.role,
@@ -463,22 +516,25 @@ app.controller('ctrl', function ($scope,  svc) {
         var details = document.getElementById("semprot_lahan");
         var btn_submit = document.getElementById("submit");
         var btn_approve = document.getElementById("approve_action");
+        var workflow_history = document.getElementById("workflow_history");
 
         $scope.role_id = window.localStorage.getItem('role_id');
+        folio_no.setAttribute('readonly', 'readonly');
+
+        applicant.setAttribute('readonly', 'readonly');
+        department.setAttribute('readonly', 'readonly');
+        role.setAttribute('readonly', 'readonly');
+        employee_id.setAttribute('readonly', 'readonly');
+        
 
         if ($scope.role_id === '0') {
             approval.style.display = "none";
             btn_approve.style.display = "none";
+            workflow_history.style.display = "none";
 
         }
         else if (($scope.role_id === '1') || ($scope.role_id === '2') || ($scope.role_id === '3') || ($scope.role_id === '4')) {
             appr.style.display = "none";
-            folio_no.setAttribute('readonly', 'readonly');
-
-            applicant.setAttribute('readonly', 'readonly');
-            department.setAttribute('readonly', 'readonly');
-            role.setAttribute('readonly', 'readonly');
-            employee_id.setAttribute('readonly', 'readonly');
             extension.setAttribute('readonly', 'readonly');
             details.style.pointerEvents = "none";
             btn_submit.style.display = "none";
@@ -513,8 +569,8 @@ app.controller('ctrl', function ($scope,  svc) {
 
                     if (($scope.header_data.status_id === 3) && ((window.localStorage.getItem("role_id") === "4")) || (window.localStorage.getItem("role_id") === "3")) {
                         delivered.style.display = "block";
-                        approval.style.display = "none";
-                        btn_approve.style.display = "none";
+                        //approval.style.display = "none";
+                        //btn_approve.style.display = "none";
                     }
 
                     //if (($scope.header_data.status_id !== 3) && (window.localStorage.getItem("role_id") === "0")) {
@@ -575,7 +631,14 @@ app.controller('ctrl', function ($scope,  svc) {
                 var resp_data = JSON.parse(response.data.d);
                 console.log(resp_data);
                 if (resp_data.ProcessSuccess) {
-                    window.alert("Successfully Approving/Rejecting Request");
+                    if (approval_value == "Approve") {
+                        window.alert("Successfully Approving Request");
+                    }
+
+                    else if (approval_value == "Reject") {
+                        window.alert("Successfully Rejecting Request");
+                    }
+
                     window.location.href = '/Home.aspx';
                 }
                 else {
@@ -592,7 +655,22 @@ app.controller('ctrl', function ($scope,  svc) {
         console.log($scope.assignment_id);
     }
 
+    $scope.CekItemName = function () {
+        for (var i = 0; i < $scope.rows.length; i++) {
+            console.log($scope.rows[i].item_name);
+            if ($scope.rows[i].item_name == "A4 Paper") {
+                $scope.rows[i].uom = "Rim";
+            } else {
+                $scope.rows[i].uom = "Piece";
+            }
+        }
+
+    }
 
 
+
+
+    /*setInterval($scope.GetData, 1000);*/
     $scope.GetData();
+    $scope.GetCurrentLoginData();
  })

@@ -52,6 +52,7 @@
     <Compile Include="Controller\HomeController.cs" />
     <Compile Include="Controller\LoginController.cs" />
     <Compile Include="Controller\StationaryRequestController.cs" />
+    <Compile Include="Models\CurrentLoginModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\StationaryRequestModel.cs" />
     <Compile Include="Models\WorkFlowModel.cs" />

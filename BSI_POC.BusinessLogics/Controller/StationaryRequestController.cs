@@ -200,6 +200,37 @@ namespace BSI_POC.BusinessLogics.Controller
             }
         }
 
+        public CurrentLoginModel GetCurrentLoginData(int role_id)
+        {
+            try
+            {
+                dt = new DataTable();
+                db.OpenConnection(ref conn);
+                db.cmd.CommandText = "dbo.GetCurrentLoginData";
+                db.cmd.CommandType = CommandType.StoredProcedure;
+                db.cmd.Parameters.Clear();
+                db.AddInParameter(db.cmd, "role_id", role_id);
+                reader = db.cmd.ExecuteReader();
+                dt.Load(reader);
+                db.CloseDataReader(reader);
+                db.CloseConnection(ref conn);
+
+                if (dt.Rows.Count > 0)
+                {
+                    return Utility.ConvertDataTableToList<CurrentLoginModel>(dt)[0];
+                }
+                else
+                {
+                    return new CurrentLoginModel();
+                }
+            }
+            catch(Exception ex)
+            {
+                db.CloseConnection(ref conn);
+                throw ex;
+            }
+        }
+
         public List<StationaryRequestDetailModel> GetDataDetailByID(int header_id)
         {
             try

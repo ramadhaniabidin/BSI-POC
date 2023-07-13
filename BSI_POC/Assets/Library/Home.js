@@ -222,13 +222,6 @@ app.controller('ctrl', function ($scope, svc) {
 
     $scope.ListDataByID = function () {
         try {
-            //$scope.task_name = window.localStorage.getItem("taks_name");
-            //var parts = $scope.task_name.split("-");
-            //var header_id = parseInt(parts[parts.length - 1].trim());
-
-            //console.log(typeof (window.localStorage.getItem("role_id")));
-
-            //console.log(header_id);
             var role_id = parseInt(window.localStorage.getItem("role_id"));
             console.log(role_id);
 
@@ -241,15 +234,10 @@ app.controller('ctrl', function ($scope, svc) {
                     for (i of data.items) {
                         i.created_date = parseInt((i.created_date).substring(6, i.created_date.length - 2));
                         i.created_date = new Date(i.created_date).toDateString();
-                        /*var date = new Date(ticks).toDateString();*/
-
-                        /*console.log(i.created_date);*/
                     }
 
                     $scope.Item = data.items;
                     console.log($scope.Item);
-                    //console.log($scope.task_id);
-                    //console.log($scope.assignment_id);
                 } else {
                     console.log(data.InfoMessage);
                 }

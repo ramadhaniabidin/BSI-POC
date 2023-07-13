@@ -276,6 +276,32 @@ namespace BSI_POC.WebServices
         }
 
         [WebMethod]
+        public string GetCurrentLoginData(int role_id)
+        {
+            try
+            {
+                var data = controller.GetCurrentLoginData(role_id);
+                var result = new
+                {
+                    ProcessSuccess = true,
+                    InfoMessage = "OK",
+                    data = data
+                };
+
+                return new JavaScriptSerializer().Serialize(result);
+            }
+            catch(Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.Message
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+        [WebMethod]
         public string GetDataByID(int header_id)
         {
             try

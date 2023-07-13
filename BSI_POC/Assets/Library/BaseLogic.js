@@ -228,3 +228,23 @@ function SetInputsToReadonly(targetClassName) {
 		}
 	}
 }
+
+function generateString() {
+    const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numbers = "0123456789";
+
+    let firstTwoDigits = '';
+    for (let i = 0; i < 2; i++) {
+        const randomIndex = Math.floor(Math.random() * alphabets.length);
+        firstTwoDigits += alphabets[randomIndex];
+    }
+
+    let lastThreeDigits = '';
+    for (let i = 0; i < 3; i++) {
+        const randomIndex = Math.floor(Math.random() * numbers.length);
+        lastThreeDigits += numbers[randomIndex];
+    }
+
+    const output = firstTwoDigits + lastThreeDigits;
+    return output;
+}
