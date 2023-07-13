@@ -381,7 +381,6 @@ app.controller('ctrl', function ($scope, svc) {
             var data = JSON.parse(response.data.d);
             if (data.ProcessSuccess) {
                 $scope.token = data.token;
-                /*window.localStorage.setItem("token", $scope.token);*/
                 console.log($scope.token);
             }
             else {
@@ -440,7 +439,7 @@ app.controller('ctrl', function ($scope, svc) {
                 var resp_data = JSON.parse(response.data.d);
                 console.log(resp_data);
                 if (resp_data.ProcessSuccess) {
-                    window.alert("Successfully Insert/Update data, Status : " + resp_data.InfoMessage.toString());
+                    window.alert("Successfully submitting request, Status : " + resp_data.InfoMessage.toString());
                     window.location.href = '/Home.aspx';
                 }
                 else {
@@ -455,18 +454,20 @@ app.controller('ctrl', function ($scope, svc) {
         var header_id = $scope.header_data.id;
         console.log("header_id: " + header_id);
 
-        svc.svc_ConfirmStationary(header_id).
-            then(function (response) {
-                var resp_data = JSON.parse(response.data.d);
-                console.log(resp_data);
-                if (resp_data.ProcessSuccess) {
-                    window.alert("Successfully closing request, Status : " + resp_data.InfoMessage.toString());
-                    window.location.href = '/Home.aspx';
-                }
-                else {
-                    window.alert("Error : " + resp_data.InfoMessage);
-                }
-            });
+        console.log($scope.rows);
+
+        //svc.svc_ConfirmStationary(header_id).
+        //    then(function (response) {
+        //        var resp_data = JSON.parse(response.data.d);
+        //        console.log(resp_data);
+        //        if (resp_data.ProcessSuccess) {
+        //            window.alert("Successfully closing request, Status : " + resp_data.InfoMessage.toString());
+        //            window.location.href = '/Home.aspx';
+        //        }
+        //        else {
+        //            window.alert("Error : " + resp_data.InfoMessage);
+        //        }
+        //    });
 
     }
 

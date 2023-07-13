@@ -25,15 +25,17 @@
                   <th scope="col">Status</th>
                   <th scope="col">Submitted By</th>
                   <th scope="col">Submitted Date</th>
+                  <th scope="col">Current Approver</th>
                 </tr>
               </thead>
               <tbody>
                   <tr ng-repeat="i in Items">
                       <td>{{$index+1}}</td>
                       <td><a href="/Pages/StationaryRequest.aspx?folio_no={{i.folio_no}}" target="_blank">{{i.folio_no}}</a></td>
-                      <td>{{i.status_id}}</td>
+                      <td>{{i.status_name}}</td>
                       <td>{{i.created_by}}</td>
                       <td>{{i.created_date}}</td>
+                      <td>{{i.current_approver}}</td>
                   </tr>
               </tbody>
             </table>
@@ -56,7 +58,7 @@
                   <tr ng-repeat="i in Item">
                       <td>{{$index+1}}</td>
                       <td><a href="/Pages/StationaryRequest.aspx?folio_no={{i.folio_no}}" target="_blank">{{i.folio_no}}</a></td>
-                      <td>{{i.status_id}}</td>
+                      <td>{{i.status_name}}</td>
                       <td>{{i.created_by}}</td>
                       <td>{{i.created_date}}</td>
                   </tr>

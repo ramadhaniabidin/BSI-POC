@@ -19,7 +19,7 @@ namespace BSI_POC.WebServices
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     // [System.Web.Script.Services.ScriptService]
     [ScriptService]
-    public class Home : System.Web.Services.WebService
+    public class Home : WebService
     {
         HomeController controller = new HomeController();
         readonly StationaryRequestController stationaryRequestController = new StationaryRequestController();
