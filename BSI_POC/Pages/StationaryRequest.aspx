@@ -100,15 +100,19 @@
                                 <p style="text-align:center">{{ $index + 1 }}</p>
                             </td>
                             <td>
-                                <select style="width: 90%;" ng-model="row.item_name" ng-options="item for item in itemNames" ng-change="CekItemName()">
+                                <select style="width: 90%;" ng-model="row.item_name" ng-options="item for item in itemNames" ng-change="CekItemName({{$index}})">
                                     <option disabled="disabled" selected="selected" style="text-align:center"> == Select Stationary Item == </option>
                                 </select>
                             </td>
                             <td>
                                 <input ng-model="row.uom"/>
                             </td>
-                            <td><input type="text"/></td>
-                            <td><input class="myInput" type="number" ng-model="row.request_qty"></td>
+                            <td><input type="text" ng-model="row.stock" readonly="readonly"/></td>
+                            <td>
+                                <p ng-show="row.WarningMessage" style="color:red; margin-bottom:0px;">Permintaan Anda melebihi stok</p>
+                                <input class="myInput" type="number" ng-model="row.request_qty" ng-change="CekRequestQty({{$index}})">
+                            </td>
+
                             <td><textarea id="reason" style="width: 100%" oninput="adjustHeight()" ng-model="row.reason"></textarea></td>
                         </tr>
                     </tbody>

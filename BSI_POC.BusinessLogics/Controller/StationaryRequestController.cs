@@ -231,6 +231,37 @@ namespace BSI_POC.BusinessLogics.Controller
             }
         }
 
+        public StockModel GetStockAndUom(string item_name)
+        {
+            try
+            {
+                dt = new DataTable();
+                db.OpenConnection(ref conn);
+                db.cmd.CommandText = "dbo.GetStockAndUom";
+                db.cmd.CommandType = CommandType.StoredProcedure;
+                db.cmd.Parameters.Clear();
+                db.AddInParameter(db.cmd, "item_name", item_name);
+                reader = db.cmd.ExecuteReader();
+                dt.Load(reader);
+                db.CloseDataReader(reader);
+                db.CloseConnection(ref conn);
+
+                if(dt.Rows.Count > 0)
+                {
+                    return Utility.ConvertDataTableToList<StockModel>(dt)[0];
+                }
+                else
+                {
+                    return new StockModel();
+                }
+            }
+            catch(Exception ex)
+            {
+                db.CloseConnection(ref conn);
+                throw ex;
+            }
+        }
+
         public List<StationaryRequestDetailModel> GetDataDetailByID(int header_id)
         {
             try

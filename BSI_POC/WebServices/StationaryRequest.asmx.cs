@@ -302,6 +302,32 @@ namespace BSI_POC.WebServices
         }
 
         [WebMethod]
+        public string GetStockAndUom(string item_name)
+        {
+            try
+            {
+                var data = controller.GetStockAndUom(item_name);
+                var result = new
+                {
+                    ProcessSuccess = true,
+                    InfoMessage = "OK",
+                    data = data
+                };
+
+                return new JavaScriptSerializer().Serialize(result);
+            }
+            catch(Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.Message
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+        [WebMethod]
         public string GetDataByID(int header_id)
         {
             try

@@ -34,6 +34,29 @@ app.directive('loading', ['$http', function ($http) {
 
 app.service("svc", function ($http) {
 
+    this.getStock = function (item_name) {
+        var url = "/WebServices/StationaryRequest.asmx/GetStockAndUom"
+        var param = {
+            item_name: item_name
+        }
+
+        return fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(param)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ProcessSuccess) {
+                    return data.data;
+                } else {
+                    throw new Error(data.InfoMessage);
+                }
+            });
+    }
+
     this.svc_GetData = function (folio_no) {
         var param = {
             folio_no: folio_no,
@@ -58,6 +81,21 @@ app.service("svc", function ($http) {
         var response = $http({
             method: "post",
             url: "/WebServices/StationaryRequest.asmx/GetCurrentLoginData",
+            data: JSON.stringify(param),
+            dataType: "json"
+        })
+
+        return response;
+    }
+
+    this.svc_GetStockAndUom = function (item_name) {
+        var param = {
+            'item_name': item_name,
+        }
+
+        var response = $http({
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/GetStockAndUom",
             data: JSON.stringify(param),
             dataType: "json"
         })
@@ -467,8 +505,10 @@ app.controller('ctrl', function ($scope, svc) {
         item_name: '',
         no: '',
         uom: '',
+        stock: '',
         request_qty: 0,
-        reason: ''
+        reason: '',
+        WarningMessage: false
     }];
 
     $scope.itemNames = ['A4 Paper', 'Pencil', 'Marker', 'Envelope'];
@@ -479,8 +519,10 @@ app.controller('ctrl', function ($scope, svc) {
             item_name: '',
             no: '',
             uom: '',
+            stock: '',
             request_qty: 0,
-            reason: ''
+            reason: '',
+            WarningMessage: false
         });
     };
 
@@ -655,18 +697,51 @@ app.controller('ctrl', function ($scope, svc) {
         console.log($scope.assignment_id);
     }
 
-    $scope.CekItemName = function () {
-        for (var i = 0; i < $scope.rows.length; i++) {
-            console.log($scope.rows[i].item_name);
-            if ($scope.rows[i].item_name == "A4 Paper") {
-                $scope.rows[i].uom = "Rim";
-            } else {
-                $scope.rows[i].uom = "Piece";
-            }
-        }
+    $scope.CekItemName = function (index) {
+        //for (i of $scope.rows) {
+        //    console.log(i.item_name);
+        //    var item_name = i.item_name;
+
+        //    var proc = svc.svc_GetStockAndUom(item_name);
+        //    proc.then(function (response) {
+        //        var data = JSON.parse(response.data.d);
+        //        i.uom = data.data.uom;
+        //        console.log(i.uom);
+        //    })
+        //}
+
+        //for (var i = 0; i < $scope.rows.length; i++) {
+        //    var item_name = $scope.rows[i].item_name;
+        //    svc.getStock(item_name)
+        //        .then(data => {
+        //            console.log(data);
+        //        })
+        //}
+
+        var item_name = $scope.rows[index].item_name;
+        var proc = svc.svc_GetStockAndUom(item_name);
+            proc.then(function (response) {
+                var data = JSON.parse(response.data.d);
+                $scope.rows[index].uom = data.data.uom;
+                $scope.rows[index].stock = data.data.stock;
+                console.log($scope.rows[index].uom);
+            })
+
+        //    //if ($scope.rows[i].item_name == "A4 Paper") {
+        //    //    $scope.rows[i].uom = "Rim";
+        //    //} else {
+        //    //    $scope.rows[i].uom = "Piece";
+        //    //}
+        //}
 
     }
 
+
+    $scope.WarningMessage = false;
+    $scope.CekRequestQty = function (index) {
+        var value = $scope.rows[index].request_qty;
+        $scope.rows[index].WarningMessage = isNaN(value) || value > $scope.rows[index].stock;
+    }
 
 
 
