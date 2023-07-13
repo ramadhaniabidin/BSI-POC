@@ -57,6 +57,19 @@ app.service("svc", function ($http) {
             });
     }
 
+    this.svc_GetWorkflowHistory = function () {
+        var response = $http({
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/GetWorkflowHistory",
+            //data: JSON.stringify(param),
+            data: {},
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json"
+        })
+
+        return response;
+    }
+
     this.svc_GetData = function (folio_no) {
         var param = {
             folio_no: folio_no,
@@ -187,6 +200,21 @@ app.service("svc", function ($http) {
         return response;
     }
 
+    this.svc_InsertWorkflowHistory = function (input_data) {
+        var param = {
+            'input_data': input_data
+        }
+
+        var response = $http({
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/InsertToWorkflowHistory",
+            data: JSON.stringify(param),
+            datatype: "json"
+        })
+
+        return response;
+    }
+
     this.svc_DeliverStationary = function (header_id) {
         var param = {
             'header_id': header_id,
@@ -278,26 +306,19 @@ app.controller('ctrl', function ($scope, svc) {
     }
 
 
-    function generateString() {
-        const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const numbers = "0123456789";
+    $scope.WorkflowHistoryLog = function () {
+        var proc = svc.svc_GetWorkflowHistory();
+        proc.then(function (response) {
+            var data = JSON.parse(response.data.d);
+            console.log(data.history);
+            for (i of data.history) {
+                i.action_date = parseInt((i.action_date).substring(6, i.action_date.length - 2));
+                i.action_date = new Date(i.action_date).toDateString();
+            }
 
-        let firstTwoDigits = '';
-        for (let i = 0; i < 2; i++) {
-            const randomIndex = Math.floor(Math.random() * alphabets.length);
-            firstTwoDigits += alphabets[randomIndex];
-        }
-
-        let lastThreeDigits = '';
-        for (let i = 0; i < 3; i++) {
-            const randomIndex = Math.floor(Math.random() * numbers.length);
-            lastThreeDigits += numbers[randomIndex];
-        }
-
-        const output = firstTwoDigits + lastThreeDigits;
-        return output;
+            $scope.workflow_history = data.history;
+        })
     }
-
 
     $scope.header_data = {
         folio_no: 'Generated on submit',
@@ -428,6 +449,8 @@ app.controller('ctrl', function ($scope, svc) {
             });
     }
 
+    
+
     $scope.ConfirmStationary = function () {
         var header_id = $scope.header_data.id;
         console.log("header_id: " + header_id);
@@ -510,6 +533,8 @@ app.controller('ctrl', function ($scope, svc) {
         reason: '',
         WarningMessage: false
     }];
+
+    $scope.workflow_history = [];
 
     $scope.itemNames = ['A4 Paper', 'Pencil', 'Marker', 'Envelope'];
     $scope.uoms = ["Rim", "Piece"];
@@ -664,9 +689,30 @@ app.controller('ctrl', function ($scope, svc) {
         console.log($scope.header_data.id);
     }
 
+    $scope.comment = ''
+
     $scope.ApproveRequest = function () {
         var header_id = $scope.header_data.id;
         var approval_value = $scope.approve_value;
+        var folio_no = GetQueryString()['folio_no'];
+
+        var action_date = new moment().format("DD-MMM-YYYY");
+        var action_date_formatted = new moment(action_date, "DD-MMM-YYYY").format("YYYY-MM-DD HH:mm:ss");
+
+        var input_data = {
+            folio_no: folio_no,
+            pic_name: '',
+            comment: $scope.comment,
+            action_name: $scope.approve_value,
+            action_date: action_date_formatted
+        }
+
+        console.log(input_data);
+        svc.svc_InsertWorkflowHistory(input_data)
+            .then(function (response) {
+                var resp_data = JSON.parse(response.data.d);
+                console.log(resp_data);
+            });
 
         svc.svc_ApproveRequest(approval_value, $scope.task_id, $scope.assignment_id).
             then(function (response) {
@@ -698,26 +744,6 @@ app.controller('ctrl', function ($scope, svc) {
     }
 
     $scope.CekItemName = function (index) {
-        //for (i of $scope.rows) {
-        //    console.log(i.item_name);
-        //    var item_name = i.item_name;
-
-        //    var proc = svc.svc_GetStockAndUom(item_name);
-        //    proc.then(function (response) {
-        //        var data = JSON.parse(response.data.d);
-        //        i.uom = data.data.uom;
-        //        console.log(i.uom);
-        //    })
-        //}
-
-        //for (var i = 0; i < $scope.rows.length; i++) {
-        //    var item_name = $scope.rows[i].item_name;
-        //    svc.getStock(item_name)
-        //        .then(data => {
-        //            console.log(data);
-        //        })
-        //}
-
         var item_name = $scope.rows[index].item_name;
         var proc = svc.svc_GetStockAndUom(item_name);
             proc.then(function (response) {
@@ -726,14 +752,6 @@ app.controller('ctrl', function ($scope, svc) {
                 $scope.rows[index].stock = data.data.stock;
                 console.log($scope.rows[index].uom);
             })
-
-        //    //if ($scope.rows[i].item_name == "A4 Paper") {
-        //    //    $scope.rows[i].uom = "Rim";
-        //    //} else {
-        //    //    $scope.rows[i].uom = "Piece";
-        //    //}
-        //}
-
     }
 
 
@@ -748,4 +766,5 @@ app.controller('ctrl', function ($scope, svc) {
     /*setInterval($scope.GetData, 1000);*/
     $scope.GetData();
     $scope.GetCurrentLoginData();
+    $scope.WorkflowHistoryLog();
  })

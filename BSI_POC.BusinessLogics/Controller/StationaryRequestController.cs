@@ -76,10 +76,26 @@ namespace BSI_POC.BusinessLogics.Controller
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
-
-
-
             return header_id;
+        }
+
+        public bool InsertWorflowHistory(WorkFlowHistoryLogModel data)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand("dbo.InsertToWorkflowHistory", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@folio_no", data.folio_no);
+            cmd.Parameters.AddWithValue("@pic_name", data.pic_name);
+            cmd.Parameters.AddWithValue("@comment", data.comment);
+            cmd.Parameters.AddWithValue("@action_name", data.action_name);
+            cmd.Parameters.AddWithValue("@action_date", data.action_date);
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            return true;
         }
 
         public bool ConfirmStationary(int header_id)
@@ -282,6 +298,35 @@ namespace BSI_POC.BusinessLogics.Controller
                     return new List<StationaryRequestDetailModel>();
             }
             catch (Exception ex)
+            {
+                db.CloseConnection(ref conn);
+                throw ex;
+            }
+        }
+
+        public List<WorkFlowHistoryLogModel> GetWorkflowHistory()
+        {
+            try
+            {
+                dt = new DataTable();
+                db.OpenConnection(ref conn);
+                db.cmd.CommandText = "dbo.WorkflowHistoryLog";
+                db.cmd.CommandType = CommandType.StoredProcedure;
+                db.cmd.Parameters.Clear();
+                reader = db.cmd.ExecuteReader();
+                dt.Load(reader);
+                db.CloseDataReader(reader);
+                db.CloseConnection(ref conn);
+                if(dt.Rows.Count > 0)
+                {
+                    return Utility.ConvertDataTableToList<WorkFlowHistoryLogModel>(dt);
+                }
+                else
+                {
+                    return new List<WorkFlowHistoryLogModel>();
+                }
+            }
+            catch(Exception ex)
             {
                 db.CloseConnection(ref conn);
                 throw ex;

@@ -135,7 +135,7 @@
                 </div>
                 <div class="col">
                     <label style="width: 50%; padding-left: 0px; padding-bottom: 0px">Comments: </label>
-                    <textarea style="width:100%; height:100%"></textarea>
+                    <textarea style="width:100%; height:100%" ng-model="comment"></textarea>
                 </div>
             </div>
             <div class="row" style=" width:90%; display:flex">
@@ -166,12 +166,21 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Name</th>
+                            <th>Folio no</th>
                             <th>Comment</th>
-                            <th>Status</th>
-                            <th>Time</th>
+                            <th>Action Name</th>
+                            <th>Action Date</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr ng-repeat="i in workflow_history">
+                            <td>{{$index + 1}}</td>
+                            <td>{{i.folio_no}}</td>
+                            <td>{{i.comment}}</td>
+                            <td>{{i.action_name}}</td>
+                            <td>{{i.action_date}}</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
               

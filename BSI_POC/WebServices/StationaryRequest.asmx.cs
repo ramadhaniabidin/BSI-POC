@@ -302,6 +302,42 @@ namespace BSI_POC.WebServices
         }
 
         [WebMethod]
+        public string InsertToWorkflowHistory(WorkFlowHistoryLogModel input_data)
+        {
+            try
+            {
+                bool status = controller.InsertWorflowHistory(input_data);
+                if(status == true)
+                {
+                    var result = new
+                    {
+                        ProcessSuccess = true,
+                        InfoMessage = "OK"
+                    };
+                    return new JavaScriptSerializer().Serialize(result);
+                }
+                else
+                {
+                    var result = new
+                    {
+                        ProcessSuccess = false,
+                        InfoMessage = "Error"
+                    };
+                    return new JavaScriptSerializer().Serialize(result);
+                }
+            }
+            catch(Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.Message
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+        [WebMethod]
         public string GetStockAndUom(string item_name)
         {
             try
@@ -314,6 +350,31 @@ namespace BSI_POC.WebServices
                     data = data
                 };
 
+                return new JavaScriptSerializer().Serialize(result);
+            }
+            catch(Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.Message
+                };
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+        [WebMethod]
+        public string GetWorkflowHistory()
+        {
+            try
+            {
+                var history = controller.GetWorkflowHistory();
+                var result = new
+                {
+                    ProcessSuccess = true,
+                    InfoMessage = "OK",
+                    history
+                };
                 return new JavaScriptSerializer().Serialize(result);
             }
             catch(Exception ex)
