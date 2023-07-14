@@ -71,6 +71,7 @@ namespace BSI_POC.BusinessLogics.Controller
                 cmd.Parameters.AddWithValue("@uom", d.uom);
                 cmd.Parameters.AddWithValue("@request_qty", d.request_qty);
                 cmd.Parameters.AddWithValue("@reason", d.reason);
+                cmd.Parameters.AddWithValue("stock", d.stock);
 
                 con.Open();
                 cmd.ExecuteNonQuery();

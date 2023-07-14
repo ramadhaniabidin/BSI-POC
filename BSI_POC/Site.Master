@@ -31,8 +31,16 @@
     <script src="/Assets/Library/Pager.js"></script>
     <script src="/Assets/Library/angular-filter.js"></script>
     <script src="/Assets/Library/BaseLogic.js"></script>
+    <%--<script src="Assets/Library/StationaryRequest.js"></script>--%>
 
+        <script>
+            Logout = function () {
+                window.location.href = "/Login.aspx";
+                window.localStorage.removeItem('email');
+                window.localStorage.removeItem('role_id');
 
+            }
+        </script>
 </head>
 <body style="padding-top:0px">
     <form runat="server">
@@ -106,7 +114,11 @@
             <hr class="sidebar-divider d-none d-md-block">
             
             <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle" type="button"></button>
+                <%--<button class="rounded-circle border-0" id="sidebarToggle" type="button"></button>--%>
+                <a style="font-size:18px" href="\Login.aspx" onclick="Logout()">
+                    <i class="fa fa-sign-out-alt" style="color:red;"></i>
+                </a>
+                <%--<button style="font-size:12px" onclick="Logout()"> <i class="fa fa-sign-out-alt" style="color:red;"></i></button>--%>
             </div>
             
 <%--            <div class="sidebar-card d-none d-lg-flex">
@@ -172,4 +184,6 @@
 
     </form>
 </body>
+
+
 </html>

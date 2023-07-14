@@ -13,6 +13,12 @@ function HideSharePointUpperRibbon() {
     }
 }
 
+//function Logout() {
+//    window.localStorage.removeItem('email');
+//    window.localStorage.removeItem('role_id');
+//    window.location.href = "/Login.aspx";
+//}
+
 function ChangeComponentValueHeaderTitle(newTitle) {
     //$('#header_titleHeader').html('Form Bukti Penerimaan Sembako, Beras, & Susu');
     var elem = document.getElementById('#header_titleHeader');

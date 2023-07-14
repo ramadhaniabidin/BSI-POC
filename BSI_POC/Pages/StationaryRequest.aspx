@@ -2,7 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="../Assets/css/bootstrap/bootstrap_importer.css"/>
     <link rel="stylesheet" href="../Assets/css/myOwnStyle.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">--%>
+    <link href="Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
 
     <script src="../Assets/Library/angular-filter.js"></script>
@@ -165,7 +166,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <button id="LogOut" class="btn btn-danger" style="width:5%; color:white" ng-click="LogOut()">LogOut</button>
+                    <button id="LogOut" class="btn btn-danger" style="width:5%; color:white; display:none" ng-click="LogOut()">LogOut</button>
                 </div>
 
                 <div class="row" style=" width:90%;" id="workflow_history">
@@ -178,7 +179,7 @@
                                 <th>Name</th>
                                 <th>Comment</th>
                                 <th>Status</th>
-                                <th>Action Date</th>
+                                <th>Time</th>
                             </tr>
                         </thead>
                         <tbody>

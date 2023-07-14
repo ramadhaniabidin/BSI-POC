@@ -2,6 +2,7 @@ C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.Busine
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.BusinessLogics\bin\Debug\BSI_POC.BusinessLogics.pdb
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.BusinessLogics\bin\Debug\Newtonsoft.Json.dll
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.BusinessLogics\bin\Debug\Newtonsoft.Json.xml
+C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.BusinessLogics\obj\Debug\BSI_POC.BusinessLogics.csproj.AssemblyReference.cache
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.BusinessLogics\obj\Debug\BSI_POC.BusinessLogics.csproj.CoreCompileInputs.cache
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.BusinessLogics\obj\Debug\BSI_POC.BusinessLogics.csproj.CopyComplete
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC.BusinessLogics\obj\Debug\BSI_POC.BusinessLogics.dll

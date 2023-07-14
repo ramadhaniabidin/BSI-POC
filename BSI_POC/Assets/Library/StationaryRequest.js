@@ -411,12 +411,14 @@ app.controller('ctrl', function ($scope, svc) {
     }
 
     $scope.InsertDataHeader = function () {
+        var isError = true
         var detail = []
         for (var i = 0; i < $scope.rows.length; i++) {
             detail.push({
                 item_name: $scope.rows[i].item_name,
                 no: i + 1,
                 uom: $scope.rows[i].uom,
+                stock: $scope.rows[i].stock,
                 request_qty: $scope.rows[i].request_qty,
                 reason: $scope.rows[i].reason,
             })
@@ -456,31 +458,53 @@ app.controller('ctrl', function ($scope, svc) {
 
         for (i of params.detail) {
             if ((i.item_name === null) || (i.item_name === undefined) || (i.item_name === '')) {
+                isError = true;
                 alert("Please Select Stationary Item");
-                window.location.href = "/Pages/StationaryRequest.aspx"
+                /*window.location.href = "/Pages/StationaryRequest.aspx"*/
             }
             /*console.log(i.item_name);*/
 
             else if ((params.header.current_approver_role == 0) || (params.header.current_approver_role === undefined) || (params.header.current_approver_role === null)) {
+                isError = true;
                 alert("Please select the next approver");
-                window.location.href = "/Pages/StationaryRequest.aspx"
+                /*window.location.href = "/Pages/StationaryRequest.aspx"*/
             }
 
-            else {
-                svc.svc_InsertHeaderData(params.header, params.detail).
-                    then(function (response) {
-                        var resp_data = JSON.parse(response.data.d);
-                        console.log(resp_data);
-                        if (resp_data.ProcessSuccess) {
-                            window.alert("Successfully submitting request, Status : " + resp_data.InfoMessage.toString());
-                            window.location.href = '/Home.aspx';
-                        }
-                        else {
-                            window.alert("Error : " + resp_data.InfoMessage);
-                        }
-                    });
+
+            if (i.request_qty === 0) {
+                isError = true;
+                alert("Please insert the amount of request")
             }
+
+
+
+            else {
+                isError = false;
+            }
+
         }
+
+        if (isError == false) {
+            svc.svc_InsertHeaderData(params.header, params.detail).
+                then(function (response) {
+                    var resp_data = JSON.parse(response.data.d);
+                    console.log(resp_data);
+                    if (resp_data.ProcessSuccess) {
+                        /*window.alert("Successfully submitting request, Status : " + resp_data.InfoMessage.toString());*/
+                        window.location.href = '/Home.aspx';
+                    }
+                    else {
+                        window.alert("Error : " + resp_data.InfoMessage);
+                    }
+                });
+        }
+
+
+
+
+    
+
+
 
 
 
@@ -645,6 +669,7 @@ app.controller('ctrl', function ($scope, svc) {
         var btn_submit = document.getElementById("submit");
         var btn_approve = document.getElementById("approve_action");
         var workflow_history = document.getElementById("workflow_history");
+        var next_approver = document.getElementById("approver");
 
         $scope.role_id = window.localStorage.getItem('role_id');
         folio_no.setAttribute('readonly', 'readonly');
@@ -709,6 +734,12 @@ app.controller('ctrl', function ($scope, svc) {
 
                     if ($scope.header_data.status_id !== 5) {
                         close.style.display = "none";
+                    }
+
+                    if ($scope.header_data.status_id === 5) {
+                        submit.style.display = "none";
+                        next_approver.style.display = "none";
+                        details.style.pointerEvents = "none";
                     }
 
 
@@ -784,35 +815,43 @@ app.controller('ctrl', function ($scope, svc) {
 
         prom.then(function () {
             console.log(input_data);
+            if ((approval_value === null) || (approval_value === undefined) || (approval_value === '')) {
+                window.alert("Please choose the approval action");
+                window.location.href = "/Pages/StationaryRequest.aspx?folio_no=" + folio_no;
+            }
 
-            svc.svc_InsertWorkflowHistory(input_data)
-                .then(function (response) {
-                    var resp_data = JSON.parse(response.data.d);
-                    console.log(resp_data);
-                });
+            else {
+                svc.svc_InsertWorkflowHistory(input_data)
+                    .then(function (response) {
+                        var resp_data = JSON.parse(response.data.d);
+                        console.log(resp_data);
+                    });
 
-            svc.svc_ApproveRequest(approval_value, $scope.task_id, $scope.assignment_id).
-                then(function (response) {
-                    var resp_data = JSON.parse(response.data.d);
-                    console.log(resp_data);
-                    if (resp_data.ProcessSuccess) {
-                        if (approval_value == "Approve") {
-                            window.alert("Successfully Approving Request");
+                svc.svc_ApproveRequest(approval_value, $scope.task_id, $scope.assignment_id).
+                    then(function (response) {
+                        var resp_data = JSON.parse(response.data.d);
+                        console.log(resp_data);
+                        if (resp_data.ProcessSuccess) {
+                            if (approval_value == "Approve") {
+                                window.alert("Successfully Approving Request");
+                            }
+
+                            else if (approval_value == "Reject") {
+                                window.alert("Successfully Rejecting Request");
+                            }
+
+                            window.location.href = '/Home.aspx';
                         }
-
-                        else if (approval_value == "Reject") {
-                            window.alert("Successfully Rejecting Request");
+                        else {
+                            console.log("Error : " + resp_data.InfoMessage);
                         }
+                    })
+                    .catch(function (error) {
+                        console.log("Error: " + error.statusText);
+                    })
+            }
 
-                        window.location.href = '/Home.aspx';
-                    }
-                    else {
-                        console.log("Error : " + resp_data.InfoMessage);
-                    }
-                })
-                .catch(function (error) {
-                    console.log("Error: " + error.statusText);
-                })
+
         })
 
         
@@ -845,6 +884,8 @@ app.controller('ctrl', function ($scope, svc) {
 
 
     /*setInterval($scope.GetData, 1000);*/
+    if (window.localStorage)
+
     $scope.GetData();
     $scope.GetCurrentLoginData();
     $scope.WorkflowHistoryLog();
