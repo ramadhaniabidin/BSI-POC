@@ -1,4 +1,5 @@
-﻿var app = angular.module('app', ['angular.filter', 'ngCookies']);
+﻿
+var app = angular.module('app', ['angular.filter', 'ngCookies']);
 
 app.directive('button', function () {
     return {
@@ -34,6 +35,21 @@ app.directive('loading', ['$http', function ($http) {
 
 app.service("svc", function ($http) {
 
+    this.svc_UpdateStock = function (request_detail) {
+        var param = {
+            'request_detail': request_detail
+        }
+
+        var response = $http({
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/UpdateStock",
+            data: JSON.stringify(param),
+            dataType: "json"
+        })
+
+        return response;
+    }
+
     this.getStock = function (item_name) {
         var url = "/WebServices/StationaryRequest.asmx/GetStockAndUom"
         var param = {
@@ -57,12 +73,16 @@ app.service("svc", function ($http) {
             });
     }
 
-    this.svc_GetWorkflowHistory = function () {
+    this.svc_GetWorkflowHistory = function (folio_no) {
+        var param = {
+            'folio_no': folio_no
+        }
+
         var response = $http({
             method: "post",
             url: "/WebServices/StationaryRequest.asmx/GetWorkflowHistory",
-            //data: JSON.stringify(param),
-            data: {},
+            data: JSON.stringify(param),
+            /*data: {},*/
             contentType: 'application/json; charset=utf-8',
             dataType: "json"
         })
@@ -307,13 +327,14 @@ app.controller('ctrl', function ($scope, svc) {
 
 
     $scope.WorkflowHistoryLog = function () {
-        var proc = svc.svc_GetWorkflowHistory();
+        var folio_no = GetQueryString()["folio_no"];
+        var proc = svc.svc_GetWorkflowHistory(folio_no);
         proc.then(function (response) {
             var data = JSON.parse(response.data.d);
             console.log(data.history);
             for (i of data.history) {
-                i.action_date = parseInt((i.action_date).substring(6, i.action_date.length - 2));
-                i.action_date = new Date(i.action_date).toDateString();
+                i.action_date = new Date(parseInt(i.action_date.substring(6)))
+                i.action_date = i.action_date.toLocaleString()
             }
 
             $scope.workflow_history = data.history;
@@ -414,7 +435,7 @@ app.controller('ctrl', function ($scope, svc) {
 
         var params = {
             header: {
-                folio_no: '',
+                folio_no: $scope.header_data.folio_no,
                 applicant: $scope.header_data.applicant,
                 department: $scope.header_data.department,
                 role: $scope.header_data.role,
@@ -424,28 +445,29 @@ app.controller('ctrl', function ($scope, svc) {
                 status_id: $scope.header_data.status_id,
                 remarks: $scope.header_data.remarks,
                 created_by: $scope.header_data.created_by,
-                created_date: $scope.created_dateFormatted,
+                created_date: new Date(),
                 modified_by: $scope.header_data.modified_by,
-                modified_date: $scope.created_dateFormatted,
+                modified_date: new Date(),
                 approver_target_role_id: $scope.header_data.approver_target_role_id,
                 current_approver_role: $scope.header_data.current_approver_role,
             },
             detail: detail,
         }
 
+        console.log(params.header.created_date);
         console.log(params);
-        svc.svc_InsertHeaderData(params.header, params.detail).
-            then(function (response) {
-                var resp_data = JSON.parse(response.data.d);
-                console.log(resp_data);
-                if (resp_data.ProcessSuccess) {
-                    window.alert("Successfully submitting request, Status : " + resp_data.InfoMessage.toString());
-                    window.location.href = '/Home.aspx';
-                }
-                else {
-                    window.alert("Error : " + resp_data.InfoMessage);
-                }
-            });
+        //svc.svc_InsertHeaderData(params.header, params.detail).
+        //    then(function (response) {
+        //        var resp_data = JSON.parse(response.data.d);
+        //        console.log(resp_data);
+        //        if (resp_data.ProcessSuccess) {
+        //            window.alert("Successfully submitting request, Status : " + resp_data.InfoMessage.toString());
+        //            window.location.href = '/Home.aspx';
+        //        }
+        //        else {
+        //            window.alert("Error : " + resp_data.InfoMessage);
+        //        }
+        //    });
     }
 
     
@@ -455,19 +477,26 @@ app.controller('ctrl', function ($scope, svc) {
         console.log("header_id: " + header_id);
 
         console.log($scope.rows);
+        console.log($scope.rows[0].header_id);
 
-        //svc.svc_ConfirmStationary(header_id).
-        //    then(function (response) {
-        //        var resp_data = JSON.parse(response.data.d);
-        //        console.log(resp_data);
-        //        if (resp_data.ProcessSuccess) {
-        //            window.alert("Successfully closing request, Status : " + resp_data.InfoMessage.toString());
-        //            window.location.href = '/Home.aspx';
-        //        }
-        //        else {
-        //            window.alert("Error : " + resp_data.InfoMessage);
-        //        }
-        //    });
+        svc.svc_UpdateStock($scope.rows)
+            .then(function (response) {
+                var resp_data = JSON.parse(response.data.d);
+                console.log(resp_data);
+            })
+
+        svc.svc_ConfirmStationary(header_id).
+            then(function (response) {
+                var resp_data = JSON.parse(response.data.d);
+                console.log(resp_data);
+                if (resp_data.ProcessSuccess) {
+                    window.alert("Successfully closing request, Status : " + resp_data.InfoMessage.toString());
+                    window.location.href = '/Home.aspx';
+                }
+                else {
+                    window.alert("Error : " + resp_data.InfoMessage);
+                }
+            });
 
     }
 
@@ -598,7 +627,7 @@ app.controller('ctrl', function ($scope, svc) {
         if ($scope.role_id === '0') {
             approval.style.display = "none";
             btn_approve.style.display = "none";
-            workflow_history.style.display = "none";
+            /*workflow_history.style.display = "none";*/
 
         }
         else if (($scope.role_id === '1') || ($scope.role_id === '2') || ($scope.role_id === '3') || ($scope.role_id === '4')) {
@@ -635,10 +664,10 @@ app.controller('ctrl', function ($scope, svc) {
 
                     //Jika status_id = 3 dan yang current login role_id = 4 maka tombol deliver akan dimunculkan;
 
-                    if (($scope.header_data.status_id === 3) && ((window.localStorage.getItem("role_id") === "4")) || (window.localStorage.getItem("role_id") === "3")) {
+                    if (($scope.header_data.status_id === 3) && (((window.localStorage.getItem("role_id") === "4")) || (window.localStorage.getItem("role_id") === "3"))) {
                         delivered.style.display = "block";
-                        //approval.style.display = "none";
-                        //btn_approve.style.display = "none";
+                        approval.style.display = "none";
+                        btn_approve.style.display = "none";
                     }
 
                     //if (($scope.header_data.status_id !== 3) && (window.localStorage.getItem("role_id") === "0")) {
@@ -699,44 +728,57 @@ app.controller('ctrl', function ($scope, svc) {
 
         var action_date = new moment().format("DD-MMM-YYYY");
         var action_date_formatted = new moment(action_date, "DD-MMM-YYYY").format("YYYY-MM-DD HH:mm:ss");
+        var input_data;
 
-        var input_data = {
-            folio_no: folio_no,
-            pic_name: '',
-            comment: $scope.comment,
-            action_name: $scope.approve_value,
-            action_date: action_date_formatted
-        }
-
-        console.log(input_data);
-        svc.svc_InsertWorkflowHistory(input_data)
+        var role_id = parseInt(window.localStorage.getItem("role_id"));
+        var prom = svc.svc_GetCurrentLoginData(role_id)
             .then(function (response) {
                 var resp_data = JSON.parse(response.data.d);
-                console.log(resp_data);
-            });
-
-        svc.svc_ApproveRequest(approval_value, $scope.task_id, $scope.assignment_id).
-            then(function (response) {
-                var resp_data = JSON.parse(response.data.d);
-                console.log(resp_data);
-                if (resp_data.ProcessSuccess) {
-                    if (approval_value == "Approve") {
-                        window.alert("Successfully Approving Request");
-                    }
-
-                    else if (approval_value == "Reject") {
-                        window.alert("Successfully Rejecting Request");
-                    }
-
-                    window.location.href = '/Home.aspx';
-                }
-                else {
-                    console.log("Error : " + resp_data.InfoMessage);
+                input_data = {
+                    folio_no: folio_no,
+                    pic_name: resp_data.data.role,
+                    comment: $scope.comment,
+                    action_name: $scope.approve_value,
+                    action_date: new Date()
                 }
             })
-            .catch(function (error) {
-                console.log("Error: " + error.statusText);
-            })
+
+
+        prom.then(function () {
+            console.log(input_data);
+
+            svc.svc_InsertWorkflowHistory(input_data)
+                .then(function (response) {
+                    var resp_data = JSON.parse(response.data.d);
+                    console.log(resp_data);
+                });
+
+            svc.svc_ApproveRequest(approval_value, $scope.task_id, $scope.assignment_id).
+                then(function (response) {
+                    var resp_data = JSON.parse(response.data.d);
+                    console.log(resp_data);
+                    if (resp_data.ProcessSuccess) {
+                        if (approval_value == "Approve") {
+                            window.alert("Successfully Approving Request");
+                        }
+
+                        else if (approval_value == "Reject") {
+                            window.alert("Successfully Rejecting Request");
+                        }
+
+                        window.location.href = '/Home.aspx';
+                    }
+                    else {
+                        console.log("Error : " + resp_data.InfoMessage);
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Error: " + error.statusText);
+                })
+        })
+
+        
+
     }
 
     $scope.Cek = function () {

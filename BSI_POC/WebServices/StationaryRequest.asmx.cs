@@ -109,6 +109,44 @@ namespace BSI_POC.WebServices
         }
 
         [WebMethod]
+        public string UpdateStock(List<StationaryRequestDetailModel> request_detail)
+        {
+            try
+            {
+                bool status = controller.UpdateStock(request_detail);
+                if(status == true)
+                {
+                    var result = new
+                    {
+                        ProcessSuccess = true,
+                        InfoMessage = "OK"
+                    };
+                    return new JavaScriptSerializer().Serialize(result);
+                }
+
+                else
+                {
+                    var result = new
+                    {
+                        ProcessSuccess = false,
+                        InfoMessage = "Error"
+                    };
+                    return new JavaScriptSerializer().Serialize(result);
+                }
+            }
+            catch(Exception ex)
+            {
+                var result = new
+                {
+                    ProcessSuccess = false,
+                    InfoMessage = ex.GetType().Name + ", " + ex.Message
+                };
+
+                return new JavaScriptSerializer().Serialize(result);
+            }
+        }
+
+        [WebMethod]
         public string ConfirmStationary(int header_id)
         {
             try
@@ -364,11 +402,11 @@ namespace BSI_POC.WebServices
         }
 
         [WebMethod]
-        public string GetWorkflowHistory()
+        public string GetWorkflowHistory(string folio_no)
         {
             try
             {
-                var history = controller.GetWorkflowHistory();
+                var history = controller.GetWorkflowHistory(folio_no);
                 var result = new
                 {
                     ProcessSuccess = true,

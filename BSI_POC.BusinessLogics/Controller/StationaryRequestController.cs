@@ -79,6 +79,23 @@ namespace BSI_POC.BusinessLogics.Controller
             return header_id;
         }
 
+        public bool UpdateStock(List<StationaryRequestDetailModel> detailModel)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            foreach(var d in detailModel)
+            {
+                SqlCommand cmd = new SqlCommand("dbo.UpdateStock", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@item_name", d.item_name);
+                cmd.Parameters.AddWithValue("@req_qty", d.request_qty);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            return true;
+        }
+
         public bool InsertWorflowHistory(WorkFlowHistoryLogModel data)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -304,7 +321,7 @@ namespace BSI_POC.BusinessLogics.Controller
             }
         }
 
-        public List<WorkFlowHistoryLogModel> GetWorkflowHistory()
+        public List<WorkFlowHistoryLogModel> GetWorkflowHistory(string folio_no)
         {
             try
             {
@@ -313,6 +330,7 @@ namespace BSI_POC.BusinessLogics.Controller
                 db.cmd.CommandText = "dbo.WorkflowHistoryLog";
                 db.cmd.CommandType = CommandType.StoredProcedure;
                 db.cmd.Parameters.Clear();
+                db.AddInParameter(db.cmd, "folio_no", folio_no);
                 reader = db.cmd.ExecuteReader();
                 dt.Load(reader);
                 db.CloseDataReader(reader);

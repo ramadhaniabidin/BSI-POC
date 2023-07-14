@@ -100,8 +100,12 @@
                                 <p style="text-align:center">{{ $index + 1 }}</p>
                             </td>
                             <td>
-                                <select style="width: 90%;" ng-model="row.item_name" ng-options="item for item in itemNames" ng-change="CekItemName({{$index}})">
-                                    <option disabled="disabled" selected="selected" style="text-align:center"> == Select Stationary Item == </option>
+<%--                                <select style="width: 90%;" ng-model="row.item_name" ng-options="item for item in itemNames" ng-change="CekItemName({{$index}})">
+                                    <option selected="selected" invisible="invisible" style="text-align:center" value=""> == Select Stationary Item == </option>
+                                </select>--%>
+                                <select style="width: 90%;" ng-model="row.item_name" ng-change="CekItemName({{$index}})">
+                                    <option value="" selected disabled style="text-align:center"> == Select Stationary Item == </option>
+                                    <option ng-repeat="item in itemNames" value="{{item}}">{{item}}</option>
                                 </select>
                             </td>
                             <td>
@@ -141,8 +145,12 @@
             <div class="row" style=" width:90%; display:flex">
                 <div class="col" id="approver">
                     <strong> Next Approval : </strong>
-                    <select style="margin-bottom: 10px" ng-options="i for i in approver_list" ng-model="approver">
-
+<%--                    <select style="margin-bottom: 10px" ng-options="i for i in approver_list" ng-model="approver">
+                        
+                    </select>--%>
+                    <select style="margin-bottom: 10px" ng-model="approver">
+                        <option value="" selected disabled style="text-align:center"> == Choose The Next Approver ==</option>
+                        <option ng-repeat="i in approver_list" value="{{i}}">{{i}}</option>
                     </select>
                 </div>
 
@@ -166,16 +174,16 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Folio no</th>
+                            <th>Name</th>
                             <th>Comment</th>
-                            <th>Action Name</th>
+                            <th>Status</th>
                             <th>Action Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="i in workflow_history">
                             <td>{{$index + 1}}</td>
-                            <td>{{i.folio_no}}</td>
+                            <td>{{i.pic_name}}</td>
                             <td>{{i.comment}}</td>
                             <td>{{i.action_name}}</td>
                             <td>{{i.action_date}}</td>

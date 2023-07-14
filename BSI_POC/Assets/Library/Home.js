@@ -178,8 +178,12 @@ app.controller('ctrl', function ($scope, svc) {
                 if (data.ProcessSuccess) {
                     
                     for (i of data.items) {
-                        i.created_date = parseInt((i.created_date).substring(6, i.created_date.length - 2));
-                        i.created_date = new Date(i.created_date).toDateString();
+                        //i.created_date = parseInt((i.created_date).substring(6, i.created_date.length - 2));
+                        //i.created_date = new Date(i.created_date).toDateString();
+
+                        i.created_date = new Date(parseInt(i.created_date.substring(6)));
+                        i.created_date = i.created_date.toLocaleString();
+
                         /*var date = new Date(ticks).toDateString();*/
 
                         /*console.log(i.created_date);*/
