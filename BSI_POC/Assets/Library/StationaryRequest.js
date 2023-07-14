@@ -454,8 +454,39 @@ app.controller('ctrl', function ($scope, svc) {
             detail: detail,
         }
 
-        console.log(params.header.created_date);
-        console.log(params);
+        for (i of params.detail) {
+            if ((i.item_name === null) || (i.item_name === undefined) || (i.item_name === '')) {
+                alert("Please Select Stationary Item");
+                window.location.href = "/Pages/StationaryRequest.aspx"
+            }
+            /*console.log(i.item_name);*/
+
+            else if ((params.header.current_approver_role == 0) || (params.header.current_approver_role === undefined) || (params.header.current_approver_role === null)) {
+                alert("Please select the next approver");
+                window.location.href = "/Pages/StationaryRequest.aspx"
+            }
+
+            else {
+                svc.svc_InsertHeaderData(params.header, params.detail).
+                    then(function (response) {
+                        var resp_data = JSON.parse(response.data.d);
+                        console.log(resp_data);
+                        if (resp_data.ProcessSuccess) {
+                            window.alert("Successfully submitting request, Status : " + resp_data.InfoMessage.toString());
+                            window.location.href = '/Home.aspx';
+                        }
+                        else {
+                            window.alert("Error : " + resp_data.InfoMessage);
+                        }
+                    });
+            }
+        }
+
+
+
+        /*console.log(params);*/
+
+        /*if (params.detail)*/
         //svc.svc_InsertHeaderData(params.header, params.detail).
         //    then(function (response) {
         //        var resp_data = JSON.parse(response.data.d);
@@ -622,6 +653,8 @@ app.controller('ctrl', function ($scope, svc) {
         department.setAttribute('readonly', 'readonly');
         role.setAttribute('readonly', 'readonly');
         employee_id.setAttribute('readonly', 'readonly');
+
+
         
 
         if ($scope.role_id === '0') {
@@ -673,6 +706,11 @@ app.controller('ctrl', function ($scope, svc) {
                     //if (($scope.header_data.status_id !== 3) && (window.localStorage.getItem("role_id") === "0")) {
                     //    delivered.style.display = "none";
                     //}
+
+                    if ($scope.header_data.status_id !== 5) {
+                        close.style.display = "none";
+                    }
+
 
                     if (window.localStorage.getItem("role_id") === "0") {
                         approval.style.display = "none";
