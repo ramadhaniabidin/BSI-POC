@@ -55,15 +55,6 @@ namespace BSI_POC.BusinessLogics.Controller
                 db.CloseConnection(ref conn);
 
                 return Utility.ConvertDataTableToList<HomeModel>(dt);
-
-                //if(dt.Rows.Count > 0)
-                //{
-                //    return Utility.ConvertDataTableToList<HomeModel>(dt);
-                //}
-                //else
-                //{
-                //    return new HomeModel();
-                //}
             }
 
             catch(Exception ex)

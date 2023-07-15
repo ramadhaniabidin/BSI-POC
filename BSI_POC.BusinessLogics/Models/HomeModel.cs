@@ -15,5 +15,6 @@ namespace BSI_POC.BusinessLogics.Models
         public string current_approver { get; set; }
         public DateTime created_date { get; set; }
         public string created_by { get; set; }
+        public string approver_name { get; set; }
     }
 }

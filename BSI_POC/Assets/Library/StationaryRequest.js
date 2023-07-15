@@ -309,6 +309,8 @@ app.service("svc", function ($http) {
 })
 
 app.controller('ctrl', function ($scope, svc) {
+    $scope.username = '';
+
     $scope.GetCurrentLoginData = function () {
         var role_id = parseInt(window.localStorage.getItem("role_id"));
 
@@ -316,10 +318,12 @@ app.controller('ctrl', function ($scope, svc) {
         proc.then(function (response) {
             var data = JSON.parse(response.data.d);
             console.log(data);
+            $scope.username = data.data.name;
             $scope.header_data.applicant = data.data.name;
             $scope.header_data.department = data.data.department;
             $scope.header_data.role = data.data.role;
             $scope.header_data.employee_id = data.data.id;
+
             /*console.log($scope.header_data.applicant);*/
 /*            console.log(data.data.name);*/
         })
@@ -817,7 +821,7 @@ app.controller('ctrl', function ($scope, svc) {
             console.log(input_data);
             if ((approval_value === null) || (approval_value === undefined) || (approval_value === '')) {
                 window.alert("Please choose the approval action");
-                window.location.href = "/Pages/StationaryRequest.aspx?folio_no=" + folio_no;
+                /*window.location.href = "/Pages/StationaryRequest.aspx?folio_no=" + folio_no;*/
             }
 
             else {
@@ -884,7 +888,7 @@ app.controller('ctrl', function ($scope, svc) {
 
 
     /*setInterval($scope.GetData, 1000);*/
-    if (window.localStorage)
+    /*if (window.localStorage)*/
 
     $scope.GetData();
     $scope.GetCurrentLoginData();

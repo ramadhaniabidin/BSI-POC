@@ -32,6 +32,22 @@ app.directive('loading', ['$http', function ($http) {
 }]);
 
 app.service("svc", function ($http) {
+    this.svc_GetCurrentLoginData = function (role_id) {
+        var param = {
+            'role_id': role_id,
+        }
+
+        var response = $http({
+            method: "post",
+            url: "/WebServices/StationaryRequest.asmx/GetCurrentLoginData",
+            data: JSON.stringify(param),
+            dataType: "json"
+        })
+
+        return response;
+    }
+
+
     this.svc_ListData = function () {
         var response = $http({
             method: "post",
@@ -134,6 +150,19 @@ app.controller('ctrl', function ($scope, svc) {
     $scope.role_id = '';
     $scope.token = '';
     $scope.task_name = '';
+    $scope.username = '';
+
+    $scope.GetCurrentLoginData = function () {
+        var role_id = parseInt(window.localStorage.getItem("role_id"));
+
+        var proc = svc.svc_GetCurrentLoginData(role_id);
+        proc.then(function (response) {
+            var data = JSON.parse(response.data.d);
+            console.log(data);
+            $scope.username = data.data.name;
+            console.log($scope.username);
+        })
+    }
 
     $scope.GetTaskList = function () {
         try {
@@ -143,17 +172,10 @@ app.controller('ctrl', function ($scope, svc) {
                 var taskData = JSON.parse(data.tasksJson);
                 if (data.ProcessSuccess) {
                     console.log(taskData);
-                    //for (var i = 0; i < taskData.length; i++) {
-                    //    console.log("Task Name: " + taskData[i].name)
-                    //    console.log("Assignee: " + taskData[i].taskAssignments[0].assignee);
-                    //}
                     $scope.task_id = taskData["name"];
                     $scope.assignment_id = taskData.taskAssignments[0]["assignee"];
 
                     window.localStorage.setItem("taks_name", taskData["name"]);
-
-                    //console.log("Task Name: " + $scope.task_id);
-                    //console.log("Assignee: " + $scope.assignment_id);
 
 
                 }
@@ -187,6 +209,12 @@ app.controller('ctrl', function ($scope, svc) {
                         /*var date = new Date(ticks).toDateString();*/
 
                         /*console.log(i.created_date);*/
+
+                        if ((i.status_id === 3) || (i.status_id === 5)) {
+                            i.current_approver = ""
+                            i.approver_name = ""
+                        }
+
                     }
                     $scope.Items = data.items;
                     console.log($scope.Items);
@@ -303,6 +331,7 @@ app.controller('ctrl', function ($scope, svc) {
 
     
     $scope.GetRoleID();
+    $scope.GetCurrentLoginData();
     /*$scope.GetTaskList();*/
     var listData = document.getElementById("listData");
     var listDataByID = document.getElementById("listDataByID");
