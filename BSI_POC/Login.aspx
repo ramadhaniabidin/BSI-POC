@@ -40,7 +40,7 @@
     <script src="/Assets/Library/Login.js"></script>
 
 </head>
-<body class="bg-gradient-primary" style="background-color:red">
+<body class="bg-gradient-primary" style="background-color:rgb(22 22 21)">
     <form id="form1" runat="server">
         <div class="custom-centered " ng-app="app" ng-controller="ctrl">
 
