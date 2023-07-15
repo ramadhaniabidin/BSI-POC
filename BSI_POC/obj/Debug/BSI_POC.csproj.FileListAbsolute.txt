@@ -74,15 +74,3 @@ C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\obj\De
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\obj\Debug\BSI_POC.csproj.CopyComplete
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\obj\Debug\BSI_POC.dll
 C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\obj\Debug\BSI_POC.pdb
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.Helpers.dll
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.Mvc.dll
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.Razor.dll
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.WebPages.Deployment.dll
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.WebPages.dll
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.WebPages.Razor.dll
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.Helpers.xml
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.Mvc.xml
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.Razor.xml
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.WebPages.xml
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.WebPages.Deployment.xml
-C:\Users\ramad\OneDrive\Documents\Belajar\Angular\BSI_POC\BSI_POC\BSI_POC\bin\System.Web.WebPages.Razor.xml
